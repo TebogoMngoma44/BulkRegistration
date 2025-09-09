@@ -1,0 +1,848 @@
+@page "/auth/exam"
+
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pa-0" Style="min-height: 100vh;">
+    <!-- Header with blue striped background -->
+    <MudPaper Class="pa-6 mb-4" Elevation="0" Style="background: repeating-linear-gradient(45deg, #1a3570 0px, #1a3570 20px, #22407a 20px, #22407a 40px); color: white; height: auto; min-height: 280px;">
+        <MudGrid AlignItems="Center">
+            <MudItem xs="12" sm="8" md="8">
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.h4" Style="font-weight: 600; font-size: clamp(1.5rem, 4vw, 2.125rem);">Business Management Fundamentals - Final Examination</MudText>
+                    <MudText Typo="Typo.body1" Style="opacity: 0.9; font-size: clamp(0.875rem, 2vw, 1rem);">Module Assessment • Under Supervision • Auto-Graded</MudText>
+
+                    <!-- Exam Details Section with Emoji Icons -->
+                    <MudGrid Class="mt-4" id="examDetailsGrid">
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="exam-detail-item">
+                                <MudText Style="font-size: 1.2rem;">📅</MudText>
+                                <MudText Style="font-size: clamp(0.875rem, 1.5vw, 1rem);">Duration: 90 minutes</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="exam-detail-item">
+                                <MudText Style="font-size: 1.2rem;">❓</MudText>
+                                <MudText Style="font-size: clamp(0.875rem, 1.5vw, 1rem);">Questions: 15</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="exam-detail-item">
+                                <MudText Style="font-size: 1.2rem;">🎯</MudText>
+                                <MudText Style="font-size: clamp(0.875rem, 1.5vw, 1rem);">Total Points: 100</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2" Class="exam-detail-item">
+                                <MudText Style="font-size: 1.2rem;">✅</MudText>
+                                <MudText Style="font-size: clamp(0.875rem, 1.5vw, 1rem);">Pass Mark: 70%</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudStack>
+            </MudItem>
+
+            <MudItem xs="12" sm="4" md="4" Class="d-flex justify-center justify-sm-end">
+                <MudStack AlignItems="AlignItems.Center" AlignItems-sm="AlignItems.End" Spacing="2">
+                    <!-- AI MARKED Badge -->
+                    <MudPaper Class="px-3 py-1" Elevation="1" Style="border-radius: 9999px; background-color: white; color: blue; font-weight: 600; font-size: clamp(0.75rem, 1.2vw, 0.875rem);">
+                        AI MARKED
+                    </MudPaper>
+
+                    <!-- Timer Component -->
+                    <MudPaper Elevation="3" Class="pa-4 text-center exam-status-panel"
+                              Style="background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 20px; min-width: clamp(200px, 25vw, 260px); border: 1px solid rgba(255,255,255,0.2);">
+                        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                            <div class="status-indicator clock-circle @GetTimerWarningClass()" style="font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 4px;">
+                                ⏱️
+                            </div>
+
+                            <div class="status-text" style="color: white; opacity: 0.9; margin-bottom: 4px; font-size: clamp(0.7rem, 1.2vw, 0.75rem);">
+                                Time Remaining
+                            </div>
+
+                            <div class="time-remaining @GetTimerWarningClass()" id="timer"
+                                 style="font-family: 'Courier New', monospace; font-weight: 700; color: white; margin-bottom: 2px; font-size: clamp(1.75rem, 4vw, 2.125rem);">
+                                @timeRemaining
+                            </div>
+
+                            <div class="time-label" style="color: white; opacity: 0.8; font-size: clamp(0.7rem, 1.2vw, 0.75rem);">
+                                Minutes
+                            </div>
+                        </MudStack>
+                    </MudPaper>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <!-- Main Content Area -->
+    <div Style="background: white; min-height: calc(100vh - 320px); padding: 0;">
+        <MudGrid Class="px-6 pb-6" Spacing="3">
+            <!-- Question Area -->
+            <MudItem xs="12" lg="9">
+                <MudPaper Class="pa-6" Elevation="3" Style="min-height: clamp(400px, 60vh, 600px); border-radius: 12px;">
+                    <MudStack Spacing="4">
+                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.subtitle1" Style="color: #666; font-weight: 500; font-size: clamp(0.875rem, 1.5vw, 1rem);">Question @currentQuestion of @totalQuestions</MudText>
+                            <MudChip T="string" Color="Color.Info" Size="Size.Small" Style="background: #2196f3; color: white; font-size: clamp(0.75rem, 1.2vw, 0.875rem);">@GetCurrentPoints() points</MudChip>
+                        </MudStack>
+
+                        <MudText Typo="Typo.h5" Style="font-weight: 600; color: #333; margin-bottom: 32px; font-size: clamp(1.125rem, 2.5vw, 1.5rem); line-height: 1.4;">@GetCurrentQuestion()</MudText>
+
+                        <MudStack Spacing="3">
+                            @foreach (var option in GetCurrentOptions())
+                            {
+                                <MudPaper Class="pa-4 cursor-pointer answer-option"
+                                          Style="@GetAnswerStyle(option)"
+                                          @onclick="() => HandleAnswerChange(option)">
+                                    <MudStack Row AlignItems="AlignItems.Center" Spacing="3">
+                                        <div class="custom-radio @(GetCheckedState(option) ? "selected" : "")"></div>
+                                        <MudText Typo="Typo.body1" Style="color: #333; font-size: clamp(0.875rem, 1.5vw, 1rem); line-height: 1.5;">@option</MudText>
+                                    </MudStack>
+                                </MudPaper>
+                            }
+                        </MudStack>
+
+                        <!-- Question Navigation Footer -->
+                        <MudDivider Class="my-4" />
+                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                            <MudStack Row Spacing="2">
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           OnClick="SaveAndContinue"
+                                           Disabled="!HasSelectedAnswer()"
+                                           Style="text-transform: none;">
+                                    Save & Continue
+                                </MudButton>
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           OnClick="SaveAnswer"
+                                           Disabled="!HasSelectedAnswer()"
+                                           Style="text-transform: none;">
+                                    Save Answer
+                                </MudButton>
+                                <MudButton Variant="Variant.Text"
+                                           Color="Color.Warning"
+                                           OnClick="FlagQuestion"
+                                           Style="text-transform: none;">
+                                    @(flaggedQuestions.Contains(currentQuestion) ? "Unflag" : "Flag for Review")
+                                </MudButton>
+                            </MudStack>
+
+                            <MudStack Row Spacing="2">
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Secondary"
+                                           OnClick="PreviousQuestion"
+                                           Disabled="@(currentQuestion <= 1)"
+                                           Style="text-transform: none;">
+                                    Previous
+                                </MudButton>
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           OnClick="NextQuestion"
+                                           Style="text-transform: none;">
+                                    @(currentQuestion == totalQuestions ? "Review" : "Next")
+                                </MudButton>
+                            </MudStack>
+                        </MudStack>
+                    </MudStack>
+                </MudPaper>
+            </MudItem>
+
+            <!-- Navigation Sidebar -->
+            <MudItem xs="12" lg="3">
+                <MudPaper Class="pa-4" Elevation="3" Style="border-radius: 12px; min-height: clamp(400px, 60vh, 600px);">
+                    <MudStack Spacing="3">
+                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; font-size: clamp(1rem, 2vw, 1.25rem);">Navigation</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666; font-size: clamp(0.75rem, 1.2vw, 0.875rem);">@answeredQuestions of @totalQuestions</MudText>
+                        </MudStack>
+
+                        <MudDivider />
+
+                        <!-- Progress Summary -->
+                        <MudStack Spacing="1">
+                            <MudStack Row Justify="Justify.SpaceBetween">
+                                <MudText Typo="Typo.caption" Style="color: #666;">Completed:</MudText>
+                                <MudText Typo="Typo.caption" Style="color: #16a34a; font-weight: 600;">@answeredQuestions / @totalQuestions</MudText>
+                            </MudStack>
+                            <MudStack Row Justify="Justify.SpaceBetween">
+                                <MudText Typo="Typo.caption" Style="color: #666;">Flagged:</MudText>
+                                <MudText Typo="Typo.caption" Style="color: #f59e0b; font-weight: 600;">@flaggedQuestions.Count</MudText>
+                            </MudStack>
+                            <MudStack Row Justify="Justify.SpaceBetween">
+                                <MudText Typo="Typo.caption" Style="color: #666;">Remaining:</MudText>
+                                <MudText Typo="Typo.caption" Style="color: #ef4444; font-weight: 600;">@(totalQuestions - answeredQuestions)</MudText>
+                            </MudStack>
+                        </MudStack>
+
+                        <MudDivider />
+
+                        <!-- Question Grid with Flexible Layout -->
+                        <div class="question-grid-container">
+                            <MudGrid Spacing="1" Class="mb-3" id="questionGrid">
+                                @for (int i = 1; i <= totalQuestions; i++)
+                                {
+                                    int q = i;
+                                    string buttonId = $"qBtn{q - 1}";
+                                    <MudItem xs="2" Class="d-flex justify-center">
+                                        <MudButton Class="@GetQuestionButtonClass(q)"
+                                                   id="@buttonId"
+                                                   Variant="Variant.Filled"
+                                                   Size="Size.Small"
+                                                   Style="@GetNavigationButtonStyle(q)"
+                                                   OnClick="() => NavigateToQuestion(q)">
+                                            @q
+                                        </MudButton>
+                                    </MudItem>
+                                }
+                            </MudGrid>
+                        </div>
+
+                        <!-- Legend -->
+                        <MudStack Spacing="1" Class="mb-3">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                                <div style="width: 16px; height: 16px; background: #1e40af; border-radius: 4px;"></div>
+                                <MudText Typo="Typo.caption" Style="color: #666;">Current</MudText>
+                            </MudStack>
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                                <div style="width: 16px; height: 16px; background: #16a34a; border-radius: 4px;"></div>
+                                <MudText Typo="Typo.caption" Style="color: #666;">Answered</MudText>
+                            </MudStack>
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                                <div style="width: 16px; height: 16px; background: #f59e0b; border-radius: 4px;"></div>
+                                <MudText Typo="Typo.caption" Style="color: #666;">Flagged</MudText>
+                            </MudStack>
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                                <div style="width: 16px; height: 16px; background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 4px;"></div>
+                                <MudText Typo="Typo.caption" Style="color: #666;">Not Visited</MudText>
+                            </MudStack>
+                        </MudStack>
+
+                        <!-- Navigation Actions with Flexible Layout -->
+                        <MudStack Class="nav-actions" Spacing="2">
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Secondary"
+                                       FullWidth
+                                       Size="Size.Large"
+                                       OnClick="ReviewAllAnswers"
+                                       Style="text-transform: none;"
+                                       Class="nav-btn">
+                                Review All Answers
+                            </MudButton>
+
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Success"
+                                       FullWidth
+                                       Size="Size.Large"
+                                       OnClick="SubmitExam"
+                                       Style="text-transform: none; font-weight: 700;"
+                                       Class="btn-large nav-btn">
+                                Submit Exam
+                            </MudButton>
+                        </MudStack>
+                    </MudStack>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </div>
+</MudContainer>
+
+<!-- Submit Confirmation Dialog -->
+<MudDialog @bind-IsVisible="showSubmitDialog" Options="dialogOptions">
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h6" Style="color: #333;">Submit Examination</MudText>
+            <MudText Typo="Typo.body1">
+                Are you sure you want to submit your exam? This action cannot be undone.
+            </MudText>
+
+            <MudDivider />
+
+            <MudStack Spacing="2">
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudText>Questions Answered:</MudText>
+                    <MudText Style="font-weight: 600;">@answeredQuestions / @totalQuestions</MudText>
+                </MudStack>
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudText>Questions Flagged:</MudText>
+                    <MudText Style="font-weight: 600; color: #f59e0b;">@flaggedQuestions.Count</MudText>
+                </MudStack>
+                <MudStack Row Justify="Justify.SpaceBetween">
+                    <MudText>Time Remaining:</MudText>
+                    <MudText Style="font-weight: 600; color: #ef4444;">@timeRemaining</MudText>
+                </MudStack>
+            </MudStack>
+
+            @if (answeredQuestions < totalQuestions)
+            {
+                <MudAlert Severity="Severity.Warning">
+                    You have @(totalQuestions - answeredQuestions) unanswered question(s). These will be marked as incorrect.
+                </MudAlert>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CancelSubmit" Color="Color.Secondary">Cancel</MudButton>
+        <MudButton OnClick="ConfirmSubmit" Color="Color.Success" Variant="Variant.Filled">Submit Exam</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<!-- Time Warning Dialog -->
+<MudDialog @bind-IsVisible="showTimeWarningDialog" Options="timeWarningDialogOptions">
+    <DialogContent>
+        <MudStack Spacing="3" AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icons.Material.Filled.Warning" Style="font-size: 48px; color: #f59e0b;" />
+            <MudText Typo="Typo.h6" Style="color: #f59e0b; text-align: center;">Time Warning</MudText>
+            <MudText Typo="Typo.body1" Style="text-align: center;">
+                You have @GetWarningTimeText() remaining to complete your exam.
+            </MudText>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="DismissTimeWarning" Color="Color.Primary" Variant="Variant.Filled">Continue</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<style>
+    /* Existing styles plus additional enhancements */
+    .answer-option {
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        background: #ffffff;
+        padding: clamp(12px, 2vw, 16px);
+    }
+
+        .answer-option:hover {
+            background-color: #f8fafc;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .answer-option.selected {
+            border-color: #3b82f6 !important;
+            background-color: #eff6ff !important;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .custom-radio {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        background: #ffffff;
+        position: relative;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+        .custom-radio.selected {
+            border-color: #3b82f6;
+            background: #3b82f6;
+        }
+
+            .custom-radio.selected::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 8px;
+                height: 8px;
+                background: white;
+                border-radius: 50%;
+            }
+
+    .mud-button-root {
+        transition: all 0.2s ease;
+    }
+
+        .mud-button-root:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .question-btn {
+        width: clamp(35px, 5vw, 45px) !important;
+        height: clamp(35px, 5vw, 45px) !important;
+        font-weight: 600 !important;
+        min-width: clamp(35px, 5vw, 45px) !important;
+        border-radius: clamp(6px, 1vw, 10px) !important;
+        transition: all 0.2s ease !important;
+        font-size: clamp(0.75rem, 1.2vw, 0.875rem) !important;
+    }
+
+        .question-btn.current {
+            background: #1e40af !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .question-btn.answered {
+            background: #16a34a !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .question-btn.flagged {
+            background: #f59e0b !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .question-btn:not(.current):not(.answered):not(.flagged) {
+            background: #f8f9fa !important;
+            color: #6b7280 !important;
+            border: 1px solid #e5e7eb !important;
+        }
+
+    .timer-warning .time-remaining {
+        color: #fbbf24 !important;
+        animation: warning-pulse 1s infinite;
+    }
+
+    .timer-critical .time-remaining {
+        color: #ef4444 !important;
+        animation: critical-pulse 0.5s infinite;
+    }
+
+    @@keyframes warning-pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.7;
+        }
+    }
+
+    @@keyframes critical-pulse {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
+    }
+
+    .nav-btn {
+        height: clamp(44px, 6vh, 56px) !important;
+        font-weight: 600 !important;
+        border-radius: clamp(6px, 1vw, 8px) !important;
+        text-transform: none !important;
+        font-size: clamp(0.875rem, 1.5vw, 1rem) !important;
+    }
+
+    .btn-large {
+        height: clamp(48px, 7vh, 60px) !important;
+        font-weight: 700 !important;
+        font-size: clamp(0.95rem, 1.8vw, 1.1rem) !important;
+    }
+</style>
+
+@code {
+    private int currentQuestion = 1;
+    private int totalQuestions = 15;
+    private System.Threading.Timer? timer;
+    private TimeSpan timeLeft = TimeSpan.FromMinutes(90);
+    private string timeRemaining => timeLeft.ToString(@"mm\:ss");
+
+    private Dictionary<int, string> selectedAnswers = new();
+    private HashSet<int> answeredQuestionSet = new();
+    private HashSet<int> flaggedQuestions = new();
+    private bool showSubmitDialog = false;
+    private bool showTimeWarningDialog = false;
+    private bool timeWarningShown = false;
+    private bool timeCriticalWarningShown = false;
+
+    private DialogOptions dialogOptions = new() { CloseOnEscapeKey = true };
+    private DialogOptions timeWarningDialogOptions = new() { CloseOnEscapeKey = false, CloseButton = false };
+
+    private Dictionary<int, ExamQuestion> questions = new()
+    {
+        { 1, new ExamQuestion {
+            Text = "What is the primary purpose of a business plan?",
+            Points = 5,
+            Options = new() {
+                "To secure funding from investors",
+                "To provide a roadmap for business operations and strategy",
+                "To comply with legal requirements",
+                "To impress potential customers"
+            },
+            CorrectAnswer = "To provide a roadmap for business operations and strategy"
+        }},
+        { 2, new ExamQuestion {
+            Text = "Which of the following is NOT a key component of SWOT analysis?",
+            Points = 5,
+            Options = new() { "Strengths", "Weaknesses", "Opportunities", "Targets" },
+            CorrectAnswer = "Targets"
+        }},
+        { 3, new ExamQuestion {
+            Text = "What is the main goal of supply chain management?",
+            Points = 7,
+            Options = new() {
+                "Minimize costs at all stages",
+                "Optimize the flow of goods and services",
+                "Increase inventory levels",
+                "Reduce supplier relationships"
+            },
+            CorrectAnswer = "Optimize the flow of goods and services"
+        }},
+        { 4, new ExamQuestion {
+            Text = "In project management, what does the acronym SMART stand for?",
+            Points = 5,
+            Options = new() {
+                "Simple, Measurable, Achievable, Relevant, Time-bound",
+                "Specific, Measurable, Achievable, Relevant, Time-bound",
+                "Strategic, Meaningful, Actionable, Realistic, Trackable",
+                "Systematic, Manageable, Adaptable, Reliable, Testable"
+            },
+            CorrectAnswer = "Specific, Measurable, Achievable, Relevant, Time-bound"
+        }},
+        { 5, new ExamQuestion {
+            Text = "What is the difference between leadership and management?",
+            Points = 8,
+            Options = new() {
+                "There is no difference",
+                "Leadership focuses on vision and inspiration, management on execution",
+                "Management is more important than leadership",
+                "Leadership is only for senior executives"
+            },
+            CorrectAnswer = "Leadership focuses on vision and inspiration, management on execution"
+        }},
+        { 6, new ExamQuestion {
+            Text = "What is a key benefit of market segmentation?",
+            Points = 6,
+            Options = new() { "Increased competition", "Wider product range", "Improved market focus", "Greater employee retention" },
+            CorrectAnswer = "Improved market focus"
+        }},
+        { 7, new ExamQuestion {
+            Text = "Which financial statement shows a company's revenues and expenses?",
+            Points = 5,
+            Options = new() { "Balance sheet", "Income statement", "Cash flow statement", "Equity report" },
+            CorrectAnswer = "Income statement"
+        }},
+        { 8, new ExamQuestion {
+            Text = "What does ROI stand for?",
+            Points = 4,
+            Options = new() { "Return on Investment", "Rate of Income", "Revenue over Interest", "Report of Inventory" },
+            CorrectAnswer = "Return on Investment"
+        }},
+        { 9, new ExamQuestion {
+            Text = "What is the role of a mission statement?",
+            Points = 6,
+            Options = new() { "Explain company rules", "Define operational tasks", "Outline financial strategy", "Describe purpose and values" },
+            CorrectAnswer = "Describe purpose and values"
+        }},
+        { 10, new ExamQuestion {
+            Text = "What is a stakeholder?",
+            Points = 5,
+            Options = new() { "An employee", "A business competitor", "Anyone affected by a business", "Only the owner" },
+            CorrectAnswer = "Anyone affected by a business"
+        }},
+        { 11, new ExamQuestion {
+            Text = "Which is NOT a leadership style?",
+            Points = 6,
+            Options = new() { "Autocratic", "Democratic", "Situational", "Domineering" },
+            CorrectAnswer = "Domineering"
+        }},
+        { 12, new ExamQuestion {
+            Text = "What does KPI stand for?",
+            Points = 4,
+            Options = new() { "Key Performance Indicator", "Knowledge Priority Index", "Known Project Input", "Keep Profit In" },
+            CorrectAnswer = "Key Performance Indicator"
+        }},
+        { 13, new ExamQuestion {
+            Text = "What is the main purpose of benchmarking?",
+            Points = 7,
+            Options = new() { "To cut costs", "To copy competitors", "To improve performance", "To outsource work" },
+            CorrectAnswer = "To improve performance"
+        }},
+        { 14, new ExamQuestion {
+            Text = "Which is a type of business ownership?",
+            Points = 5,
+            Options = new() { "Freelance group", "Sole proprietorship", "Public manager", "Regional cluster" },
+            CorrectAnswer = "Sole proprietorship"
+        }},
+        { 15, new ExamQuestion {
+            Text = "What is cash flow?",
+            Points = 6,
+            Options = new() { "Money tied in fixed assets", "Net profit over 12 months", "Movement of money in and out", "Bank loan repayment schedule" },
+            CorrectAnswer = "Movement of money in and out"
+        }}
+    };
+
+    public class ExamQuestion
+    {
+        public string Text { get; set; } = "";
+        public int Points { get; set; }
+        public List<string> Options { get; set; } = new();
+        public string CorrectAnswer { get; set; } = "";
+    }
+
+    protected override void OnInitialized()
+    {
+        StartTimer();
+    }
+
+    private void StartTimer()
+    {
+        timer = new System.Threading.Timer(async _ =>
+        {
+            if (timeLeft.TotalSeconds > 0)
+            {
+                timeLeft = timeLeft.Subtract(TimeSpan.FromSeconds(1));
+
+                // Show warnings at specific time intervals
+                if (timeLeft.TotalMinutes <= 15 && !timeWarningShown)
+                {
+                    timeWarningShown = true;
+                    showTimeWarningDialog = true;
+                }
+                else if (timeLeft.TotalMinutes <= 5 && !timeCriticalWarningShown)
+                {
+                    timeCriticalWarningShown = true;
+                    showTimeWarningDialog = true;
+                }
+
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                await HandleTimeUp();
+            }
+        }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+    }
+
+    private async Task HandleTimeUp()
+    {
+        timer?.Dispose();
+        await InvokeAsync(async () =>
+        {
+            await SubmitExamInternal();
+            StateHasChanged();
+        });
+    }
+
+    private string GetTimerWarningClass()
+    {
+        if (timeLeft.TotalMinutes <= 5)
+            return "timer-critical";
+        else if (timeLeft.TotalMinutes <= 15)
+            return "timer-warning";
+        return "";
+    }
+
+    private string GetWarningTimeText()
+    {
+        if (timeLeft.TotalMinutes <= 5)
+            return $"{timeLeft.Minutes}:{timeLeft.Seconds:00}";
+        return $"{(int)timeLeft.TotalMinutes} minutes";
+    }
+
+    private string GetCurrentQuestion()
+    {
+        return questions.TryGetValue(currentQuestion, out var q) ? q.Text : "Question not found.";
+    }
+
+    private int GetCurrentPoints()
+    {
+        return questions.TryGetValue(currentQuestion, out var q) ? q.Points : 5;
+    }
+
+    private List<string> GetCurrentOptions()
+    {
+        return questions.TryGetValue(currentQuestion, out var q) ? q.Options : new List<string>();
+    }
+
+    private bool GetCheckedState(string option)
+    {
+        return selectedAnswers.TryGetValue(currentQuestion, out var selected) && selected == option;
+    }
+
+    private string GetAnswerStyle(string option)
+    {
+        return GetCheckedState(option)
+            ? "border-color: #3b82f6; background-color: #eff6ff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);"
+            : "border-color: #e5e7eb; background-color: #ffffff;";
+    }
+
+    private bool HasSelectedAnswer()
+    {
+        return selectedAnswers.ContainsKey(currentQuestion);
+    }
+
+    private void HandleAnswerChange(string option)
+    {
+        selectedAnswers[currentQuestion] = option;
+        answeredQuestionSet = selectedAnswers.Keys.ToHashSet();
+        StateHasChanged();
+    }
+
+    private string GetQuestionButtonClass(int questionNum)
+    {
+        var baseClass = "question-btn";
+
+        if (questionNum == currentQuestion)
+            return $"{baseClass} current";
+        else if (flaggedQuestions.Contains(questionNum))
+            return $"{baseClass} flagged";
+        else if (answeredQuestionSet.Contains(questionNum))
+            return $"{baseClass} answered";
+        else
+            return baseClass;
+    }
+
+    private string GetNavigationButtonStyle(int questionNum)
+    {
+        if (questionNum == currentQuestion)
+            return "background: #1e40af; color: white; border: none;";
+        else if (flaggedQuestions.Contains(questionNum))
+            return "background: #f59e0b; color: white; border: none;";
+        else if (answeredQuestionSet.Contains(questionNum))
+            return "background: #16a34a; color: white; border: none;";
+        else
+            return "background: #f8f9fa; color: #6b7280; border: 1px solid #e5e7eb;";
+    }
+
+    private void NavigateToQuestion(int questionNum)
+    {
+        currentQuestion = questionNum;
+        StateHasChanged();
+    }
+
+    private void SaveAnswer()
+    {
+        if (HasSelectedAnswer())
+        {
+            answeredQuestionSet.Add(currentQuestion);
+            StateHasChanged();
+        }
+    }
+
+    private void SaveAndContinue()
+    {
+        SaveAnswer();
+        NextQuestion();
+    }
+
+    private void NextQuestion()
+    {
+        if (currentQuestion < totalQuestions)
+        {
+            currentQuestion++;
+            StateHasChanged();
+        }
+    }
+
+    private void PreviousQuestion()
+    {
+        if (currentQuestion > 1)
+        {
+            currentQuestion--;
+            StateHasChanged();
+        }
+    }
+
+    private void FlagQuestion()
+    {
+        if (flaggedQuestions.Contains(currentQuestion))
+            flaggedQuestions.Remove(currentQuestion);
+        else
+            flaggedQuestions.Add(currentQuestion);
+
+        StateHasChanged();
+    }
+
+    private void ReviewAllAnswers()
+    {
+        // Navigate to first unanswered question, or first question if all answered
+        var firstUnanswered = Enumerable.Range(1, totalQuestions)
+            .FirstOrDefault(q => !answeredQuestionSet.Contains(q));
+
+        if (firstUnanswered > 0)
+            currentQuestion = firstUnanswered;
+        else
+            currentQuestion = 1;
+
+        StateHasChanged();
+    }
+
+    private void SubmitExam()
+    {
+        showSubmitDialog = true;
+        StateHasChanged();
+    }
+
+    private void CancelSubmit()
+    {
+        showSubmitDialog = false;
+        StateHasChanged();
+    }
+
+    private async Task ConfirmSubmit()
+    {
+        showSubmitDialog = false;
+        await SubmitExamInternal();
+    }
+
+    private async Task SubmitExamInternal()
+    {
+        timer?.Dispose();
+
+        // Calculate score
+        var score = CalculateScore();
+        var percentage = (double)score / GetTotalPossiblePoints() * 100;
+
+        // Here you would typically submit to your backend
+        // For now, we'll just show results in console or navigate
+
+        Console.WriteLine($"Exam submitted with score: {score}/{GetTotalPossiblePoints()} ({percentage:F1}%)");
+
+        // Navigate to results page or show results dialog
+        // NavigationManager.NavigateTo($"/exam/results?score={score}&total={GetTotalPossiblePoints()}");
+
+        StateHasChanged();
+    }
+
+    private int CalculateScore()
+    {
+        int score = 0;
+        foreach (var answer in selectedAnswers)
+        {
+            if (questions.TryGetValue(answer.Key, out var question))
+            {
+                if (question.CorrectAnswer == answer.Value)
+                {
+                    score += question.Points;
+                }
+            }
+        }
+        return score;
+    }
+
+    private int GetTotalPossiblePoints()
+    {
+        return questions.Values.Sum(q => q.Points);
+    }
+
+    private void DismissTimeWarning()
+    {
+        showTimeWarningDialog = false;
+        StateHasChanged();
+    }
+
+    private int answeredQuestions => selectedAnswers.Count;
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

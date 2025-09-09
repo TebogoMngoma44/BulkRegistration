@@ -1,0 +1,57 @@
+wwwroot\css\AdvancedBulkRegistration.css
+wwwroot\css\AdvancedBulkRegistrationFour.css
+wwwroot\css\AdvancedBulkRegistrationOne.css
+wwwroot\css\AdvancedBulkRegistrationThree.css
+wwwroot\css\AdvancedBulkRegistrationTwo.css
+wwwroot\css\app.css
+wwwroot\css\AvancedBulkRegistrationFour.css
+wwwroot\css\bootstrap\bootstrap.min.css
+wwwroot\css\certificate.css
+wwwroot\css\create-user.css
+wwwroot\css\DealsPage.css
+wwwroot\css\faq-help.css
+wwwroot\css\navigation-bar.css
+wwwroot\css\page-header.css
+wwwroot\css\qualification-styles.css
+wwwroot\css\site.css
+wwwroot\css\speccon-overides.css
+wwwroot\css\stage-modal.css
+wwwroot\css\StipendClientDeals.css
+wwwroot\Data\qualifications.json
+wwwroot\icon-192.png
+wwwroot\icons\Clip path group.png
+wwwroot\icons\edit_icon.png
+wwwroot\icons\Frame 1261155157.png
+wwwroot\icons\Frame 1261155191.png
+wwwroot\icons\Frame 1261155199.png
+wwwroot\icons\Icons\appoint.png
+wwwroot\icons\Icons\message.png
+wwwroot\icons\more.png
+wwwroot\icons\notify_user_icon.png
+wwwroot\icons\view_icon.png
+wwwroot\images\SpecCon_Blue.png
+wwwroot\images\SpecCon_White.png
+wwwroot\index.html
+wwwroot\scripts.js
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\AdvancedBulkRegistration.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\AdvancedBulkRegistrationFour.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\AdvancedBulkRegistrationOne.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\AdvancedBulkRegistrationThree.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\AdvancedBulkRegistrationTwo.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\app.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\AvancedBulkRegistrationFour.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\bootstrap\bootstrap.min.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\certificate.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\create-user.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\DealsPage.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\faq-help.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\navigation-bar.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\page-header.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\qualification-styles.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\site.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\speccon-overides.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\stage-modal.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\css\StipendClientDeals.css
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\Data\qualifications.json
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\index.html
+C:\Users\TSHPL034\Downloads\Speccon_Learnership\wwwroot\scripts.js

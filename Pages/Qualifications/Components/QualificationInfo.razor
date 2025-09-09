@@ -1,0 +1,287 @@
+﻿@* @attribute [Authorize] *@
+@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="QualificationInfo">
+        <Authorized>
+*@
+<MudCard Class="info-card">
+    <MudCardContent>
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="info-header">
+            <MudText Typo="Typo.h5" Class="section-title" Style="color: #1e3a5f !important;">
+                Qualification Information
+            </MudText>
+            <MudButton Variant="Variant.Filled" Class="toggle-button"
+                       StartIcon="@(IsExpanded ? Icons.Material.Filled.Remove : Icons.Material.Filled.Add)"
+                       Size="Size.Medium" OnClick="ToggleExpanded">
+                Details
+            </MudButton>
+        </MudStack>
+
+        <MudCollapse @bind-Expanded="IsExpanded" AnimationDuration="0.3">
+            <MudGrid Spacing="3">
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Deal Number</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.DealNumber</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Client Company</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.ClientCompany</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Facilitator</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.Facilitator</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Chief Learning Officer</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.ChiefLearningOfficer</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Start Date</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.StartDate.ToString("dd MMM yyyy")</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Expected End Date</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.ExpectedEndDate.ToString("dd MMM yyyy")</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">SETA</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.SETA</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Qualification Code</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.QualificationCode</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">NQF Level</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">Level @Qualification.NQFLevel</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Credits</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.Credits Credits</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Programme Duration</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.ProgrammeDurationMonths Months</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Elevation="0" Class="detail-card">
+                        <MudCardContent>
+                            <MudText Typo="Typo.caption" Class="detail-label">Workplace Mentor</MudText>
+                            <MudText Typo="Typo.body1" Class="detail-value">@Qualification.WorkplaceMentor</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </MudCollapse>
+    </MudCardContent>
+</MudCard>
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+
+@code {
+    // Added missing Value parameter to fix runtime error
+    [Parameter] public bool? Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter] public SetaQualificationModel Qualification { get; set; } = new();
+    [Parameter] public bool IsExpanded { get; set; } = true;
+    [Parameter] public EventCallback<bool> IsExpandedChanged { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        // Sync Value parameter with IsExpanded if Value is provided
+        if (Value.HasValue && Value.Value != IsExpanded)
+        {
+            IsExpanded = Value.Value;
+        }
+    }
+
+    private async Task ToggleExpanded()
+    {
+        IsExpanded = !IsExpanded;
+
+        // Update Value parameter when expanded state changes
+        if (ValueChanged.HasDelegate)
+        {
+            await ValueChanged.InvokeAsync(IsExpanded);
+        }
+
+        await IsExpandedChanged.InvokeAsync(IsExpanded);
+    }
+}
+
+<style>
+    .info-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+    }
+
+    .info-header {
+        margin-bottom: 24px;
+    }
+
+    .section-title {
+        font-weight: 600;
+        color: #1e3a5f;
+    }
+
+    .toggle-button {
+        background-color: #1e3a5f;
+        color: white;
+        text-transform: none;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        box-shadow: none;
+        min-width: unset;
+    }
+
+    .detail-card {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .detail-label {
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #6c757d;
+        margin-bottom: 8px;
+    }
+
+    .detail-value {
+        font-weight: 600;
+        color: #1e3a5f;
+        margin: 0;
+    }
+
+    /* Unauthorized Styles */
+    .unauthorized-info {
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .unauthorized-title {
+        font-weight: 600;
+        color: #757575;
+        margin-bottom: 16px;
+    }
+
+    .unauthorized-text {
+        color: #9e9e9e;
+        max-width: 500px;
+        margin: 0 auto 24px;
+        line-height: 1.6;
+    }
+
+    .info-features {
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+    }
+
+    .feature-chip {
+        background-color: #e3f2fd;
+        color: #1565c0;
+        font-weight: 600;
+        border: 1px solid #bbdefb;
+        padding: 8px 16px;
+        gap: 6px;
+    }
+
+        .feature-chip .mud-icon {
+            color: #1565c0;
+        }
+
+    .access-button {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-transform: none;
+        border: none;
+        box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+    }
+
+        .access-button:hover {
+            background: linear-gradient(135deg, #2c4a6b, #1e3a5f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(30, 58, 95, 0.4);
+        }
+
+    /* Responsive */
+    @@media (max-width: 600px) {
+        .info-features {
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-chip {
+            width: 100%;
+            max-width: 200px;
+            justify-content: center;
+        }
+    }
+</style>

@@ -1,0 +1,2139 @@
+﻿@page "/Assignment/Assignment"
+ 
+attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView >
+        <Authorized>
+             <MudContainer MaxWidth="MaxWidth.False" Class="pa-0">
+                <!-- Main Content Area with Gradient Background -->
+                <MudPaper Style="background: linear-gradient(135deg, #003366 0%, #003366 100%); min-height: 300px; color: white;" Class="my-md-8">              
+                    <MudContainer Class="py-8">
+                        <MudGrid>
+                            <MudItem xs="12" md="8">
+                                <!-- Title Section -->
+                                <!-- Mobile layout - vertical stack (shows only on xs screens) -->
+                                <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                                    <MudStack Class="mb-4" Spacing="2" AlignItems="AlignItems.Center">
+                                        <MudText Typo="Typo.h4" Align="Align.Center"><strong>Marketing Strategy Analysis</strong></MudText>
+                                        <MudChip T="string" Style="background-color:white;" Variant="Variant.Filled" Class="px-4 py-2">
+                                            <MudText Color="Color.Primary">ASSIGNMENT</MudText>
+                                        </MudChip>
+                                    </MudStack>
+                                </MudHidden>
+
+                                <!-- Desktop layout - horizontal (shows on sm screens and up) -->
+                                <MudHidden Breakpoint="Breakpoint.Xs">
+                                    <MudStack Row Class="d-flex align-center mb-4">
+                                        <MudText Typo="Typo.h4" Class="mr-4"><strong>Marketing Strategy Analysis</strong></MudText>
+                                        <MudChip T="string" Style="background-color:white;" Variant="Variant.Filled" Class="px-4 py-2">
+                                            <MudText Color="Color.Primary">ASSIGNMENT</MudText>
+                                        </MudChip>
+                                    </MudStack>
+                                </MudHidden>
+
+                                <MudText Typo="Typo.body1" Class="mb-6" Style="opacity: 0.9;">Module 9: Strategic Marketing</MudText>
+
+                                <!-- Assignment Details Grid -->
+                                <MudGrid Spacing="4">
+                                        <MudItem xs="12" sm="6" md="4">
+                                            <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="mb-2">
+                                                <MudText Typo="Typo.subtitle2">
+                                                    <strong>📚 Type:</strong>
+                                                </MudText>
+                                                <MudText Typo="Typo.body1">
+                                                    Individual Assignment
+                                                </MudText>
+                                            </MudStack>
+                                        </MudItem>
+
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="mb-2">
+                                            <MudText Typo="Typo.subtitle2"><strong>⏱️ Duration:</strong></MudText>
+                                            <MudText Typo="Typo.body1">2 weeks</MudText>
+                                        </MudStack>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="mb-2">
+                                            <MudText Typo="Typo.subtitle2"><strong>📄 Format:</strong></MudText>
+                                            <MudText Typo="Typo.body1">Written Report</MudText>
+                                        </MudStack>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="mb-2">
+                                            <MudText Typo="Typo.subtitle2"><strong>🎯 Weight:</strong></MudText>
+                                            <MudText Typo="Typo.body1">25% of Module</MudText>
+                                        </MudStack>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="mb-2">
+                                            <MudText Typo="Typo.subtitle2"><strong>📊 Pass Mark:</strong></MudText>
+                                            <MudText Typo="Typo.body1">50%</MudText>
+                                        </MudStack>
+                                    </MudItem>
+
+                                    <MudItem xs="12" sm="6" md="4">
+                                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="mb-2">
+                                            <MudText Typo="Typo.subtitle2"><strong>📝 Word Count:</strong></MudText>
+                                            <MudText Typo="Typo.body1">2,500-3,000 words</MudText>
+                                        </MudStack>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudItem>
+
+                            <MudItem xs="12" md="4" Class="d-flex justify-center align-center">
+                                <!-- Status Card -->
+                                <MudCard Class="pa-6 text-center" Style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); min-width: 320px;color:white;border-radius:15px;">
+                                    <MudAvatar Size="Size.Large" Class="mx-auto mb-4" Style="background-color:white;">
+                                        <MudText>📝</MudText>
+                                    </MudAvatar>
+                                    <MudText Typo="Typo.h6" Class="mb-2">In Progress</MudText>
+                                    <MudText Typo="Typo.h4" Class="mb-1"><strong>July 25</strong></MudText>
+                                    <MudText Typo="Typo.body2" Style="opacity: 0.8;">Due Date</MudText>
+                                </MudCard>
+                            </MudItem>
+                        </MudGrid>
+                    </MudContainer>
+                </MudPaper>
+
+                <!-- Main Content Section -->
+                <MudContainer Class="mt-6">
+                    <MudGrid Spacing="4">
+                        <!-- Left Column - Assignment Instructions -->
+                        <MudItem xs="12" md="8">
+                            <MudCard Elevation="2" Style="border-radius:15px;" Class="mb-4">
+                                <MudPaper Style="background-color: #003366; padding: 16px; border-radius: 12px 12px 0 0;">
+                                    <MudStack AlignItems="AlignItems.Start" Class="d-flex mb-2">
+                                        <MudText Typo="Typo.h6" Class="text-white">📋 Assignment Instructions</MudText>
+                                    </MudStack>
+                                </MudPaper>
+                                <MudPaper Style="padding:25px;">
+                                    <MudText Typo="Typo.h6" Class="mb-3" Style="color: #003366;">🎯 Assignment Overview</MudText>
+                                    <MudText Typo="Typo.body1" Class="mb-4">
+                                        You are required to conduct a comprehensive analysis of marketing strategies used by a company of your choice.
+                                        This assignment will test your understanding of strategic marketing principles,
+                                        digital marketing approaches, and your ability to critically evaluate and recommend improvements to existing marketing practices.
+                                    </MudText>
+
+                                    <!-- Key Requirements -->
+                                    <MudPaper Elevation="0" class="mb-4">
+                                        <MudStack Style="background-color: #f8f9fa; padding: 20px; border-radius: 0px 10px 10px 0px; border-left: 4px solid #003366;">
+                                            <MudText Typo="Typo.h6" Class="mb-3" Style="color: #003366;">🎯 Key Requirements</MudText>
+
+                                            @foreach (var item in keyRequirements)
+                                            {
+                                                <MudStack Row AlignItems="AlignItems.Start" class="d-flex mb-2">
+                                                    <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" Color="Color.Success" Class="mr-2" />
+                                                    <MudText Typo="Typo.body2">@item</MudText>
+                                                </MudStack>
+                                            }
+                                        </MudStack>
+                                    </MudPaper>
+
+                                    <!-- Assignment Structure -->
+                                    <MudPaper Elevation="0" Class="mb-4">
+                                        <MudText Typo="Typo.h6" Class="mb-3" Style="color: #003366;">📚 Assignment Structure</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3">Your report should be structured as follows:</MudText>
+
+                                        <MudStack>
+                                            <MudText Typo="Typo.subtitle1" Class="mb-3"><strong>1. Executive Summary</strong> (300 words)</MudText>
+                                            <MudText Typo="Typo.body2" Class="ml-4 mb-3">Brief overview of the company, key findings, and main recommendations.</MudText>
+                                        </MudStack>
+
+
+                                        <MudStack >
+                                            <MudText Typo="Typo.subtitle1" Class="mb-3"><strong>2. Company Background</strong> (400 words)</MudText>
+                                            <MudText Typo="Typo.body2" Class="ml-4 mb-3">Overview of the selected company, industry context, and target market.</MudText>
+                                        </MudStack>
+
+                                        <MudStack >
+                                            <MudText Typo="Typo.subtitle1" Class="mb-3"><strong>3. Current Marketing Strategy Analysis</strong> (800 words)</MudText>
+                                            <MudText Typo="Typo.body2" Class="ml-4 mb-3">Detailed analysis of existing marketing mix, positioning, and channel strategies.</MudText>
+                                        </MudStack>
+
+                                        <MudStack >
+                                            <MudText Typo="Typo.subtitle1" ><strong>4. Digital Marketing Evaluation</strong> (600 words)</MudText>
+                                            <MudText Typo="Typo.body2" Class="ml-4 mb-3">Assessment of digital presence, social media strategy, and online engagement.</MudText>
+                                        </MudStack>
+
+                                        <MudStack >
+                                            <MudText Typo="Typo.subtitle1" ><strong>5. Strategic Recommendations</strong> (700 words)</MudText>
+                                            <MudText Typo="Typo.body2" Class="ml-4 mb-3">Evidence-based recommendations for marketing strategy improvements.</MudText>
+                                        </MudStack>
+
+                                        <MudStack >
+                                            <MudText Typo="Typo.subtitle1"><strong>6. Conclusion</strong> (200 words)</MudText>
+                                            <MudText Typo="Typo.body2" Class="ml-4 mb-3">Summary of key insights and implementation considerations.</MudText>
+                                        </MudStack>
+                                    </MudPaper>
+
+                                    <!-- Assessment Criteria -->
+                                    <MudPaper Elevation="0" Class="mb-4">
+                                        <MudText Typo="Typo.h6" Class="mb-3" Style="color: #003366;">🎯 Assessment Criteria</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3">Your assignment will be evaluated based on:</MudText>
+
+                                        <MudStack Class="mb-2">
+                                            <MudText Typo="Typo.body2"><strong>• Analysis Quality (30%)</strong> - Depth and accuracy of marketing strategy analysis</MudText>
+                                        </MudStack>
+                                        <MudStack Class="mb-2">
+                                            <MudText Typo="Typo.body2"><strong>• Critical Thinking (25%)</strong> - Evidence of independent thought and evaluation</MudText>
+                                        </MudStack>
+                                        <MudStack Class="mb-2">
+                                            <MudText Typo="Typo.body2"><strong>• Recommendations (20%)</strong> - Practicality and justification of suggestions</MudText>
+                                        </MudStack>
+                                        <MudStack Class="mb-2">
+                                            <MudText Typo="Typo.body2"><strong>• Research & References (15%)</strong> - Use of credible sources and proper citation</MudText>
+                                        </MudStack>
+                                        <MudStack Class="mb-2">
+                                            <MudText Typo="Typo.body2"><strong>• Structure & Presentation (10%)</strong> - Professional formatting and clarity</MudText>
+                                        </MudStack>
+                                    </MudPaper>
+
+                                    <!-- Recommended Resources -->
+                                    <div Class="mb-4">
+                                        <MudText Typo="Typo.h6" Class="mb-3" Style="color: #003366;">📚 Recommended Resources</MudText>
+                                        <MudCard style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+                                            @foreach (var resource in recommendedResources)
+                                            {
+                                                <MudStack Row  AlignItems="AlignItems.Center" Class="d-flex mb-3 pa-2 resource-item" style="background-color: white; border-radius: 8px;">
+                                                    <MudAvatar Size="Size.Medium" Class="mr-3" Style="@($"background-color: {resource.Color}")">
+                                                        <MudIcon Icon="@resource.Icon" Style="color: white;" />
+                                                    </MudAvatar>
+                                                    <MudStack>
+                                                        <MudText Typo="Typo.subtitle2"><strong>@resource.Title</strong></MudText>
+                                                        <MudText Typo="Typo.body2" Style="color: #6c757d; font-size: 0.875rem;">@resource.Description</MudText>
+                                                    </MudStack>
+                                                </MudStack>
+                                            }
+                                        </MudCard>
+
+                                        <style>
+                                            .resource-item {
+                                                transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+                                                cursor: pointer;
+                                            }
+
+                                                .resource-item:hover {
+                                                    transform: translateX(10px);
+                                                    background-color: #e3f2fd !important;
+                                                }
+                                        </style>
+                                    </div>
+                                </MudPaper>
+                            </MudCard>
+                        </MudItem>
+
+                        <!-- Right Column -->
+                        <MudItem xs="12" md="4">
+                            <!-- Submit Assignment Card -->
+                            <MudCard Elevation="2" Style="border-radius:15px;" Class="mb-4">
+                                <MudStack Row AlignItems="AlignItems.Start" style="background-color: #003366; padding: 16px; border-radius: 12px 12px 0 0;"
+                                  class="mb-2">
+                                        <MudText Typo="Typo.h6" Class="text-white">📤 Submit Assignment</MudText>  
+                                </MudStack>
+
+                                <!-- Enhanced File Upload Section -->
+                                <div class="upload-container @(isDragging ? "drag-over" : "")"
+                                     style="cursor:pointer; padding:25px;border: 2px dotted #003366; margin:20px; border-radius:15px; position: relative; min-height: 200px;transform: @(isHovering ? "scale(1.05)" : "scale(1)"); transition: transform 0.3s ease;"
+                                     @ref="uploadDropZone"
+                                     @onmouseenter="() => isHovering = true"
+                                     @onmouseleave="() => isHovering = false">
+
+                                    <MudStack class="d-flex justify-center align-center" style="flex-direction: column; ">
+                                        <MudPaper Elevation="0" style="padding: 5px; background: linear-gradient(135deg, #42A5F5 0%, #1565C0 100%); border-radius: 100%;">
+                                            <MudAvatar Size="Size.Large" Style="background: linear-gradient(135deg, #42A5F5 0%, #1565C0 100%);">
+                                                <MudText Style="font-size: 25px">📁</MudText>
+                                            </MudAvatar>
+                                        </MudPaper>
+
+                                        @if (uploadedFiles.Count == 0)
+                                        {
+                                            <MudText Typo="Typo.body2" Class="mb-4" Color="Color.Primary">
+                                                <strong>@(isDragging ? "Drop files here!" : "Upload your assignment")</strong>
+                                            </MudText>
+                                            <MudText Typo="Typo.body2" Class="mb-4" Style="text-align: center;">
+                                                Drag & drop file here or click to browse.<br />
+                                                <span style="font-size: small; color: #6c757d;">
+                                                    Accepted formats: PDF, DOC, DOCX (MAX: 10MB)
+                                                </span>
+                                            </MudText>
+                                        }
+                                        else
+                                        {
+                                            <MudText Typo="Typo.body2" Class="mb-4" Color="Color.Success">
+                                                <strong>@uploadedFiles.Count file(s) selected</strong>
+                                            </MudText>
+                                        }
+
+                                        <!-- File Input (Hidden) -->
+                                        <InputFile id="fileInput"
+                                                   @ref="fileInputRef"
+                                                   OnChange="OnFileSelected"
+                                                   multiple
+                                                   accept=".pdf,.doc,.docx"
+                                                   style="display: none;" />
+
+                                        <!-- Upload Buttons -->
+                                        <MudPaper Elevation="0" >
+                                            <MudButton Variant="Variant.Outlined"
+                                                       FullWidth="true"
+                                                       Class="mb-3 choose-file-btn pt-2 pb-2 pl-5 pr-5"
+                                                       Style="border-radius:18px; background: linear-gradient(135deg, #42A5F5 0%, #1565C0 100%); color:white; border: none;text-transform: none;"
+                                                       @onclick="OpenFileDialog">
+                                                Choose a file
+                                            </MudButton>
+                                        </MudPaper>
+                                    </MudStack>
+                                </div>
+                   
+                                <!-- File List Display -->
+                                @if (uploadedFiles.Count > 0)
+                                {
+                                    <MudPaper Elevation="0" style="margin: 0 20px 20px 20px;">
+                            
+                                        @foreach (var file in uploadedFiles)
+                                        {
+                                            //bafana
+                                            <MudPaper Elevation="0" class="d-flex align-center justify-space-between mb-2 pa-2"
+                                                 style="background-color: #f8f9fa;padding: 12px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                                                <MudStack Row class="d-flex align-center">
+                                                    <MudIcon Icon="@GetFileIcon(file.Name)" Class="mr-2" Color="Color.Primary" />
+                                                    <div>
+                                                        <MudText Typo="Typo.body2"><strong>@file.Name</strong></MudText>
+                                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">
+                                                            @FormatFileSize(file.Size)
+                                                            @*@if (file.Size > 10 * 1024 * 1024)
+                                                            {
+                                                                <span style="color: #dc3545; font-weight: bold;"> (⚠️ TOO LARGE!)</span>
+                                                            }
+                                                             else if (file.Size > 2 * 1024 * 1024)
+                                                            {
+                                                                <span style="color: #ff9800;"> (Will be downloaded)</span>
+                                                            } *@
+                                                        </MudText>
+                                                    </div>
+                                                </MudStack>
+                                                <MudButton Variant="Variant.Outlined"
+                                                           Size="Size.Small"
+                                                           Color="Color.Error"
+                                                           Style="text-transform: none; text-decoration: none;"
+                                                           @onclick="() => RemoveFile(file)">
+                                                    Remove
+                                                </MudButton>
+                                   
+                                            </MudPaper>
+                                        }
+                                    </MudPaper>
+                                }
+
+                                <!-- Upload Progress -->
+                                @if (isUploading)
+                                {
+                                    <div style="margin: 0 20px 20px 20px;">
+                                        <MudProgressLinear Color="Color.Primary" Value="@uploadProgress" />
+                                        <MudText Typo="Typo.body2" Class="mt-2" Style="text-align: center;">
+                                            @uploadStatusMessage
+                                        </MudText>
+                                    </div>
+                                }
+
+                                <style>
+                                    .upload-container {
+                                        transition: all 0.3s ease-in-out;
+                                    }
+
+                                        .upload-container.drag-over {
+                                            border-color: #28a745 !important;
+                                            background-color: rgba(40, 167, 69, 0.1) !important;
+                                            transform: scale(1.02);
+                                        }
+
+                                    .choose-file-btn {
+                                        transition: transform 0.3s ease-in-out;
+                                    }
+
+                                        .choose-file-btn:hover {
+                                            transform: translateY(-2px);
+                                        }
+                                </style>
+                            </MudCard>
+
+                            <!-- Assignment Progress Card -->
+                            <MudCard Elevation="2" Style="border-radius:15px;" Class="mb-4">
+                                <MudStack style="background-color: #f8f9fa; padding: 16px; border-radius: 12px 12px 0 0;">
+                                    <MudStack Row AlignItems="AlignItems.Start" class="d-flex justify-space-between">
+                                        <MudText Typo="Typo.h6" Style="color: #003366;">Assignment Progress</MudText>
+                                        @if (hasFinalSubmission)
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Style="background-color: #28a745; color: white;">
+                                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Class="mr-1" />
+                                                Completed
+                                            </MudChip>
+                                        }
+                                        else if (totalProgressPercentage >= 60)
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Style="background-color: #ff9800; color: white;">
+                                                <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Small" Class="mr-1" />
+                                                In Progress
+                                            </MudChip>
+                                        }
+                                        else
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Style="background-color: #2196f3; color: white;">
+                                                <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Small" Class="mr-1" />
+                                                Started
+                                            </MudChip>
+                                        }
+                                    </MudStack>
+                                </MudStack>
+                                <MudCard style="padding:20px;">
+                                    <MudStack Class="mb-3">
+                                        <MudStack Row class="d-flex justify-space-between align-center">
+                                            <MudText Typo="Typo.body2" Style="color: #6c757d;">Progress</MudText>
+                                            <MudText Typo="Typo.body2" Style="@($"color: {(hasFinalSubmission ? "#28a745" : "#6c757d")}")">
+                                                <strong>@totalProgressPercentage%</strong>
+                                            </MudText>
+                                        </MudStack>
+                                        <MudProgressLinear Color="@(hasFinalSubmission? Color.Success: (totalProgressPercentage >= 60 ? Color.Warning : Color.Primary))"
+                                                           Value="@totalProgressPercentage"
+                                                           Class="mb-2"
+                                                           Style="border-radius:15px; height: 8px;" />
+                                        <MudText Typo="Typo.body2" Style="color: #6c757d;">@GetProgressText()</MudText>
+                                    </MudStack>
+
+                                    @if (!hasFinalSubmission)
+                                    {
+                                        <MudPaper Elevation="0" style="background-color: #e3f2fd; padding: 12px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                                            <MudStack Row AlignItems="AlignItems.Start" class="d-flex">
+                                                <MudIcon Icon="@Icons.Material.Filled.Info" Size="Size.Small" Color="Color.Primary" Class="mr-2" />
+                                                <MudText Typo="Typo.body2" Style="color: #1976d2;">
+                                                    <strong>Tip:</strong> Save drafts to track progress. Submit final assignment to complete!
+                                                </MudText>
+                                            </MudStack>
+                                        </MudPaper>
+                                    }
+                                    else
+                                    {
+                                        <MudPaper Elevation="0" style="background-color: #e8f5e8; padding: 12px; border-radius: 8px; border-left: 4px solid #28a745;">
+                                            <MudStack Row AlignItems="AlignItems.Start" class="d-flex">
+                                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Color="Color.Success" Class="mr-2" />
+                                                <MudText Typo="Typo.body2" Style="color: #2e7d32;">
+                                                    <strong>Completed!</strong> Your assignment has been successfully submitted.
+                                                </MudText>
+                                            </MudStack>
+                                        </MudPaper>
+                                    }
+                                </MudCard>
+                            </MudCard>
+
+                            <MudCard Elevation="2" Style="border-radius:15px;" Class="mb-4">
+                                <div style="padding:20px;">
+                                    <MudButton Variant="Variant.Filled"
+                                               Color="Color.Success"
+                                               FullWidth="true"
+                                               Class="mb-3 submit-btn"
+                                               Style="border-radius:10px;"
+                                               Disabled="@(uploadedFiles.Count == 0 || isUploading || hasFinalSubmission)"
+                                               @onclick="OpenSubmitConfirmation">
+                                        @if (hasFinalSubmission)
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                                            <text>Already Submitted</text>
+                                        }
+                                        else
+                                        {
+                                            <text>🚀 Submit Final Assignment</text>
+                                        }
+                                    </MudButton>
+                                    <MudButton Variant="Variant.Filled"
+                                               FullWidth="true"
+                                               Class="mb-3 save-draft-btn"
+                                               Style="border-radius:10px; background-color:#6c757d; color:white;"
+                                               Disabled="@(uploadedFiles.Count == 0 || isUploading || hasFinalSubmission)"
+                                               @onclick="SaveDraft">
+                                        @if (hasFinalSubmission)
+                                        {
+                                            <text>💾 Final Submitted</text>
+                                        }
+                                        else
+                                        {
+                                            <text>💾 Save as Draft</text>
+                                        }
+                                    </MudButton>
+                                    <MudButton Variant="Variant.Outlined"
+                                               Color="Color.Primary"
+                                               FullWidth="true"
+                                               Class="mb-3 extension-btn"
+                                               Style="border-radius:10px; border: 2px solid #42A5F5;"
+                                               @onclick="RequestExtension">
+                                        ⏰ Request Extension
+                                    </MudButton>
+                                    <MudButton Variant="Variant.Outlined"
+                                               Color="Color.Secondary"
+                                               FullWidth="true"
+                                               Class="support-btn"
+                                               Style="border-radius:10px; border: 2px solid #42A5F5;"
+                                               @onclick="ContactSupport">
+                                        ☁️ Contact Support
+                                    </MudButton>
+
+                                    <style>
+                                        .submit-btn {
+                                            transition: opacity 0.3s ease-in-out;
+                                        }
+
+                                            .submit-btn:disabled {
+                                                opacity: 0.6;
+                                                cursor: not-allowed !important;
+                                            }
+
+                                        .save-draft-btn {
+                                            transition: transform 0.3s ease-in-out;
+                                        }
+
+                                            .save-draft-btn:hover {
+                                                transform: translateY(-3px);
+                                            }
+
+                                        .extension-btn, .support-btn {
+                                            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+                                        }
+
+                                            .extension-btn:hover, .support-btn:hover {
+                                                background-color: #42A5F5 !important;
+                                                color: white !important;
+                                            }
+                                    </style>
+                                </div>
+                            </MudCard>
+
+                            <!-- Submission History Card -->
+                            <MudCard Elevation="2" Style="border-radius:15px;">
+                                <MudCard Elevation="0" style="background-color: #003366; padding: 16px; border-radius: 12px 12px 0 0;">
+                                    <MudStack Row class="d-flex align-center justify-space-between">
+                                        <MudText Typo="Typo.h6" Class="text-white">📜 Submission History</MudText>
+                                        <MudIconButton Icon="@Icons.Material.Filled.Refresh"
+                                                       Size="Size.Small"
+                                                       Style="color: white;"
+                                                       @onclick="LoadSubmissionHistory" />
+                                    </MudStack>
+                                </MudCard>
+                                <div>
+                                    <!-- Display submissions -->
+                                    @if (savedSubmissions.Any())
+                                    {
+                                        <!-- Show recent submissions (3 latest) -->
+                                        @foreach (var submission in savedSubmissions.Take(3))
+                                        {
+                                            <div Class="d-flex align-start mb-4" style="padding:20px;">
+                                                <MudAvatar Size="Size.Small" Style="@($"background-color: {(submission.Status == "Submitted" ? "#28a745" : "#6c757d")};")" Class="mr-3 mt-1">
+                                                    <MudIcon Icon="@(submission.Status == "Submitted" ? Icons.Material.Filled.Upload : Icons.Material.Filled.Save)" Size="Size.Small" Style="color: white;" />
+                                                </MudAvatar>
+                                                <div class="flex-grow-1">
+                                                    <MudStack Row AlignItems="AlignItems.Center" class="d-flex justify-space-between">
+                                                        <MudText Typo="Typo.subtitle2"><strong>@submission.Title</strong></MudText>
+                                                        <MudIconButton Icon="@Icons.Material.Filled.Download"
+                                                                       Size="Size.Small"
+                                                                       Color="Color.Primary"
+                                                                       @onclick="() => DownloadSubmission(submission.Id)" />
+                                                    </MudStack>
+                                                    <MudText Typo="Typo.body2" Style="color: #6c757d; font-size: 0.875rem;">
+                                                        @submission.SubmissionDate.ToString("MMM dd, yyyy 'at' h:mm tt") •
+                                                        @submission.Files.Count file(s) • @submission.Status
+                                                    </MudText>
+                                                    @if (submission.Files.Any())
+                                                    {
+                                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">
+                                                            Files: @string.Join(", ", submission.Files.Select(f => f.FileName))
+                                                        </MudText>
+                                                    }
+                                                </div>
+                                            </div>
+                                            @if (submission != savedSubmissions.Take(3).Last())
+                                            {
+                                                <MudDivider></MudDivider>
+                                            }
+                                        }
+
+                                        <!-- View All Button -->
+                                        @if (savedSubmissions.Count > 3)
+                                        {
+                                            <div style="padding: 20px; background-color: #f8f9fa; border-radius: 0 0 12px 12px;">
+                                                <div class="d-flex justify-space-between align-center">
+                                                    <MudText Typo="Typo.body2" Style="color: #6c757d;">
+                                                        Showing 3 of @savedSubmissions.Count submissions
+                                                    </MudText>
+                                                    <MudButton Variant="Variant.Outlined"
+                                                               Size="Size.Small"
+                                                               StartIcon="@Icons.Material.Filled.Visibility"
+                                                               Style="border-color: #003366; color: #003366;"
+                                                               @onclick="OpenHistoryModal">
+                                                        View All (@savedSubmissions.Count)
+                                                    </MudButton>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div Class="d-flex align-center justify-center" style="padding:40px;">
+                                            <div style="text-align: center;">
+                                                <MudAvatar Size="Size.Large" Class="mb-3" Style="background-color: #f8f9fa;">
+                                                    <MudIcon Icon="@Icons.Material.Filled.Assignment" Style="color: #6c757d;" />
+                                                </MudAvatar>
+                                                <MudText Typo="Typo.body2" Style="color: #6c757d;">
+                                                    No submissions yet. Upload your first assignment!
+                                                </MudText>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </MudContainer>
+
+                <!-- Submit Confirmation Modal -->
+                <MudOverlay @bind-Visible="isSubmitConfirmationOpen" DarkBackground="true" AutoClose="false">
+                    <MudCard Style="max-width: 500px; margin: 2rem auto; border-radius: 15px;">
+                        <MudCardContent Style="padding: 2rem;">
+                            <div class="d-flex align-center mb-4">
+                                <MudAvatar Size="Size.Large" Class="mr-3" Style="background-color: #ff6b6b;">
+                                    <MudText Style="font-size: 1.5rem;">🚀</MudText>
+                                </MudAvatar>
+                                <div>
+                                    <MudText Typo="Typo.h6" Style="color: #003366; font-weight: bold;">
+                                        Confirm Submission
+                                    </MudText>
+                                </div>
+                            </div>
+
+                            <MudText Typo="Typo.body1" Class="mb-3" Style="font-weight: 500;">
+                                Are you ready to submit your assignment?
+                            </MudText>
+
+                            <MudText Typo="Typo.body2" Class="mb-4" Style="color: #6c757d;">
+                                Once submitted, you will not be able to make further changes
+                                unless your instructor provides feedback requiring revisions.
+                            </MudText>
+
+                            <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                                <MudText Typo="Typo.subtitle2" Class="mb-2" Style="color: #003366; font-weight: bold;">
+                                    Files to submit:
+                                </MudText>
+                                @foreach (var file in uploadedFiles)
+                                {
+                                    <div class="d-flex align-center mb-1">
+                                        <MudIcon Icon="@GetFileIcon(file.Name)" Size="Size.Small" Class="mr-2" Color="Color.Primary" />
+                                        <MudText Typo="Typo.body2">
+                                            @file.Name (@FormatFileSize(file.Size))
+                                        </MudText>
+                                    </div>
+                                }
+                            </div>
+
+                            <MudStack Row class="d-flex justify-end">
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Default"
+                                           Class="mr-3"
+                                           Style="border-radius: 8px;"
+                                           @onclick="CloseSubmitConfirmation">
+                                    Cancel
+                                </MudButton>
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Success"
+                                           Style="border-radius: 8px;"
+                                           @onclick="ConfirmSubmitAssignment">
+                                    Submit Assignment
+                                </MudButton>
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
+                </MudOverlay>
+
+                <!-- Submission History Modal -->
+                <MudOverlay @bind-Visible="isHistoryModalOpen" DarkBackground="true" AutoClose="true">
+                    <MudCard Style="max-width: 800px; max-height: 80vh; margin: 2rem auto; overflow: hidden;">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <div class="d-flex align-center">
+                                    <MudIcon Icon="@Icons.Material.Filled.History" Class="mr-3" Style="color: #003366;" />
+                                    <MudText Typo="Typo.h6" Style="color: #003366;">Complete Submission History</MudText>
+                                </div>
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                               Color="Color.Default"
+                                               @onclick="CloseHistoryModal" />
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardContent Style="max-height: 60vh; overflow-y: auto; padding: 1rem;">
+                            @if (savedSubmissions.Any())
+                            {
+                                <!-- Filter and Sort Controls -->
+                                <div class="d-flex justify-space-between align-center mb-4 pa-3" style="background-color: #f8f9fa; border-radius: 8px;">
+                                    <div class="d-flex align-center">
+                                        <MudText Typo="Typo.body2" Class="mr-3" Style="color: #6c757d;">Filter:</MudText>
+                                        <MudSelect T="string" @bind-Value="statusFilter" Variant="Variant.Outlined" Margin="Margin.Dense" Style="min-width: 120px;">
+                                            <MudSelectItem Value="@("All")">All Status</MudSelectItem>
+                                            <MudSelectItem Value="@("Submitted")">Submitted</MudSelectItem>
+                                            <MudSelectItem Value="@("Draft")">Draft</MudSelectItem>
+                                        </MudSelect>
+                                    </div>
+                                    <div class="d-flex align-center">
+                                        <MudText Typo="Typo.body2" Class="mr-2" Style="color: #6c757d;">
+                                            @GetFilteredSubmissions().Count() of @savedSubmissions.Count shown
+                                        </MudText>
+                                        <MudIconButton Icon="@Icons.Material.Filled.FilterList"
+                                                       Size="Size.Small"
+                                                       Color="Color.Primary" />
+                                    </div>
+                                </div>
+
+                                <!-- Submissions List -->
+                                @foreach (var submission in GetFilteredSubmissions())
+                                {
+                                    <MudCard Elevation="1" Class="mb-3" Style="@($"border-radius: 12px; border-left: 4px solid {(submission.Status == "Submitted" ? "#28a745" : "#6c757d")};")">
+                                        <MudCardContent>
+                                            <div class="d-flex align-start">
+                                                <MudAvatar Size="Size.Medium" Style="@($"background-color: {(submission.Status == "Submitted" ? "#28a745" : "#6c757d")};")" Class="mr-3">
+                                                    <MudIcon Icon="@(submission.Status == "Submitted" ? Icons.Material.Filled.Upload : Icons.Material.Filled.Save)" Style="color: white;" />
+                                                </MudAvatar>
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex justify-space-between align-center mb-2">
+                                                        <MudText Typo="Typo.subtitle1"><strong>@submission.Title</strong></MudText>
+                                                        <div class="d-flex align-center">
+                                                            <MudChip T="string" Size="Size.Small"
+                                                                     Style="@($"background-color: {(submission.Status == "Submitted" ? "#28a745" : "#6c757d")}; color: white;")"
+                                                                     Class="mr-2">
+                                                                @submission.Status
+                                                            </MudChip>
+                                                            <MudIconButton Icon="@Icons.Material.Filled.Download"
+                                                                           Size="Size.Small"
+                                                                           Color="Color.Primary"
+                                                                           @onclick="() => DownloadSubmission(submission.Id)" />
+                                                        </div>
+                                                    </div>
+                                                    <MudText Typo="Typo.body2" Style="color: #6c757d;" Class="mb-2">
+                                                        📅 @submission.SubmissionDate.ToString("MMMM dd, yyyy 'at' h:mm tt")
+                                                    </MudText>
+                                                    <MudText Typo="Typo.body2" Style="color: #6c757d;" Class="mb-2">
+                                                        📁 @submission.Files.Count file(s) • @FormatTotalFileSize(submission.Files.Sum(f => f.FileSize))
+                                                    </MudText>
+                                                    @if (submission.Files.Any())
+                                                    {
+                                                        <div class="mt-2">
+                                                            <MudText Typo="Typo.caption" Style="color: #6c757d;" Class="mb-1">
+                                                                <strong>Files:</strong>
+                                                            </MudText>
+                                                            <div class="d-flex flex-wrap">
+                                                                @foreach (var file in submission.Files)
+                                                                {
+                                                                    <MudChip T="string" Size="Size.Small"
+                                                                             Variant="Variant.Outlined"
+                                                                             Class="mr-1 mb-1"
+                                                                             Style="border-color: #003366; color: #003366;">
+                                                                        <div class="d-flex align-center">
+                                                                            <MudIcon Icon="@GetFileIcon(file.FileName)" Size="Size.Small" Class="mr-1" />
+                                                                            @file.FileName
+                                                                        </div>
+                                                                    </MudChip>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </MudCardContent>
+                                    </MudCard>
+                                }
+                            }
+                            else
+                            {
+                                <div class="d-flex align-center justify-center" style="padding: 60px;">
+                                    <div style="text-align: center;">
+                                        <MudAvatar Size="Size.Large" Class="mb-3" Style="background-color: #f8f9fa;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Assignment" Style="color: #6c757d;" />
+                                        </MudAvatar>
+                                        <MudText Typo="Typo.h6" Style="color: #6c757d;" Class="mb-2">No submissions found</MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #6c757d;">
+                                            Upload your first assignment to see it here!
+                                        </MudText>
+                                    </div>
+                                </div>
+                            }
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Text" @onclick="CloseHistoryModal" Style="color: #6c757d;">
+                                Close
+                            </MudButton>
+                            @if (savedSubmissions.Any())
+                            {
+                                <MudButton Variant="Variant.Outlined"
+                                           StartIcon="@Icons.Material.Filled.Download"
+                                           @onclick="DownloadAllSubmissions"
+                                           Style="border-color: #003366; color: #003366;">
+                                    Download All
+                                </MudButton>
+                            }
+                        </MudCardActions>
+                    </MudCard>
+                </MudOverlay>
+
+                <!-- Snackbar for notifications -->
+                <MudSnackbarProvider />
+            </MudContainer>
+        </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/login");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+
+
+
+@code {
+
+    private List<IBrowserFile> uploadedFiles = new();
+    private bool isDragging = false;
+    private bool isUploading = false;
+    private int uploadProgress = 0;
+    private string uploadStatusMessage = "";
+    private ElementReference uploadDropZone;
+    private InputFile fileInputRef;
+    private List<AssignmentSubmission> savedSubmissions = new();
+    private bool isHovering = false;
+    bool _loader = true;
+
+    // Modal properties
+    private bool isHistoryModalOpen = false;
+    private bool isSubmitConfirmationOpen = false;
+    private string statusFilter = "All";
+
+    // Progress calculation properties
+    private int totalProgressPercentage = 0;
+    private bool hasFinalSubmission = false;
+
+    private string[] keyRequirements = new[]
+    {
+        "Evaluate digital marketing effectiveness and ROI",
+        "Identify gaps and opportunities for improvement",
+        "Provide actionable recommendations with justification",
+        "Include relevant marketing theories and frameworks",
+        "Use credible academic and industry sources (minimum 8 references)",
+        "Follow APA referencing style throughout"
+    };
+
+    private List<ResourceItem> recommendedResources = new()
+    {
+        new ResourceItem { Title = "Kotler's Marketing Management Guide", Description = "Essential marketing theories and frameworks", Icon = Icons.Material.Filled.MenuBook, Color = "#003366" },
+        new ResourceItem { Title = "Digital Marketing Trends 2025", Description = "Latest industry insights and best practices", Icon = Icons.Material.Filled.TrendingUp, Color = "#17a2b8" },
+        new ResourceItem { Title = "Marketing Strategy Case Studies", Description = "Real-world examples and analysis templates", Icon = Icons.Material.Filled.Business, Color = "#28a745" },
+        new ResourceItem { Title = "APA Referencing Guide", Description = "Academic writing and citation standards", Icon = Icons.Material.Filled.Edit, Color = "#dc3545" }
+    };
+
+    private async Task LoadSubmissionHistory()
+    {
+        try
+        {
+            var json = await JSRuntime.InvokeAsync<string>("getSubmissionHistory");
+            if (!string.IsNullOrEmpty(json))
+            {
+                savedSubmissions = JsonSerializer.Deserialize<List<AssignmentSubmission>>(json) ?? new List<AssignmentSubmission>();
+                // Sort by submission date descending (newest first)
+                savedSubmissions = savedSubmissions.OrderByDescending(s => s.SubmissionDate).ToList();
+            }
+            else
+            {
+                savedSubmissions = new List<AssignmentSubmission>();
+            }
+
+            // Calculate progress after loading submissions
+            CalculateProgress();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading submission history: {ex.Message}");
+            savedSubmissions = new List<AssignmentSubmission>();
+            CalculateProgress();
+        }
+    }
+
+    private void CalculateProgress()
+    {
+        // Check if there's a final submission (status = "Submitted")
+        hasFinalSubmission = savedSubmissions.Any(s => s.Status == "Submitted");
+
+        if (hasFinalSubmission)
+        {
+            totalProgressPercentage = 100;
+        }
+        else
+        {
+            // Calculate progress based on drafts
+            var draftCount = savedSubmissions.Count(s => s.Status == "Draft");
+
+            if (draftCount == 0)
+            {
+                totalProgressPercentage = 0;
+            }
+            else
+            {
+                // Progress calculation: each draft adds percentage, max 95% for drafts
+                // 1 draft = 20%, 2 drafts = 40%, 3 drafts = 60%, 4 drafts = 80%, 5+ drafts = 95%
+                totalProgressPercentage = Math.Min(draftCount * 20, 95);
+            }
+        }
+    }
+
+    private string GetProgressText()
+    {
+        if (hasFinalSubmission)
+        {
+            return "Assignment Submitted (100%)";
+        }
+        else
+        {
+            var draftCount = savedSubmissions.Count(s => s.Status == "Draft");
+            return $"{draftCount} draft(s) saved ({totalProgressPercentage}%)";
+        }
+    }
+
+    private string GetProgressColor()
+    {
+        if (hasFinalSubmission)
+        {
+            return "Color.Success";
+        }
+        else if (totalProgressPercentage >= 60)
+        {
+            return "Color.Warning";
+        }
+        else
+        {
+            return "Color.Primary";
+        }
+    }
+
+    // Modal functions
+    private void OpenHistoryModal()
+    {
+        isHistoryModalOpen = true;
+        StateHasChanged();
+    }
+
+    private void CloseHistoryModal()
+    {
+        isHistoryModalOpen = false;
+        StateHasChanged();
+    }
+
+    // Submit confirmation modal functions
+    private void OpenSubmitConfirmation()
+    {
+        if (uploadedFiles.Count == 0)
+        {
+            Snackbar.Add("⚠️ Please select at least one file before submitting.", Severity.Warning);
+            return;
+        }
+
+        // Double-check file sizes before opening modal
+        var oversizedFiles = uploadedFiles.Where(f => f.Size > 10 * 1024 * 1024).ToList();
+        if (oversizedFiles.Any())
+        {
+            var fileNames = string.Join(", ", oversizedFiles.Select(f => f.Name));
+            Snackbar.Add($"❌ Cannot submit: The following files exceed 10MB limit: {fileNames}", Severity.Error);
+            return;
+        }
+
+        isSubmitConfirmationOpen = true;
+        StateHasChanged();
+    }
+
+    private void CloseSubmitConfirmation()
+    {
+        isSubmitConfirmationOpen = false;
+        StateHasChanged();
+    }
+
+    private async Task ConfirmSubmitAssignment()
+    {
+        // Close the modal first
+        isSubmitConfirmationOpen = false;
+        StateHasChanged();
+
+        // Call the existing submit method
+        await SubmitAssignment();
+    }
+
+    private IEnumerable<AssignmentSubmission> GetFilteredSubmissions()
+    {
+        var filtered = savedSubmissions.AsEnumerable();
+
+        if (statusFilter != "All")
+        {
+            filtered = filtered.Where(s => s.Status == statusFilter);
+        }
+
+        return filtered.OrderByDescending(s => s.SubmissionDate);
+    }
+
+    private async Task DownloadAllSubmissions()
+    {
+        try
+        {
+            var filteredSubmissions = GetFilteredSubmissions();
+            var submissionIds = filteredSubmissions.Select(s => s.Id).ToList();
+
+            if (!submissionIds.Any())
+            {
+                Snackbar.Add("No submissions to download.", Severity.Info);
+                return;
+            }
+
+            Snackbar.Add($"Starting download of {submissionIds.Count} submissions...", Severity.Info);
+
+            foreach (var submissionId in submissionIds)
+            {
+                await DownloadSubmission(submissionId);
+                await Task.Delay(1000); // Small delay between downloads
+            }
+
+            Snackbar.Add("All submissions download initiated!", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error downloading all submissions: {ex.Message}", Severity.Error);
+        }
+    }
+
+
+
+
+    [JSInvokable]
+    public async Task OnJSFilesSelected(string filesJson)
+    {
+        try
+        {
+            Console.WriteLine($"🔄 OnJSFilesSelected called");
+            Console.WriteLine($"📄 Received JSON: {filesJson}");
+
+            if (string.IsNullOrWhiteSpace(filesJson))
+            {
+                Console.WriteLine("❌ Empty JSON received");
+                Snackbar.Add("No file data received", Severity.Warning);
+                return;
+            }
+
+            // Configure JSON options to handle property name casing
+            var jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                WriteIndented = true
+            };
+
+            List<JSFileInfo> jsFiles;
+            try
+            {
+                jsFiles = JsonSerializer.Deserialize<List<JSFileInfo>>(filesJson, jsonOptions);
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"❌ JSON parsing error: {ex.Message}");
+                Snackbar.Add($"Error parsing file data: {ex.Message}", Severity.Error);
+                return;
+            }
+
+            if (jsFiles == null || !jsFiles.Any())
+            {
+                Console.WriteLine("❌ No files in parsed JSON");
+                Snackbar.Add("No files found in the data", Severity.Warning);
+                return;
+            }
+
+            Console.WriteLine($"✅ Found {jsFiles.Count} files to process");
+
+            var validFiles = new List<IBrowserFile>();
+            var rejectedFiles = new List<string>();
+
+            foreach (var jsFile in jsFiles)
+            {
+                Console.WriteLine($"📄 Processing: '{jsFile.Name}' ({jsFile.Size} bytes, {jsFile.Type})");
+
+                // Validate file name
+                if (string.IsNullOrWhiteSpace(jsFile.Name))
+                {
+                    Console.WriteLine("❌ Empty file name");
+                    rejectedFiles.Add("File with empty name");
+                    continue;
+                }
+
+                // Validate file extension
+                var extension = Path.GetExtension(jsFile.Name).ToLowerInvariant();
+                var allowedExtensions = new[] { ".pdf", ".doc", ".docx" };
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    Console.WriteLine($"❌ Invalid extension: {extension}");
+                    rejectedFiles.Add($"{jsFile.Name} (invalid format)");
+                    Snackbar.Add($"❌ File '{jsFile.Name}' has an invalid format. Only PDF, DOC, and DOCX files are allowed.", Severity.Error);
+                    continue;
+                }
+
+                // Validate file size
+                if (jsFile.Size > 10 * 1024 * 1024) // 10MB
+                {
+                    Console.WriteLine($"❌ File too large: {jsFile.Size} bytes");
+                    rejectedFiles.Add($"{jsFile.Name} (too large)");
+                    Snackbar.Add($"❌ File '{jsFile.Name}' exceeds the 10MB size limit ({FormatFileSize(jsFile.Size)}).", Severity.Error);
+                    continue;
+                }
+
+                // Check for duplicates
+                if (uploadedFiles.Any(f => f.Name == jsFile.Name && f.Size == jsFile.Size))
+                {
+                    Console.WriteLine($"⚠️ Duplicate file: {jsFile.Name}");
+                    rejectedFiles.Add($"{jsFile.Name} (already selected)");
+                    Snackbar.Add($"⚠️ File '{jsFile.Name}' is already selected.", Severity.Warning);
+                    continue;
+                }
+
+                // Create mock file
+                try
+                {
+                    var mockFile = new MockBrowserFile(jsFile.Name, jsFile.Size, jsFile.Type);
+                    validFiles.Add(mockFile);
+                    Console.WriteLine($"✅ Added valid file: {jsFile.Name}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Error creating mock file: {ex.Message}");
+                    rejectedFiles.Add($"{jsFile.Name} (processing error)");
+                    Snackbar.Add($"Error processing '{jsFile.Name}': {ex.Message}", Severity.Error);
+                }
+            }
+
+            // Update UI with results
+            if (validFiles.Any())
+            {
+                uploadedFiles.AddRange(validFiles);
+                Console.WriteLine($"✅ Added {validFiles.Count} valid files");
+                Snackbar.Add($"✅ {validFiles.Count} file(s) selected successfully!", Severity.Success);
+            }
+
+            if (rejectedFiles.Any())
+            {
+                Console.WriteLine($"❌ Rejected {rejectedFiles.Count} files: {string.Join(", ", rejectedFiles)}");
+            }
+
+            if (!validFiles.Any() && !rejectedFiles.Any())
+            {
+                Console.WriteLine("❌ No files processed");
+                Snackbar.Add("No valid files were selected.", Severity.Warning);
+            }
+
+            // Update UI
+            await InvokeAsync(StateHasChanged);
+            Console.WriteLine("🔄 UI updated");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Unexpected error: {ex.Message}");
+            Console.WriteLine($"Stack trace: {ex.StackTrace}");
+            Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error);
+        }
+    }
+
+    [JSInvokable]
+    public async Task OnDragStateChanged(bool isDragging)
+    {
+        try
+        {
+            Console.WriteLine($"🔄 Drag state: {isDragging}");
+            this.isDragging = isDragging;
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Error updating drag state: {ex.Message}");
+        }
+    }
+
+    // Updated initialization
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                Console.WriteLine("🚀 First render - initializing drag and drop");
+
+                // Small delay to ensure DOM is ready
+                await Task.Delay(100);
+
+                await JSRuntime.InvokeVoidAsync("initializeDragAndDrop", uploadDropZone, DotNetObjectReference.Create(this));
+                await LoadSubmissionHistory();
+
+                Console.WriteLine("✅ Initialization complete");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Initialization error: {ex.Message}");
+                Snackbar.Add($"Error initializing drag and drop: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    // Updated JSFileInfo class
+    public class JSFileInfo
+    {
+        public string Name { get; set; } = string.Empty;
+        public long Size { get; set; }
+        public string Type { get; set; } = string.Empty;
+        public string Extension { get; set; } = string.Empty;
+    }
+
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        var files = e.GetMultipleFiles(10);
+        await ProcessFiles(files);
+    }
+
+    private async Task ProcessFiles(IEnumerable<IBrowserFile> files)
+    {
+        var validFiles = new List<IBrowserFile>();
+
+        foreach (var file in files)
+        {
+            var allowedExtensions = new[] { ".pdf", ".doc", ".docx" };
+            var extension = Path.GetExtension(file.Name).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                Snackbar.Add($"❌ File '{file.Name}' has an invalid format. Only PDF, DOC, and DOCX files are allowed.", Severity.Error);
+                continue;
+            }
+
+            if (file.Size > 10 * 1024 * 1024) // 10MB limit
+            {
+                Snackbar.Add($"❌ File '{file.Name}' exceeds the 10MB size limit ({FormatFileSize(file.Size)}). Please choose a smaller file.", Severity.Error);
+                continue;
+            }
+
+            validFiles.Add(file);
+        }
+
+        uploadedFiles.AddRange(validFiles);
+
+        if (validFiles.Any())
+        {
+            Snackbar.Add($"{validFiles.Count} file(s) selected successfully!", Severity.Success);
+        }
+
+        StateHasChanged();
+    }
+
+    private void RemoveFile(IBrowserFile file)
+    {
+        uploadedFiles.Remove(file);
+        Snackbar.Add($"Removed {file.Name}", Severity.Info);
+        StateHasChanged();
+    }
+
+    private async Task OpenFileDialog()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("triggerFileInput", "fileInput");
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error opening file dialog: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private string GetFileIcon(string fileName)
+    {
+        var extension = Path.GetExtension(fileName).ToLowerInvariant();
+        return extension switch
+        {
+            ".pdf" => Icons.Material.Filled.PictureAsPdf,
+            ".doc" or ".docx" => Icons.Material.Filled.Description,
+            _ => Icons.Material.Filled.InsertDriveFile
+        };
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        if (bytes < 1024) return $"{bytes} B";
+        if (bytes < 1024 * 1024) return $"{bytes / 1024:F1} KB";
+        return $"{bytes / (1024 * 1024):F1} MB";
+    }
+
+    private string FormatTotalFileSize(long totalBytes)
+    {
+        return FormatFileSize(totalBytes);
+    }
+
+    private async Task SubmitAssignment()
+    {
+        if (uploadedFiles.Count == 0)
+        {
+            Snackbar.Add("⚠️ Please select at least one file before submitting.", Severity.Warning);
+            return;
+        }
+
+        // Double-check file sizes before submission
+        var oversizedFiles = uploadedFiles.Where(f => f.Size > 10 * 1024 * 1024).ToList();
+        if (oversizedFiles.Any())
+        {
+            var fileNames = string.Join(", ", oversizedFiles.Select(f => f.Name));
+            Snackbar.Add($"❌ Cannot submit: The following files exceed 10MB limit: {fileNames}", Severity.Error);
+            return;
+        }
+
+        isUploading = true;
+        uploadProgress = 0;
+        uploadStatusMessage = "Preparing files for submission...";
+        StateHasChanged();
+
+        try
+        {
+            var submission = new AssignmentSubmission
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = "Final Assignment Submission",
+                SubmissionDate = DateTime.Now,
+                Status = "Submitted",
+                Files = uploadedFiles.Select(f => new Speccon.Learnership.FrontEnd.Models.Assignment.FileInfo
+                {
+                    FileName = f.Name,
+                    FileSize = f.Size,
+                    FileType = f.ContentType
+                }).ToList()
+            };
+
+            await SaveFilesToLocalMachine(submission.Id, uploadedFiles);
+
+            savedSubmissions.Insert(0, submission); // Add to beginning (newest first)
+            await SaveSubmissionHistory();
+
+            // Recalculate progress after submission
+            CalculateProgress();
+
+            isUploading = false;
+            uploadedFiles.Clear();
+            Snackbar.Add("Assignment submitted successfully! Files have been saved locally.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            isUploading = false;
+            Console.WriteLine($"Error submitting assignment: {ex.Message}");
+            Snackbar.Add($"Error submitting assignment: {ex.Message}", Severity.Error);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task SaveDraft()
+    {
+        if (uploadedFiles.Count == 0)
+        {
+            Snackbar.Add("⚠️ Please select at least one file before saving draft.", Severity.Warning);
+            return;
+        }
+
+        // Double-check file sizes before saving
+        var oversizedFiles = uploadedFiles.Where(f => f.Size > 10 * 1024 * 1024).ToList();
+        if (oversizedFiles.Any())
+        {
+            var fileNames = string.Join(", ", oversizedFiles.Select(f => f.Name));
+            Snackbar.Add($"❌ Cannot save: The following files exceed 10MB limit: {fileNames}", Severity.Error);
+            return;
+        }
+
+        isUploading = true;
+        uploadProgress = 0;
+        uploadStatusMessage = "Saving draft...";
+        StateHasChanged();
+
+        try
+        {
+            var draft = new AssignmentSubmission
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = $"Draft Saved - {DateTime.Now:MMM dd, yyyy}",
+                SubmissionDate = DateTime.Now,
+                Status = "Draft",
+                Files = uploadedFiles.Select(f => new Models.Assignment.FileInfo
+                {
+                    FileName = f.Name,
+                    FileSize = f.Size,
+                    FileType = f.ContentType
+                }).ToList()
+            };
+
+            await SaveFilesToLocalMachine(draft.Id, uploadedFiles);
+
+            savedSubmissions.Insert(0, draft); // Add to beginning (newest first)
+            await SaveSubmissionHistory();
+
+            // Recalculate progress after saving draft
+            CalculateProgress();
+
+            isUploading = false;
+            uploadedFiles.Clear();
+            Snackbar.Add("Draft saved successfully! Files have been saved locally.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            isUploading = false;
+            Console.WriteLine($"Error saving draft: {ex.Message}");
+            Snackbar.Add($"Error saving draft: {ex.Message}", Severity.Error);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task SaveFilesToLocalMachine(string submissionId, List<IBrowserFile> files)
+    {
+        try
+        {
+            uploadStatusMessage = "Preparing files for storage...";
+            StateHasChanged();
+
+            var storageInfo = await JSRuntime.InvokeAsync<object>("getStorageUsage");
+            Console.WriteLine($"Storage info: {storageInfo}");
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                uploadProgress = (i * 100) / files.Count;
+                uploadStatusMessage = $"Processing {file.Name}... ({i + 1}/{files.Count})";
+                StateHasChanged();
+
+                try
+                {
+                    if (file.Size > 2 * 1024 * 1024)
+                    {
+                        uploadStatusMessage = $"Large file detected: {file.Name} will be downloaded immediately";
+                        StateHasChanged();
+                        await Task.Delay(1000);
+                    }
+
+                    using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+
+                    if (file.Size > 1024 * 1024)
+                    {
+                        await ProcessLargeFile(submissionId, file, stream);
+                    }
+                    else
+                    {
+                        await ProcessSmallFile(submissionId, file, stream);
+                    }
+
+                    Console.WriteLine($"Successfully processed file: {file.Name}");
+                }
+                catch (Exception fileEx)
+                {
+                    Console.WriteLine($"Error processing file {file.Name}: {fileEx.Message}");
+
+                    if (fileEx.Message.Contains("quota") || fileEx.Message.Contains("storage"))
+                    {
+                        Snackbar.Add($"Storage limit reached. File {file.Name} will be downloaded instead.", Severity.Warning);
+                    }
+                    else
+                    {
+                        Snackbar.Add($"Error processing file {file.Name}: {fileEx.Message}", Severity.Warning);
+                    }
+                }
+
+                await Task.Delay(100);
+            }
+
+            uploadProgress = 100;
+            uploadStatusMessage = "Files processed successfully!";
+            StateHasChanged();
+            await Task.Delay(1000);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in SaveFilesToLocalMachine: {ex.Message}");
+
+            if (ex.Message.Contains("quota") || ex.Message.Contains("storage"))
+            {
+                Snackbar.Add("Storage limit reached. Files will be downloaded automatically.", Severity.Warning);
+                await ClearOldFilesAndRetry();
+            }
+            else
+            {
+                Snackbar.Add($"Error saving files: {ex.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task ProcessSmallFile(string submissionId, IBrowserFile file, Stream stream)
+    {
+        using var memoryStream = new MemoryStream();
+        await stream.CopyToAsync(memoryStream);
+        var buffer = memoryStream.ToArray();
+
+        var base64Data = Convert.ToBase64String(buffer);
+        await JSRuntime.InvokeVoidAsync("saveFileToLocal", submissionId, file.Name, base64Data, file.ContentType);
+    }
+
+    private async Task ProcessLargeFile(string submissionId, IBrowserFile file, Stream stream)
+    {
+        const int chunkSize = 64 * 1024;
+        var buffer = new byte[chunkSize];
+        var allBytes = new List<byte>();
+
+        int bytesRead;
+        while ((bytesRead = await stream.ReadAsync(buffer, 0, chunkSize)) > 0)
+        {
+            for (int i = 0; i < bytesRead; i++)
+            {
+                allBytes.Add(buffer[i]);
+            }
+        }
+
+        var base64Data = Convert.ToBase64String(allBytes.ToArray());
+        await JSRuntime.InvokeVoidAsync("saveFileToLocal", submissionId, file.Name, base64Data, file.ContentType);
+    }
+
+    private async Task ClearOldFilesAndRetry()
+    {
+        try
+        {
+            uploadStatusMessage = "Clearing old files to free up space...";
+            StateHasChanged();
+
+            var cleared = await JSRuntime.InvokeAsync<int>("clearOldFiles", 3);
+
+            if (cleared > 0)
+            {
+                Snackbar.Add($"Cleared {cleared} old files to free up space.", Severity.Info);
+            }
+            else
+            {
+                var emergencyCleared = await JSRuntime.InvokeAsync<int>("clearAllAssignmentFiles");
+                if (emergencyCleared > 0)
+                {
+                    Snackbar.Add($"Emergency cleanup: removed {emergencyCleared} files.", Severity.Warning);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error clearing old files: {ex.Message}");
+            Snackbar.Add("Unable to clear space. Files will be downloaded automatically.", Severity.Warning);
+        }
+    }
+
+    private async Task SaveSubmissionHistory()
+    {
+        try
+        {
+            // Keep submissions sorted by date (newest first)
+            savedSubmissions = savedSubmissions.OrderByDescending(s => s.SubmissionDate).ToList();
+
+            var json = JsonSerializer.Serialize(savedSubmissions, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+
+            await JSRuntime.InvokeVoidAsync("saveSubmissionHistory", json);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error saving submission history: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task DownloadSubmission(string submissionId)
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("downloadSubmission", submissionId);
+            Snackbar.Add("Downloading submission files...", Severity.Info);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error downloading submission: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task RequestExtension()
+    {
+        Snackbar.Add("Extension request submitted!", Severity.Success);
+        await Task.CompletedTask;
+    }
+
+    // Updated ContactSupport method with email redirection
+    private async Task ContactSupport()
+    {
+        try
+        {
+            // Email configuration
+            string supportEmail = "info@speccon.com";
+            string subject = "Assignment Support Request - Marketing Strategy Analysis";
+            string body = @"Hello Support Team,
+
+I need assistance with my assignment:
+
+Assignment: Marketing Strategy Analysis
+Module: Module 9 - Strategic Marketing
+Due Date: July 25
+
+Please describe your issue here:
+
+
+Thank you for your assistance.
+
+Best regards";
+
+            // Use JavaScript function to open email
+            bool success = await JSRuntime.InvokeAsync<bool>("openSupportEmail", supportEmail, subject, body);
+
+            if (!success)
+            {
+                Snackbar.Add($"Please contact support at: {supportEmail}", Severity.Info);
+                //Snackbar.Add("Opening your email client...", Severity.Info);
+            }
+            // else
+            // {
+
+            // }
+        }
+        catch (Exception ex)
+        {
+            // Fallback: show email address
+            Snackbar.Add("Please contact support at: support@speccon.com", Severity.Info);
+            Console.WriteLine($"Error opening email client: {ex.Message}");
+        }
+    }
+
+   
+}
+
+<script>
+    const STORAGE_PREFIX = 'assignment_files_';
+    const HISTORY_KEY = 'assignment_submission_history';
+    const MAX_FILE_SIZE = 2 * 1024 * 1024;
+    const MAX_STORAGE_SIZE = 4 * 1024 * 1024;
+
+
+       // Final complete JavaScript fix for drag and drop
+    window.initializeDragAndDrop = (element, dotNetHelper) => {
+        if (!element) {
+            console.error('❌ Element not found for drag and drop initialization');
+            return;
+        }
+
+        console.log('✅ Initializing drag and drop for element:', element);
+
+        // Prevent default drag behaviors
+        const preventDefaults = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
+
+        // Prevent default drag behavior on document
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            document.addEventListener(eventName, preventDefaults, false);
+        });
+
+        element.addEventListener('dragover', (e) => {
+            preventDefaults(e);
+            e.dataTransfer.dropEffect = 'copy';
+        });
+
+        element.addEventListener('dragenter', (e) => {
+            preventDefaults(e);
+            console.log('🔄 Drag enter');
+            try {
+                dotNetHelper.invokeMethodAsync('OnDragStateChanged', true);
+            } catch (error) {
+                console.error('❌ Error in dragenter:', error);
+            }
+        });
+
+        element.addEventListener('dragleave', (e) => {
+            preventDefaults(e);
+            if (!element.contains(e.relatedTarget)) {
+                console.log('🔄 Drag leave');
+                try {
+                    dotNetHelper.invokeMethodAsync('OnDragStateChanged', false);
+                } catch (error) {
+                    console.error('❌ Error in dragleave:', error);
+                }
+            }
+        });
+
+        element.addEventListener('drop', (e) => {
+            preventDefaults(e);
+            console.log('🎯 Drop event triggered');
+
+            try {
+                dotNetHelper.invokeMethodAsync('OnDragStateChanged', false);
+            } catch (error) {
+                console.error('❌ Error setting drag state:', error);
+            }
+
+            const files = e.dataTransfer.files;
+            console.log('📁 Files dropped:', files.length);
+
+            if (!files || files.length === 0) {
+                console.warn('⚠️ No files in drop event');
+                return;
+            }
+
+            // Process files with proper property names for C#
+            const fileInfos = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                console.log(`📄 Processing file ${i + 1}: ${file.name} (${file.size} bytes)`);
+
+                // Skip if no name
+                if (!file.name || file.name.trim() === '') {
+                    console.warn(`⚠️ Skipping file ${i + 1} - no name`);
+                    continue;
+                }
+
+                // Get extension
+                const extension = file.name.toLowerCase().split('.').pop() || '';
+                console.log(`📄 Extension: ${extension}`);
+
+                // Determine content type
+                let contentType = file.type || '';
+                if (!contentType) {
+                    switch (extension) {
+                        case 'pdf':
+                            contentType = 'application/pdf';
+                            break;
+                        case 'doc':
+                            contentType = 'application/msword';
+                            break;
+                        case 'docx':
+                            contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                            break;
+                        default:
+                            contentType = 'application/octet-stream';
+                    }
+                }
+
+                // Create file info object with C# property names
+                const fileInfo = {
+                    Name: file.name,
+                    Size: file.size,
+                    Type: contentType,
+                    Extension: extension
+                };
+
+                console.log(`✅ File info created:`, fileInfo);
+                fileInfos.push(fileInfo);
+            }
+
+            console.log(`📦 Total files processed: ${fileInfos.length}`);
+
+            if (fileInfos.length === 0) {
+                console.warn('⚠️ No valid files to process');
+                return;
+            }
+
+            // Convert to JSON and call C# method
+            const json = JSON.stringify(fileInfos);
+            console.log('📦 JSON to send:', json);
+
+            try {
+                dotNetHelper.invokeMethodAsync('OnJSFilesSelected', json)
+                    .then(() => {
+                        console.log('✅ Files sent to C# successfully');
+                    })
+                    .catch(error => {
+                        console.error('❌ Error calling C# method:', error);
+                    });
+            } catch (error) {
+                console.error('❌ Error in drop handler:', error);
+            }
+        });
+
+        // Click to open file dialog
+        element.addEventListener('click', (e) => {
+            if (e.target === element || e.target.closest('.upload-container') === element) {
+                console.log('🖱️ Click detected, opening file dialog');
+                window.triggerFileInput('fileInput');
+            }
+        });
+
+        console.log('✅ Drag and drop setup complete');
+    };
+
+    // File input trigger
+    window.triggerFileInput = (inputId) => {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.click();
+        } else {
+            console.error(`❌ File input '${inputId}' not found`);
+        }
+    };
+
+    // Test function
+    window.testDragAndDrop = () => {
+        console.log('🧪 Testing drag and drop...');
+        return true;
+    };
+   
+    
+    window.triggerFileInput = (inputId) => {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.click();
+        }
+    };
+
+    // Email support function
+    window.openSupportEmail = (email, subject, body) => {
+        try {
+            // Create mailto URL
+            const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Try to open in the same window first
+            window.location.href = mailtoUrl;
+
+            return true;
+        } catch (error) {
+            console.error('Error opening email client:', error);
+            return false;
+        }
+    };
+
+    window.getStorageInfo = () => {
+        try {
+            const total = 5 * 1024 * 1024;
+            let used = 0;
+
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    used += localStorage.getItem(key).length;
+                }
+            }
+
+            return {
+                total: total,
+                used: used,
+                available: total - used,
+                percentage: (used / total) * 100
+            };
+        } catch (error) {
+            console.error('Error checking storage info:', error);
+            return { total: 0, used: 0, available: 0, percentage: 100 };
+        }
+    };
+
+    window.saveFileToLocal = async (submissionId, fileName, base64Data, contentType) => {
+        try {
+            console.log(`Attempting to save file: ${fileName} (${base64Data.length} bytes)`);
+
+            if (base64Data.length > MAX_FILE_SIZE) {
+                console.warn(`File ${fileName} is too large for localStorage storage (${base64Data.length} bytes)`);
+
+                await window.saveAsDownload(fileName, base64Data, contentType);
+
+                const metadata = {
+                    name: fileName,
+                    contentType: contentType || 'application/octet-stream',
+                    savedAt: new Date().toISOString(),
+                    submissionId: submissionId,
+                    size: base64Data.length,
+                    storageType: 'download',
+                    downloadedAt: new Date().toISOString()
+                };
+
+                const storageKey = `${STORAGE_PREFIX}${submissionId}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}_metadata`;
+                localStorage.setItem(storageKey, JSON.stringify(metadata));
+
+                return true;
+            }
+
+            const fileInfo = {
+                name: fileName,
+                data: base64Data,
+                contentType: contentType || 'application/octet-stream',
+                savedAt: new Date().toISOString(),
+                submissionId: submissionId,
+                size: base64Data.length,
+                storageType: 'localStorage'
+            };
+
+            const storageKey = `${STORAGE_PREFIX}${submissionId}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(fileInfo));
+                console.log(`File saved to localStorage: ${fileName}`);
+                return true;
+            } catch (quotaError) {
+                console.warn('localStorage quota exceeded, trying cleanup and alternative storage...');
+
+                const cleared = window.clearOldFiles(1);
+                if (cleared > 0) {
+                    try {
+                        localStorage.setItem(storageKey, JSON.stringify(fileInfo));
+                        console.log(`File saved after cleanup: ${fileName}`);
+                        return true;
+                    } catch (retryError) {
+                        console.warn('Still not enough space after cleanup, using download fallback');
+                    }
+                }
+
+                await window.saveAsDownload(fileName, base64Data, contentType);
+
+                const metadata = {
+                    name: fileName,
+                    contentType: contentType || 'application/octet-stream',
+                    savedAt: new Date().toISOString(),
+                    submissionId: submissionId,
+                    size: base64Data.length,
+                    storageType: 'download',
+                    downloadedAt: new Date().toISOString()
+                };
+
+                const metadataKey = `${STORAGE_PREFIX}${submissionId}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}_metadata`;
+                localStorage.setItem(metadataKey, JSON.stringify(metadata));
+
+                return true;
+            }
+        } catch (error) {
+            console.error('Error saving file:', error);
+            throw new Error(`Failed to save file ${fileName}: ${error.message}`);
+        }
+    };
+
+    window.saveAsDownload = async (fileName, base64Data, contentType) => {
+        try {
+            console.log(`Saving file as download: ${fileName}`);
+
+            const binaryData = atob(base64Data);
+            const bytes = new Uint8Array(binaryData.length);
+            for (let i = 0; i < binaryData.length; i++) {
+                bytes[i] = binaryData.charCodeAt(i);
+            }
+
+            const blob = new Blob([bytes], { type: contentType || 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            console.log(`File downloaded: ${fileName}`);
+            return true;
+        } catch (error) {
+            console.error('Error downloading file:', error);
+            throw error;
+        }
+    };
+
+    window.saveSubmissionHistory = (historyJson) => {
+        try {
+            if (historyJson.length > MAX_STORAGE_SIZE / 2) {
+                console.warn('Submission history is getting large, cleaning up...');
+
+                const history = JSON.parse(historyJson);
+                const cutoffDate = new Date();
+                cutoffDate.setDate(cutoffDate.getDate() - 30);
+
+                const recentHistory = history.filter(submission =>
+                    new Date(submission.SubmissionDate) > cutoffDate
+                );
+
+                historyJson = JSON.stringify(recentHistory);
+            }
+
+            localStorage.setItem(HISTORY_KEY, historyJson);
+            console.log('Submission history saved');
+        } catch (error) {
+            console.error('Error saving submission history:', error);
+
+            try {
+                const history = JSON.parse(historyJson);
+                const minimalHistory = history.slice(-5).map(submission => ({
+                    Id: submission.Id,
+                    Title: submission.Title,
+                    SubmissionDate: submission.SubmissionDate,
+                    Status: submission.Status,
+                    Files: submission.Files.map(f => ({
+                        FileName: f.FileName,
+                        FileSize: f.FileSize
+                    }))
+                }));
+
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(minimalHistory));
+                console.log('Minimal submission history saved');
+            } catch (fallbackError) {
+                console.error('Failed to save even minimal history:', fallbackError);
+            }
+        }
+    };
+
+    window.getSubmissionHistory = () => {
+        try {
+            return localStorage.getItem(HISTORY_KEY) || '';
+        } catch (error) {
+            console.error('Error loading submission history:', error);
+            return '';
+        }
+    };
+
+    window.downloadSubmission = async (submissionId) => {
+        try {
+            const allKeys = Object.keys(localStorage);
+            const submissionKeys = allKeys.filter(key =>
+                key.startsWith(STORAGE_PREFIX) && key.includes(submissionId)
+            );
+
+            if (submissionKeys.length === 0) {
+                alert('No files found for this submission. Files may have been automatically downloaded when saved due to storage limitations.');
+                return;
+            }
+
+            console.log(`Found ${submissionKeys.length} files for submission ${submissionId}`);
+            let downloadCount = 0;
+
+            for (const key of submissionKeys) {
+                try {
+                    const fileInfoStr = localStorage.getItem(key);
+                    if (!fileInfoStr) continue;
+
+                    const fileInfo = JSON.parse(fileInfoStr);
+
+                    if (fileInfo.storageType === 'download') {
+                        console.log(`File ${fileInfo.name} was already downloaded when saved`);
+                        continue;
+                    }
+
+                    if (fileInfo.data) {
+                        const binaryData = atob(fileInfo.data);
+                        const bytes = new Uint8Array(binaryData.length);
+                        for (let i = 0; i < binaryData.length; i++) {
+                            bytes[i] = binaryData.charCodeAt(i);
+                        }
+
+                        const blob = new Blob([bytes], { type: fileInfo.contentType || 'application/octet-stream' });
+                        const url = URL.createObjectURL(blob);
+
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileInfo.name;
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+
+                        downloadCount++;
+                        console.log(`Downloaded: ${fileInfo.name}`);
+
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+                } catch (fileError) {
+                    console.error(`Error downloading file from key ${key}:`, fileError);
+                }
+            }
+
+            if (downloadCount === 0) {
+                alert('Files were already downloaded when saved due to storage limitations. Please check your Downloads folder.');
+            } else {
+                console.log(`Downloaded ${downloadCount} files for submission ${submissionId}`);
+            }
+        } catch (error) {
+            console.error('Error downloading submission:', error);
+            alert('Error downloading files. Files may have been automatically downloaded when saved.');
+        }
+    };
+
+    window.clearOldFiles = (daysOld = 7) => {
+        try {
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - daysOld);
+
+            const allKeys = Object.keys(localStorage);
+            const fileKeys = allKeys.filter(key => key.startsWith(STORAGE_PREFIX));
+
+            let deletedCount = 0;
+            let freedSpace = 0;
+
+            for (const key of fileKeys) {
+                try {
+                    const fileInfoStr = localStorage.getItem(key);
+                    if (!fileInfoStr) continue;
+
+                    const fileInfo = JSON.parse(fileInfoStr);
+                    const savedDate = new Date(fileInfo.savedAt);
+
+                    if (savedDate < cutoffDate) {
+                        freedSpace += fileInfoStr.length;
+                        localStorage.removeItem(key);
+                        deletedCount++;
+                        console.log(`Deleted old file: ${key}`);
+                    }
+                } catch (parseError) {
+                    console.warn(`Error parsing file info for key ${key}, removing:`, parseError);
+                    const itemSize = localStorage.getItem(key)?.length || 0;
+                    freedSpace += itemSize;
+                    localStorage.removeItem(key);
+                    deletedCount++;
+                }
+            }
+
+            console.log(`Cleaned up ${deletedCount} old files, freed ${freedSpace} bytes`);
+            return deletedCount;
+        } catch (error) {
+            console.error('Error clearing old files:', error);
+            return 0;
+        }
+    };
+
+    window.clearAllAssignmentFiles = () => {
+        try {
+            const allKeys = Object.keys(localStorage);
+            const fileKeys = allKeys.filter(key => key.startsWith(STORAGE_PREFIX));
+
+            let deletedCount = 0;
+            for (const key of fileKeys) {
+                localStorage.removeItem(key);
+                deletedCount++;
+            }
+
+            console.log(`Emergency cleanup: removed ${deletedCount} files`);
+            return deletedCount;
+        } catch (error) {
+            console.error('Error in emergency cleanup:', error);
+            return 0;
+        }
+    };
+
+    window.getStorageUsage = () => {
+        try {
+            const info = window.getStorageInfo();
+            console.log(`Storage usage: ${info.percentage.toFixed(1)}% (${info.used}/${info.total} bytes)`);
+            return info;
+        } catch (error) {
+            console.error('Error getting storage usage:', error);
+            return null;
+        }
+    };
+</script>

@@ -1,0 +1,185 @@
+﻿@page "/Test/Qualification/view"
+@using Speccon.Learnership.FrontEnd.Models.Qualification
+
+@attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView Context="ViewQualification">
+        <Authorized>
+            @if (!_loader)
+            {
+                <MudContainer Class="px-0" MaxWidth="MaxWidth.False">
+                    <MudStack Row="true">
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Class="text-left ma-2" Color="MudBlazor.Color.Primary" Typo="Typo.h5" Style="font-weight: 400; margin-top: 20px; margin-bottom: 15px">@curUser.FirstName @curUser.LastName 's Qualifications</MudText>
+                        </MudItem>
+                    </MudStack>
+                    <br />
+
+                    @if (qualifications != null && qualifications.Any())
+                    {
+                        <MudGrid>
+                            @foreach (var qualification in qualifications)
+                            {
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudCard Elevation="3" Class="ma-2" Style="height: 300px; display: flex; flex-direction: column;">
+                                        <MudCardContent Style="flex: 1; overflow: hidden;">
+                                            <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-2">
+                                                @((MarkupString)qualification.QualificationName.Replace("NQF ", "<br/>NQF "))
+                                            </MudText>
+                                            <MudDivider Class="my-3" />
+                                            <MudGrid>
+                                                <MudItem xs="12" Style="min-height: 40px; display: flex; align-items: flex-start;">
+                                                    @if (!string.IsNullOrEmpty(qualification.QualificationCode))
+                                                    {
+                                                        <MudText Typo="Typo.body2" Style="font-weight: 600; color: #1976d2;">
+                                                            Code: @qualification.QualificationCode
+                                                        </MudText>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudText Typo="Typo.body2" Style="color: #999; font-style: italic;">
+                                                            Code: N/A
+                                                        </MudText>
+                                                    }
+                                                </MudItem>
+                                                <MudItem xs="6" Style="min-height: 60px;">
+                                                    <MudText Typo="Typo.caption" Class="mud-text-secondary">NQF Level</MudText>
+                                                    <MudText Typo="Typo.body1" Style="font-weight: 500;">
+                                                        @(qualification.NqfLevel == 0 ? "N/A" : qualification.NqfLevel.ToString())
+                                                    </MudText>
+                                                </MudItem>
+                                                <MudItem xs="6" Style="min-height: 60px;">
+                                                    <MudText Typo="Typo.caption" Class="mud-text-secondary">Credits</MudText>
+                                                    <MudText Typo="Typo.body1" Style="font-weight: 500;">
+                                                        @(qualification.Credits?.ToString() ?? "N/A")
+                                                    </MudText>
+                                                </MudItem>
+                                                <MudItem xs="12" Style="min-height: 60px;">
+                                                    <MudText Typo="Typo.caption" Class="mud-text-secondary">Date Added</MudText>
+                                                    <MudText Typo="Typo.body1" Style="font-weight: 500;">
+                                                        @qualification.CreateDate.ToString("MM/dd/yyyy")
+                                                    </MudText>
+                                                </MudItem>
+                                            </MudGrid>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <MudGrid>
+                            <MudItem xs="12">
+                                <MudPaper Class="pa-8 text-center" Style="min-height: 200px;">
+                                    <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Large" Style="color: #ccc; font-size: 4rem; margin-bottom: 16px;" />
+                                    <MudText Typo="Typo.h6" Style="color: #999; margin-bottom: 8px;">No Qualifications Found</MudText>
+                                    <MudText Typo="Typo.body2" Style="color: #666;">This user doesn't have any qualifications assigned yet.</MudText>
+                                </MudPaper>
+                            </MudItem>
+                        </MudGrid>
+                    }
+                </MudContainer>
+            }
+            else
+            {
+                <MudContainer Class="px-1" MaxWidth="MaxWidth.False">
+                    <MudGrid>
+                        <MudItem md="12" sm="12" xs="12">
+                            <MudSkeleton Class="rounded-pill" SkeletonType="SkeletonType.Rectangle" Style="width: 200px; height: 40px;margin-top: 20px;" />
+                        </MudItem>
+                        <MudItem xs="12" sm="4" md="4">
+                            <MudPaper xs="12" sm="12" md="12" Elevation="0">
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="200px" Style="margin-bottom: 10px;" />
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="12" sm="4" md="4">
+                            <MudPaper xs="12" sm="12" md="12" Elevation="0">
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="200px" Style="margin-bottom: 10px;" />
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="12" sm="4" md="4">
+                            <MudPaper xs="12" sm="12" md="12" Elevation="0">
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="200px" Style="margin-bottom: 10px;" />
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                </MudContainer>
+            }
+        </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    [Parameter] 
+    public string key { get; set; } = string.Empty;
+
+    private List<QualificationDto> qualifications = new();
+    private EditUserDto curUser = new EditUserDto();
+    private bool isInitialized = false;
+    bool _loader = true;
+
+    protected override void OnInitialized()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _loader = true;
+            _drawerService.IsDrawerOpen = true;
+            InvokeAsync(LoadDataAsync);
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            // Decrypt the key to get the UserKey
+            key = await EncryptionHelper.Decode(key);
+
+            // First: Get the user by UserKey to get their UserId
+            var getUser = await _userService.Getuser(new Guid(key));
+            curUser = getUser;
+
+                if (getUser != null && getUser.UserId > 0)
+                {
+                    // Second: Load qualifications using the UserId
+                    qualifications = await _testQualificationService.GetQualificationByUserId(getUser.UserId);
+                }
+                else
+                {
+                    ShowError("User not found.");
+                }
+           
+
+            await Task.Delay(10);
+        }
+        catch
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+        finally
+        {
+            _loader = false;
+            StateHasChanged();
+        }
+    }
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+}

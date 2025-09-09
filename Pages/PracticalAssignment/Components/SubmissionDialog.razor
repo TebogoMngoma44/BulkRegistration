@@ -1,0 +1,336 @@
+﻿@* Components/PracticalAssignment/SubmissionDialog.razor *@
+@using MudBlazor
+@attribute [Authorize]
+
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@
+@if (IsVisible)
+{
+    <div class="custom-dialog-overlay" @onclick="HandleBackdropClick" @onclick:stopPropagation="false">
+        <MudPaper Class="custom-dialog" @onclick:stopPropagation="true" Elevation="8">
+
+            <!-- Dialog Header -->
+            <MudPaper Style="background: linear-gradient(135deg, #1e3a5f, #2c4a6b); color: white; padding: 12px 16px; border-radius: 8px 8px 0 0;" Elevation="0">
+                <MudStack Row AlignItems="AlignItems.Center" JustifyContent="Justify.SpaceBetween">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                        <MudIcon Icon="@Icons.Material.Filled.RocketLaunch" Style="color: #fbbf24; font-size: 18px;" />
+                        <MudText Style="font-weight: 600; color: white; font-size: 16px;">Submit Practical Assignment</MudText>
+                    </MudStack>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                   Style="color: white;"
+                                   Size="Size.Small"
+                                   OnClick="HandleClose" />
+                </MudStack>
+            </MudPaper>
+
+            <!-- Dialog Body -->
+            <MudPaper Style="padding: 16px;" Elevation="0">
+                <MudStack Spacing="2">
+                    <!-- Ready Message -->
+                    <MudText Style="color: #1f2937; font-weight: 600; font-size: 14px; margin-bottom: 4px;">
+                        Ready to submit your Excel practical work?
+                    </MudText>
+                    <MudText Style="color: #6b7280; line-height: 1.4; font-size: 12px; margin-bottom: 8px;">
+                        Please ensure all requirements are completed before submission.
+                    </MudText>
+
+                    <!-- Submission Checklist -->
+                    <MudPaper Style="background: #fef3c7; border-radius: 6px; padding: 10px; border-left: 3px solid #f59e0b;" Elevation="0">
+                        <MudText Style="font-weight: 600; color: #92400e; margin-bottom: 6px; font-size: 12px;">
+                            Submission checklist:
+                        </MudText>
+
+                        <MudStack Spacing="0">
+                            @for (int i = 0; i < GetChecklistItems().Length; i++)
+                            {
+                                var index = i; // Capture for closure
+                                               <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Style="margin-bottom: 2px;">
+                                                   <MudCheckBox @bind-Value="submissionChecklist[index]"
+                                                                Color="Color.Success"
+                                                                Size="Size.Small"
+                                                                Style="transform: scale(0.8);" />
+                                                   <MudText Style="color: #1f2937; font-size: 11px;">@GetChecklistItems()[index]</MudText>
+                                               </MudStack>
+                            }
+                        </MudStack>
+                    </MudPaper>
+
+                    <!-- Submission Content Summary -->
+                    <MudPaper Style="background: #ecfdf5; border-radius: 6px; padding: 8px; border: 1px solid #10b981;" Elevation="0">
+                        @if (SubmissionMethod == 0)
+                        {
+                            <!-- Text Submission -->
+                            <MudText Style="font-weight: 600; color: #1f2937; margin-bottom: 4px; font-size: 12px;">
+                                Text Submission Summary:
+                            </MudText>
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Style="margin-bottom: 1px;">
+                                <MudIcon Icon="@Icons.Material.Filled.Edit" Style="color: #10b981; font-size: 12px;" />
+                                <MudText Style="color: #1f2937; font-size: 10px;">
+                                    @GetWordCount(AssignmentText) words written
+                                </MudText>
+                            </MudStack>
+                            @if (!string.IsNullOrWhiteSpace(AssignmentText))
+                            {
+                                <MudText Style="color: #6b7280; font-size: 10px; font-style: italic; margin-top: 4px;">
+                                    Preview: @GetTextPreview(AssignmentText)
+                                </MudText>
+                            }
+                        }
+                        else if (SubmissionMethod == 1)
+                        {
+                            <!-- File Submission -->
+                            <MudText Style="font-weight: 600; color: #1f2937; margin-bottom: 4px; font-size: 12px;">
+                                Files to be submitted (@SelectedFiles.Count):
+                            </MudText>
+                            @if (SelectedFiles.Any())
+                            {
+                                @foreach (var file in SelectedFiles.Take(3))
+                                {
+                                    <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Style="margin-bottom: 1px;">
+                                        <MudIcon Icon="@Icons.Material.Filled.Description" Style="color: #10b981; font-size: 12px;" />
+                                        <MudText Style="color: #1f2937; font-size: 10px;">@file.Name (@FormatFileSize(file.Size))</MudText>
+                                    </MudStack>
+                                }
+                                @if (SelectedFiles.Count > 3)
+                                {
+                                    <MudText Style="color: #6b7280; font-size: 10px; font-style: italic;">...and @(SelectedFiles.Count - 3) more files</MudText>
+                                }
+                            }
+                        }
+                        else if (SubmissionMethod == 2)
+                        {
+                            <!-- Questions Submission -->
+                            <MudText Style="font-weight: 600; color: #1f2937; margin-bottom: 4px; font-size: 12px;">
+                                Question Responses Summary:
+                            </MudText>
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Style="margin-bottom: 1px;">
+                                <MudIcon Icon="@Icons.Material.Filled.Quiz" Style="color: #10b981; font-size: 12px;" />
+                                <MudText Style="color: #1f2937; font-size: 10px;">
+                                    @GetAnsweredQuestionsCount() out of 4 questions answered
+                                </MudText>
+                            </MudStack>
+                            <MudText Style="color: #6b7280; font-size: 10px; font-style: italic;">
+                                Total words: @GetTotalQuestionWords()
+                            </MudText>
+                        }
+                    </MudPaper>
+                </MudStack>
+            </MudPaper>
+
+            <!-- Dialog Actions -->
+            <MudPaper Style="padding: 8px 16px; border-top: 1px solid #e5e7eb; border-radius: 0 0 8px 8px;" Elevation="0">
+                <MudStack Row JustifyContent="Justify.FlexEnd" Spacing="1">
+                    <MudButton Variant="Variant.Text"
+                               Size="Size.Small"
+                               Style="color: #6b7280; padding: 6px 12px; font-size: 12px;"
+                               OnClick="HandleClose">
+                        Cancel
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Size="Size.Small"
+                               Style="@GetSubmitButtonStyle()"
+                               OnClick="HandleSubmit"
+                               Disabled="@(!CanSubmit())">
+                        @if (IsSubmitting)
+                        {
+                            <MudProgressCircular Size="Size.Small" Indeterminate="true" Style="margin-right: 4px;" />
+                            <span>Submitting...</span>
+                        }
+                        else
+                        {
+                            <span>Submit Assignment</span>
+                        }
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudPaper>
+    </div>
+    @*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public List<IBrowserFile> SelectedFiles { get; set; } = new();
+    [Parameter] public bool IsSubmitting { get; set; }
+    [Parameter] public EventCallback OnSubmit { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    // New parameters for different submission methods
+    [Parameter] public int SubmissionMethod { get; set; } = 1; // 0=Text, 1=Files, 2=Questions
+    [Parameter] public string AssignmentText { get; set; } = "";
+    [Parameter] public string Question1Answer { get; set; } = "";
+    [Parameter] public string Question2Answer { get; set; } = "";
+    [Parameter] public string Question3Answer { get; set; } = "";
+    [Parameter] public string Question4Answer { get; set; } = "";
+
+    private bool[] submissionChecklist = new bool[6];
+
+    private readonly string[] fileChecklistItems = {
+        "All Excel workbooks completed",
+        "Formulas documented and working",
+        "Pivot tables created and formatted",
+        "Charts and visualizations included",
+        "Executive dashboard completed",
+        "File naming conventions followed"
+    };
+
+    private readonly string[] textChecklistItems = {
+        "All required sections completed",
+        "Analysis is thorough and detailed",
+        "Recommendations are actionable",
+        "Writing is clear and professional",
+        "Word count requirements met",
+        "Content reviewed for accuracy"
+    };
+
+    private readonly string[] questionChecklistItems = {
+        "All questions answered completely",
+        "Data analysis explained clearly",
+        "Excel methods described accurately",
+        "Key findings summarized well",
+        "Recommendations are practical",
+        "Responses reviewed for completeness"
+    };
+
+    private string[] GetChecklistItems()
+    {
+        return SubmissionMethod switch
+        {
+            0 => textChecklistItems,
+            2 => questionChecklistItems,
+            _ => fileChecklistItems
+        };
+    }
+
+    private bool CanSubmit()
+    {
+        if (IsSubmitting) return false;
+
+        return SubmissionMethod switch
+        {
+            0 => !string.IsNullOrWhiteSpace(AssignmentText),
+            1 => SelectedFiles?.Any() == true,
+            2 => GetAnsweredQuestionsCount() > 0,
+            _ => false
+        };
+    }
+
+    private int GetAnsweredQuestionsCount()
+    {
+        int count = 0;
+        if (!string.IsNullOrWhiteSpace(Question1Answer)) count++;
+        if (!string.IsNullOrWhiteSpace(Question2Answer)) count++;
+        if (!string.IsNullOrWhiteSpace(Question3Answer)) count++;
+        if (!string.IsNullOrWhiteSpace(Question4Answer)) count++;
+        return count;
+    }
+
+    private int GetWordCount(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0;
+        return text.Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+    }
+
+    private int GetTotalQuestionWords()
+    {
+        return GetWordCount(Question1Answer) + GetWordCount(Question2Answer) +
+               GetWordCount(Question3Answer) + GetWordCount(Question4Answer);
+    }
+
+    private string GetTextPreview(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return "";
+        return text.Length > 100 ? text.Substring(0, 100) + "..." : text;
+    }
+
+    private string GetSubmitButtonStyle()
+    {
+        var baseStyle = "padding: 6px 12px; font-weight: 600; font-size: 12px;";
+        return CanSubmit()
+            ? baseStyle + " background: #10b981; color: white;"
+            : baseStyle + " background: #9ca3af; color: white; cursor: not-allowed;";
+    }
+
+    private async Task HandleClose()
+    {
+        IsVisible = false;
+
+        // Reset checklist
+        for (int i = 0; i < submissionChecklist.Length; i++)
+        {
+            submissionChecklist[i] = false;
+        }
+
+        await IsVisibleChanged.InvokeAsync(false);
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task HandleBackdropClick()
+    {
+        await HandleClose();
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (CanSubmit())
+        {
+            await OnSubmit.InvokeAsync();
+        }
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB" };
+        double len = bytes;
+        int order = 0;
+        while (len >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            len = len / 1024;
+        }
+        return $"{len:0.##} {sizes[order]}";
+    }
+}
+
+<style>
+    .custom-dialog-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .custom-dialog {
+        width: 420px;
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 8px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    @@media (max-width: 768px) {
+        .custom-dialog {
+            width: 380px;
+            max-width: 95vw;
+        }
+    }
+</style>

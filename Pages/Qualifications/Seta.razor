@@ -1,0 +1,236 @@
+﻿@page "/Qualifications/seta"
+
+
+
+<PageTitle>My Qualifications - SpecCon</PageTitle>
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<!-- App Bar -->
+<QualificationAppBar />
+
+<!-- Main Content -->
+<MudContainer MaxWidth="MaxWidth.Large" Class="main-container">
+    <!-- Page Header -->
+    <QualificationHeader />
+
+    <!-- Qualification Selector -->
+    <QualificationSelector @bind-Value="selectedQualification"
+                           QualificationOptions="qualificationOptions"
+                           OnSelectionChanged="OnQualificationChanged" />
+
+    <!-- Progress Card -->
+    <QualificationProgressCard Qualification="currentQualification" />
+
+    <!-- Timeline - Now handles its own dialogs -->
+    <QualificationTimeline Qualification="currentQualification" />
+
+    <!-- Qualification Information -->
+    <QualificationInfo Qualification="currentQualification"
+                       @bind-IsExpanded="showQualificationDetails" />
+
+    <!-- Modules Section -->
+    <ModulesSection Qualification="currentQualification"
+                    @bind-IsExpanded="showModuleDetails"
+                    OnNavigateToFeedback="NavigateToFeedback" />
+
+    <!-- Certificate Section -->
+    @if (ShouldShowCertificateSection())
+    {
+        <CertificateSection Qualification="currentQualification" />
+    }
+
+</MudContainer>
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+
+
+@code {
+    private bool showQualificationDetails = true;
+    private bool showModuleDetails = true;
+
+    private SetaQualificationModel currentQualification = new SetaQualificationModel();
+    private List<QualificationOption> qualificationOptions = new List<QualificationOption>();
+    private string selectedQualification = "qualification1";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitializeQualificationOptionsAsync();
+        await LoadQualificationDataAsync("qualification1");
+    }
+
+    private async Task InitializeQualificationOptionsAsync()
+    {
+        // Use static options for now to ensure proper mapping
+        qualificationOptions = new List<QualificationOption>
+        {
+            new QualificationOption { Value = "qualification1", Label = "National Certificate: Business Administration Services NQF 5 (Current)" },
+            new QualificationOption { Value = "qualification2", Label = "FET Certificate: Project Management (Completed)" }
+        };
+
+        Console.WriteLine("Initialized dropdown options:"); // Debug line
+        foreach (var option in qualificationOptions)
+        {
+            Console.WriteLine($"  Value: {option.Value}, Label: {option.Label}"); // Debug line
+        }
+    }
+
+    private async Task OnQualificationChanged(string value)
+    {
+        Console.WriteLine($"Dropdown changed to: {value}"); // Debug line
+        selectedQualification = value;
+        await LoadQualificationDataAsync(value);
+        Console.WriteLine($"Loaded qualification: {currentQualification.QualificationName}"); // Debug line
+        Console.WriteLine($"Loaded qualification ID: {currentQualification.Id}"); // Debug line
+        StateHasChanged();
+    }
+
+    private async Task LoadQualificationDataAsync(string qualificationId)
+    {
+        try
+        {
+            // Extract numeric ID from qualification string - FIXED MAPPING
+            int qualificationNumericId;
+            if (qualificationId == "qualification2")
+            {
+                qualificationNumericId = 2;
+            }
+            else
+            {
+                qualificationNumericId = 1; // This covers "qualification1" and any other values
+            }
+
+            Console.WriteLine($"Mapping qualificationId '{qualificationId}' to numeric ID: {qualificationNumericId}"); // Debug line
+
+           // currentQualification = await QCTOQualificationService.GetQualificationByIdAsync(qualificationNumericId);
+            
+
+            Console.WriteLine($"Service returned: {currentQualification.QualificationName}"); // Debug line
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Service failed, using fallback. Error: {ex.Message}"); // Debug line
+
+            // Fallback to data service if injection fails
+            var dataService = new QualificationDataService();
+            currentQualification = dataService.GetQualificationData(qualificationId);
+
+            Console.WriteLine($"Fallback returned: {currentQualification.QualificationName}"); // Debug line
+        }
+    }
+
+    private bool ShouldShowCertificateSection()
+    {
+        var qualName = currentQualification.QualificationName?.Trim();
+        return qualName?.Contains("Business Administration Services") == true ||
+               qualName?.Contains("FET Certificate: Project Management") == true;
+    }
+
+    private void NavigateToFeedback(int moduleNumber)
+    {
+        NavigationManager.NavigateTo($"/module-feedback/{moduleNumber}");
+    }
+}
+
+<style>
+    .main-container {
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+
+    /* Unauthorized Notice Card */
+    .unauthorized-notice-card {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        border-radius: 20px;
+        margin: 40px 0;
+        border: 2px solid #2196f3;
+        box-shadow: 0 8px 32px rgba(33, 150, 243, 0.2);
+    }
+
+    .notice-content {
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .notice-title {
+        font-weight: 600;
+        color: #1565c0;
+        margin-bottom: 16px;
+    }
+
+    .notice-text {
+        color: #1976d2;
+        max-width: 600px;
+        margin: 0 auto 32px;
+        line-height: 1.7;
+        font-size: 16px;
+    }
+
+    .notice-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .login-notice-button {
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-transform: none;
+        border: 2px solid #1e3a5f;
+        color: #1e3a5f;
+        min-width: 200px;
+    }
+
+        .login-notice-button:hover {
+            background-color: #1e3a5f;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        }
+
+    .register-notice-button {
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-transform: none;
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        min-width: 200px;
+    }
+
+        .register-notice-button:hover {
+            background: linear-gradient(135deg, #2c4a6b, #1e3a5f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(30, 58, 95, 0.4);
+        }
+
+    /* Responsive */
+    @@media (max-width: 600px) {
+        .notice-actions {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-notice-button,
+        .register-notice-button {
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .notice-content {
+            padding: 30px 16px;
+        }
+    }
+</style>

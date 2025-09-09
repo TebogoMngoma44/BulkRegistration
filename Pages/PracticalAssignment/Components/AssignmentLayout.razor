@@ -1,0 +1,27 @@
+﻿@* Components/PracticalAssignment/AssignmentLayout.razor *@
+@attribute [Authorize]
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudContainer MaxWidth="MaxWidth.False" Class="pa-0" Style="min-height: 100vh;">
+    @Navigation
+    @Breadcrumbs
+    @Header
+    @Content
+</MudContainer>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public RenderFragment? Navigation { get; set; }
+    [Parameter] public RenderFragment? Breadcrumbs { get; set; }
+    [Parameter] public RenderFragment? Header { get; set; }
+    [Parameter] public RenderFragment? Content { get; set; }
+}

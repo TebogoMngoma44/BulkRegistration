@@ -1,0 +1,435 @@
+
+@page "/salesperson/product"
+
+@inject NavigationManager Navigation
+ 
+<!-- Main Navigation Bar -->
+<MudToolBar Dense="true" Class="mud-theme-primary" Style="background-color: #2E5C8A; min-height: 56px;">
+        <!-- Logo/Brand Section -->
+        <MudPaper Class="d-flex align-center pa-2 mr-4" Style="background-color: white; border-radius: 8px; min-width: 60px;">
+            <MudText Typo="Typo.h6" Class="mud-text-primary font-weight-bold ma-0" Style="color: #2E5C8A;">
+                SC
+            </MudText>
+        </MudPaper>
+
+        <MudText Typo="Typo.h6" Class="mud-text-secondary mr-6" Style="color: white; font-weight: 500;">
+            SpecCon Holdings
+        </MudText>
+
+        <!-- Navigation Items -->
+        <MudButton Variant="Variant.Text"
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Class="mud-text-secondary mr-4"
+                   Style="color: white; text-transform: none; font-weight: 400;"
+                   OnClick="@(() => Navigation.NavigateTo("/clients"))">
+            Back to Clients
+        </MudButton>
+
+        <MudButton Variant="Variant.Text"
+                   Class="nav-button"
+                   Style="@GetNavButtonStyle("Dashboard")"
+                   OnClick="@(() => SetActiveTab("Dashboard"))">
+            Dashboard
+        </MudButton>
+
+        <MudButton Variant="Variant.Text"
+                   Class="nav-button"
+                   Style="@GetNavButtonStyle("Information")"
+                   OnClick="@(() => SetActiveTab("Information"))">
+            Information
+        </MudButton>
+
+        <MudButton Variant="Variant.Text"
+                   Class="nav-button"
+                   Style="@GetNavButtonStyle("Products")"
+                   OnClick="@(() => SetActiveTab("Products"))">
+            Products
+        </MudButton>
+
+        <MudButton Variant="Variant.Text"
+                   Class="nav-button"
+                   Style="@GetNavButtonStyle("Financials")"
+                   OnClick="@(() => SetActiveTab("Financials"))">
+            Financials
+        </MudButton>
+
+        <MudButton Variant="Variant.Text"
+                   Class="nav-button"
+                   Style="@GetNavButtonStyle("Legal")"
+                   OnClick="@(() => SetActiveTab("Legal"))">
+            Legal
+        </MudButton>
+
+        <MudSpacer />
+
+        <!-- User/Sales Person Section -->
+        <MudButton Variant="Variant.Text"
+                   Class="nav-button"
+                   Style="@GetNavButtonStyle("Sales Person")"
+                   OnClick="@(() => SetActiveTab("Sales Person"))">
+            Sales Person
+        </MudButton>
+
+        <MudAvatar Size="Size.Small" Class="ml-2" Style="background-color: rgba(255,255,255,0.2);">
+            <MudIcon Icon="@Icons.Material.Filled.Person" Style="color: white;" />
+        </MudAvatar>
+    </MudToolBar>
+     
+<!-- Breadcrumb Section -->
+<MudPaper Class="pa-3" Style="padding: 16px 32px; background: #e9ecef; border-bottom: 1px solid #ddd; font-size: 14px; color: #666;">
+    <MudBreadcrumbs Items="@BreadcrumbItems" Class="pa-0">
+        <ItemTemplate Context="item">
+            <MudLink Href="@item.Href"
+                     Style="@(item.Disabled ? "color: #666; text-decoration: none;" : "color: #2E5C8A; text-decoration: none;")">
+                @item.Text
+            </MudLink>
+        </ItemTemplate>
+    </MudBreadcrumbs>
+</MudPaper>
+
+<MudCard>
+    <MudCardContent Class="pa-6" Style="background-color: #f8f9fa;">
+
+<!-- Client Information Section -->
+<MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="pa-6 mb-4">
+    <MudItem>
+        <MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-1">
+            Client A
+        </MudText>
+        <MudText Typo="Typo.body1" Color="Color.Secondary">
+            Corporate Client
+        </MudText>
+    </MudItem>
+    <MudItem>
+                <MudButton Variant="Variant.Outlined" Class="btn2" Color="Color.Primary" Style="border: 1px solid #007bff; background: white; color: #007bff; border-radius: 4px;">
+            Edit Client
+        </MudButton>
+    </MudItem>
+</MudGrid>
+
+<!-- Status Information Section -->
+<MudPaper Class="pa-6" Style=" background: #f8f9fa; margin-bottom: 24px;">
+            <MudGrid AlignItems="Center">
+                <MudItem xs="12" md="3">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                        Current Status
+                    </MudText>
+                    <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px ;">
+                        Quote sent, waiting for approval
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="3">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2" Style="color: #1e3a5f; font-weight: 600; font-size: 14px;">
+                        Next Follow-up Date
+                    </MudText>
+                    <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px;">
+                        July 15, 2025
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="3">
+                    <MudText Typo="Typo.subtitle2" Class="mb-2" Style="color: #1e3a5f; font-weight: 600; font-size: 14px;">
+                        Assigned Sales Person
+                    </MudText>
+                    <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px;">
+                        Alison Smith
+                    </MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="3" Class="d-flex justify-end">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               Size="Size.Medium"
+                               Class="text-transform-none btn2"
+                               Style="padding: 10px 20px; border: 1px solid #007bff; background: white; color: #007bff; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s;">
+                        Edit Status & Follow-up
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+</MudPaper>
+
+        <!-- Training Products & Services Section -->
+        <MudPaper Class="pa-6" Style="background-color: white;">
+            <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="mb-6">
+                <MudItem>
+                    <MudText Typo="Typo.h5" Style="color: #1e3a5f; font-weight: 600; font-size: 20px;">
+                        Training Products & Services
+                    </MudText>
+                </MudItem>
+                <MudItem>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Success"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               Style="padding: 8px 16px; border: 1px solid #28a745; background: #28a745; color: white; cursor: pointer; font-size: 14px;border-radius: 4px; font-weight: 500; transition: all 0.2s;">
+                        Add Product
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Learnerships Section -->
+            <MudPaper Class="pa-6 mb-4" Style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="mb-4">
+                    <MudItem>
+                        <MudText Typo="Typo.h6" Style="color: #1e3a5f; font-weight: 600; font-size: 16px; margin: 0; ">
+                            Learnerships
+                        </MudText>
+                    </MudItem>
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Small"
+                                   style="padding: 6px 12px; border: 1px solid #007bff; background: #007bff; color: white; cursor: pointer;font-size: 12px; border-radius: 4px;transition: all 0.2s;"
+                                   Class="btn3">
+                            View Reports
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- Deal 4254 -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px;  cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            Deal Number 4254
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666; ba">
+                            Start Date: Feb 01, 2024 &nbsp;&nbsp; Duration: 12 months &nbsp;&nbsp; Learners: 15 enrolled
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+                
+                <!-- Deal 5353 -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px;  cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            Deal Number 5353
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Start Date: Jan 15, 2024 &nbsp;&nbsp; Duration: 12 months &nbsp;&nbsp; Learners: 22 enrolled
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+                
+                <!-- Deal 2334 -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px;  cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            Deal Number 2334
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Start Date: Mar 10, 2024 &nbsp;&nbsp; Duration: 12 months &nbsp;&nbsp; Learners: 18 enrolled
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Warning" Size="Size.Small" Text="Starting Soon" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+            </MudPaper>
+
+            <!-- TAP Business Section -->
+            <MudPaper Class="pa-4 mb-4" Style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="mb-4">
+                    <MudItem>
+                        <MudText Typo="Typo.h6" Style="color: #2E5C8A; font-weight: 600;">
+                            TAP Business
+                        </MudText>
+                    </MudItem>
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Small"
+                                   style="padding: 6px 12px; border: 1px solid #007bff; background: #007bff; color: white; cursor: pointer;font-size: 12px; border-radius: 4px;transition: all 0.2s;"
+                                   Class="btn3">
+                            View Reports
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+                
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px;  cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            TAP Business Program
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Users: 28 &nbsp;&nbsp; Courses: 12 &nbsp;&nbsp; Start Date: Jan 15, 2024 &nbsp;&nbsp; Duration: 18 months
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+            </MudPaper>
+
+            <!-- Compliance Section -->
+            <MudPaper Class="pa-4 mb-4" Style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="mb-4">
+                    <MudItem>
+                        <MudText Typo="Typo.h6" Style="color: #2E5C8A; font-weight: 600;">
+                            Compliance
+                        </MudText>
+                    </MudItem>
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Small"
+                                   style="padding: 6px 12px; border: 1px solid #007bff; background: #007bff; color: white; cursor: pointer;font-size: 12px; border-radius: 4px;transition: all 0.2s;"
+                                   Class="btn3">
+                            View Reports
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- First Aid -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            First Aid
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Enrolled: 25 learners &nbsp;&nbsp; Certified: 22 learners &nbsp;&nbsp; Start Date: Mar 05, 2024
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+
+                <!-- Fire Fighter -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px;  cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            Fire Fighter
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Enrolled: 18 learners &nbsp;&nbsp; Certified: 15 learners &nbsp;&nbsp; Start Date: Feb 20, 2024
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+
+                <!-- OHS -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            OHS (Occupational Health & Safety)
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Enrolled: 19 learners &nbsp;&nbsp; Certified: 11 learners &nbsp;&nbsp; Start Date: Apr 01, 2024
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Warning" Size="Size.Small" Text="In Progress" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+            </MudPaper>
+
+            <!-- Other Courses Section -->
+            <MudPaper Class="pa-4 mb-8" Style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="mb-4">
+                    <MudItem>
+                        <MudText Typo="Typo.h6" Style="color: #2E5C8A; font-weight: 600;">
+                            Other Courses
+                        </MudText>
+                    </MudItem>
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Small"
+                                   style="padding: 6px 12px; border: 1px solid #007bff; background: #007bff; color: white; cursor: pointer;font-size: 12px; border-radius: 4px;transition: all 0.2s;"
+                                   Class="btn3">
+                            View Reports
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+
+                <!-- Basic Excel -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            Basic Excel
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Enrolled: 40 learners &nbsp;&nbsp; Completed: 35 learners &nbsp;&nbsp; Start Date: Apr 05, 2024
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+
+                <!-- Conflict Management -->
+                <MudPaper Class="pa-4 product-item" Style="background-color: white; border: 1px solid #e9ecef; border-radius: 8px; cursor: pointer;">
+                <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween">
+                    <MudItem xs="12" md="8">
+                        <MudText Typo="Typo.subtitle1" Class="mb-2" Style="color: #2E5C8A; font-weight: 600;">
+                            Conflict Management
+                        </MudText>
+                        <MudText Typo="Typo.body2" Style="color: #666;">
+                            Enrolled: 32 learners &nbsp;&nbsp; Completed: 28 learners &nbsp;&nbsp; Start Date: Mar 20, 2024
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="12" md="4" Class="d-flex justify-end">
+                        <MudChip T="String" Color="Color.Success" Size="Size.Small" Text="Active" />
+                    </MudItem>
+                </MudGrid>
+                </MudPaper>
+            </MudPaper>
+        </MudPaper>
+</MudCardContent>
+</MudCard> 
+ 
+
+
+@code {
+    [Parameter] public string ActiveTab { get; set; } = "Products";
+    [Parameter] public EventCallback<string> ActiveTabChanged { get; set; }
+
+    private List<BreadcrumbItem> BreadcrumbItems = new()
+    {
+        new BreadcrumbItem("Clients", href: "/clients"),
+        new BreadcrumbItem("Client A - Products", href: null, disabled: true)
+    };
+
+    private async Task SetActiveTab(string tabName)
+    {
+        ActiveTab = tabName;
+        await ActiveTabChanged.InvokeAsync(tabName);
+    }
+
+    private string GetNavButtonStyle(string tabName)
+    {
+        var isActive = ActiveTab == tabName;
+        var baseStyle = "color: white; text-transform: none; font-weight: 400; margin-right: 8px; padding: 8px 16px; border-radius: 4px; min-height: 36px;";
+
+        if (isActive)
+        {
+            return baseStyle + " background-color: rgba(255,255,255,0.15); font-weight: 500;";
+        }
+
+        return baseStyle + " background-color: transparent;";
+    }
+}

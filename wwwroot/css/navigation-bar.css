@@ -1,0 +1,187 @@
+﻿@* @attribute [Authorize] *@ @using MudBlazor @* <CascadingAuthenticationState> <AuthorizeView Context="UserList"> <Authorized> *@
+<!-- Navigation Bar -->
+<MudAppBar Elevation="1" Style="background-color: white; color: #333; height: 70px; border-bottom: 1px solid #e0e0e0;"> <MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding: 0 16px;"> <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%; height: 70px;">
+<!-- Logo -->
+<MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2"> <img src="images/SpecCon-Logo.png" alt="SpecCon Holdings Logo" style="height: clamp(35px, 6vw, 50px); width: auto;" /> </MudStack>
+<!-- Navigation Links - Hidden on mobile -->
+<MudHidden Breakpoint="Breakpoint.MdAndDown"> <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1"> <MudButton Variant="Variant.Text" Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;"> My Dashboard </MudButton> <MudButton Variant="Variant.Filled" Style="color: white; text-transform: none; padding: 8px 20px; border-radius: 25px; background: #1e3a5f; font-weight: 500; box-shadow: none;"> My Qualifications </MudButton> <MudButton Variant="Variant.Text" Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;"> My Achievements </MudButton> <MudButton Variant="Variant.Text" Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;"> My Messages </MudButton> <MudButton Variant="Variant.Text" Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;"> Quick Tips </MudButton> </MudStack> </MudHidden>
+<!-- User Profile and Notifications -->
+<MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+<!-- Mobile Menu Button -->
+<MudHidden Breakpoint="Breakpoint.LgAndUp"> <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="color: #1e3a5f; width: 40px; height: 40px;" OnClick="@ToggleMobileMenu" /> </MudHidden> <MudBadge Content="1" Color="Color.Warning" Overlap="true"> <MudIconButton Icon="@Icons.Material.Filled.Notifications" Style="color: #C9980B; background: transparent; width: 40px; height: 40px;" /> </MudBadge> <MudAvatar Style="background: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: clamp(14px, 2.5vw, 16px);"> JS </MudAvatar> </MudStack> </MudStack> </MudContainer> </MudAppBar>
+<!-- Mobile Navigation Drawer -->
+<MudDrawer @bind-Open="@isMobileMenuOpen" Anchor="@Anchor.Right" Elevation="2" Variant="@DrawerVariant.Temporary" Style="z-index: 1400;"> <MudDrawerHeader Style="background: #1e3a5f; color: white; padding: 20px;"> <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center"> <MudText Typo="Typo.h6" Style="color: white; font-weight: 600;"> Navigation </MudText> <MudIconButton Icon="@Icons.Material.Filled.Close" Style="color: white;" OnClick="@ToggleMobileMenu" /> </MudStack> </MudDrawerHeader> <MudDrawerContainer Style="padding: 0;"> <MudNavMenu> <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard" Style="padding: 16px 24px; color: #333; font-weight: 500;"> My Dashboard </MudNavLink> <MudNavLink Href="/qualifications" Icon="@Icons.Material.Filled.School" Style="padding: 16px 24px; color: #1e3a5f; font-weight: 600; background: rgba(30, 58, 95, 0.1);"> My Qualifications </MudNavLink> <MudNavLink Href="/achievements" Icon="@Icons.Material.Filled.EmojiEvents" Style="padding: 16px 24px; color: #333; font-weight: 500;"> My Achievements </MudNavLink> <MudNavLink Href="/messages" Icon="@Icons.Material.Filled.Message" Style="padding: 16px 24px; color: #333; font-weight: 500;"> My Messages </MudNavLink> <MudNavLink Href="/tips" Icon="@Icons.Material.Filled.Lightbulb" Style="padding: 16px 24px; color: #333; font-weight: 500;"> Quick Tips </MudNavLink> </MudNavMenu> </MudDrawerContainer> </MudDrawer> @* </Authorized> <NotAuthorized> <MudAppBar Fixed="true" Dense="false" Class="unauthorized-appbar"> <MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding: 0 16px;"> <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%; height: 70px;">
+<!-- Left Section -->
+<MudStack Row="true" AlignItems="AlignItems.Center" Spacing="4">
+<!-- Logo -->
+<img src="images/SpecCon-Logo.png" alt="SpecCon Holdings Logo" style="height: clamp(35px, 6vw, 50px); width: auto;" />
+<!-- Public Nav Links - Hidden on mobile -->
+<MudHidden Breakpoint="Breakpoint.MdAndDown"> <MudStack Row="true" AlignItems="AlignItems.Center"> <MudButton Variant="Variant.Text" Href="/about" Class="nav-button-unauthorized"> About </MudButton> <MudButton Variant="Variant.Text" Href="/courses" Class="nav-button-unauthorized"> Courses </MudButton> <MudButton Variant="Variant.Text" Href="/contact" Class="nav-button-unauthorized"> Contact </MudButton> </MudStack> </MudHidden> </MudStack>
+<!-- Right Section -->
+<MudHidden Breakpoint="Breakpoint.SmAndDown"> <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2"> <MudButton Variant="Variant.Text" Href="/login" Class="login-button" StartIcon="@Icons.Material.Filled.Login"> Login </MudButton> <MudButton Variant="Variant.Filled" Href="/register" Class="register-button" StartIcon="@Icons.Material.Filled.PersonAdd"> Sign Up </MudButton> </MudStack> </MudHidden>
+<!-- Mobile Menu Button for Unauthorized -->
+<MudHidden Breakpoint="Breakpoint.MdAndUp"> <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="color: white; width: 40px; height: 40px;" OnClick="@ToggleUnauthorizedMobileMenu" /> </MudHidden> </MudStack> </MudContainer> </MudAppBar>
+<!-- Mobile Menu for Unauthorized Users -->
+<MudDrawer @bind-Open="@isUnauthorizedMobileMenuOpen" Anchor="@Anchor.Right" Elevation="2" Variant="@DrawerVariant.Temporary" Style="z-index: 1400;"> <MudDrawerHeader Style="background: #757575; color: white; padding: 20px;"> <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center"> <MudText Typo="Typo.h6" Style="color: white; font-weight: 600;"> Menu </MudText> <MudIconButton Icon="@Icons.Material.Filled.Close" Style="color: white;" OnClick="@ToggleUnauthorizedMobileMenu" /> </MudStack> </MudDrawerHeader> <MudDrawerContainer Style="padding: 0;"> <MudNavMenu> <MudNavLink Href="/about" Icon="@Icons.Material.Filled.Info" Style="padding: 16px 24px; color: #333; font-weight: 500;"> About </MudNavLink> <MudNavLink Href="/courses" Icon="@Icons.Material.Filled.MenuBook" Style="padding: 16px 24px; color: #333; font-weight: 500;"> Courses </MudNavLink> <MudNavLink Href="/contact" Icon="@Icons.Material.Filled.ContactMail" Style="padding: 16px 24px; color: #333; font-weight: 500;"> Contact </MudNavLink> <MudDivider Style="margin: 16px 0;" /> <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Login" Style="padding: 16px 24px; color: #1e3a5f; font-weight: 600;"> Login </MudNavLink> <MudNavLink Href="/register" Icon="@Icons.Material.Filled.PersonAdd" Style="padding: 16px 24px; color: #4CAF50; font-weight: 600;"> Sign Up </MudNavLink> </MudNavMenu> </MudDrawerContainer> </MudDrawer> </NotAuthorized> </AuthorizeView> </CascadingAuthenticationState> *@ <style> .gradient-appbar {
+    background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+    box-shadow: 0 4px 20px rgba(30, 58, 95, 0.3);
+}
+
+.logo-paper {
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+    border-radius: 12px;
+    padding: 10px 14px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo-text {
+    font-weight: 800;
+    color: white;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.nav-button {
+    color: white;
+    text-transform: none;
+    font-weight: 500;
+    padding: 8px 20px;
+    margin-right: 20px;
+}
+
+.nav-button-active {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-transform: none;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 30px;
+    margin-right: 20px;
+}
+
+.notification-button {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    padding: 6px;
+    backdrop-filter: blur(10px);
+}
+
+.user-avatar {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Unauthorized AppBar Styles */
+.unauthorized-appbar {
+    background: linear-gradient(135deg, #757575, #9e9e9e);
+    box-shadow: 0 4px 20px rgba(117, 117, 117, 0.3);
+}
+
+.logo-paper-unauthorized {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
+    border-radius: 12px;
+    padding: 10px 14px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo-text-unauthorized {
+    font-weight: 800;
+    color: white;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.nav-button-unauthorized {
+    color: white;
+    text-transform: none;
+    font-weight: 500;
+    padding: 8px 20px;
+    margin-right: 20px;
+    opacity: 0.9;
+}
+
+    .nav-button-unauthorized:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+.login-button {
+    color: white;
+    text-transform: none;
+    font-weight: 500;
+    padding: 8px 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 25px;
+    margin-right: 8px;
+}
+
+    .login-button:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+.register-button {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    text-transform: none;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+    .register-button:hover {
+        background: linear-gradient(135deg, #45a049, #3d8b40);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+
+/* Mobile Navigation Styles */
+.mud-drawer .mud-nav-link {
+    transition: all 0.3s ease;
+}
+
+    .mud-drawer .mud-nav-link:hover {
+        background-color: rgba(30, 58, 95, 0.1);
+    }
+
+/* Responsive adjustments */
+@@media (max-width: 960px) {
+    .mud-appbar .mud-container {
+        padding: 0 12px;
+    }
+}
+
+@@media (max-width: 600px) {
+    .mud-appbar {
+        height: 60px;
+    }
+
+        .mud-appbar .mud-stack {
+            height: 60px;
+        }
+}
+
+</style >
+
+@code {
+    private bool isMobileMenuOpen = false;
+    private bool isUnauthorizedMobileMenuOpen = false;
+    private void ToggleMobileMenu()
+
+{
+    isMobileMenuOpen = !isMobileMenuOpen;
+}
+
+private void ToggleUnauthorizedMobileMenu() {
+    isUnauthorizedMobileMenuOpen = !isUnauthorizedMobileMenuOpen;
+}
+}

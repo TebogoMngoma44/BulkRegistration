@@ -1,0 +1,284 @@
+﻿@layout BlankLayout
+@page "/pages/DealsPage"
+@using MudBlazor
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="deals-container" Style="font-family:'Roboto'">
+    <!-- Top Metrics Cards -->
+    <MudGrid Class="metrics-grid">
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">5</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">Total Deals</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">0 today</MudText>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">14</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">Ungraded Attempts</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">24 today</MudText>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">50</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">Total Learners</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">59 from last week</MudText>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">1</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">At Risk Learners</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">5 from last week</MudText>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Create New Deal Button -->
+    <MudGrid Class="button-section">
+        <MudItem xs="12">
+            <MudButton Variant="Variant.Filled"
+                       Style="justify-content:center;border-radius:50px;color:white;background-color:#12265e"
+                       Class="create-deal-button">
+                Create New Deal
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Select Dropdowns -->
+    <MudGrid Class="filters-section">
+        <MudItem xs="12" md="6">
+            <MudSelect T="string"
+                       Label="Select Client"
+                       @bind-Value="selectedClient"
+                       Variant="Variant.Outlined"
+                       Class="filter-select">
+                <MudSelectItem Value="@("ABC Training")">ABC Training</MudSelectItem>
+                <MudSelectItem Value="@("XYZ Company")">XYZ Company</MudSelectItem>
+                <MudSelectItem Value="@("DEF Corporation")">DEF Corporation</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect T="string"
+                       Label="Select Deal"
+                       @bind-Value="selectedDeal"
+                       Variant="Variant.Outlined"
+                       Placeholder="Select a Deal"
+                       Class="filter-select">
+                <MudSelectItem Value="@("Deal 1")">Deal 1</MudSelectItem>
+                <MudSelectItem Value="@("Deal 2")">Deal 2</MudSelectItem>
+                <MudSelectItem Value="@("Deal 3")">Deal 3</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Data Table -->
+    <MudCard Class="table-container">
+        <MudTable Items="deals"
+                  Dense="true"
+                  Hover="true"
+                  Breakpoint="Breakpoint.None"
+                  Loading="false"
+                  LoadingProgressColor="Color.Info"
+                  Class="deals-table">
+            <HeaderContent>
+                <MudTh Class="table-header">DEALS</MudTh>
+                <MudTh Class="table-header">SETA #</MudTh>
+                <MudTh Class="table-header">LEARNERS</MudTh>
+                <MudTh Class="table-header">RECRUITED</MudTh>
+                <MudTh Class="table-header">STATUS</MudTh>
+                <MudTh Class="table-header">UNGRADED ATTEMPTS</MudTh>
+                <MudTh Class="table-header">STATUS</MudTh>
+                <MudTh Class="table-header">FEEDBACK</MudTh>
+                <MudTh Class="table-header">ACTIONS</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Deals">@context.DealName</MudTd>
+                <MudTd DataLabel="SETA #">@context.SetaNumber</MudTd>
+                <MudTd DataLabel="Learners">@context.Learners</MudTd>
+                <MudTd DataLabel="Recruited">@context.Recruited</MudTd>
+                <MudTd DataLabel="Status">
+                    <MudChip T="string" Color="@GetStatusColor(context.Status)" Size="Size.Small">
+                        @context.Status
+                    </MudChip>
+                </MudTd>
+                <MudTd DataLabel="Ungraded Attempts">@context.UngradedAttempts</MudTd>
+                <MudTd DataLabel="Status">
+                    <MudChip T="string" Color="@GetProgressStatusColor(context.ProgressStatus)" Size="Size.Small">
+                        @context.ProgressStatus
+                    </MudChip>
+                </MudTd>
+                <MudTd DataLabel="Feedback">@context.Feedback</MudTd>
+                <MudTd Style="padding:2rem;" DataLabel="Actions">
+                    <MudMenu AnchorOrigin="Origin.BottomLeft"
+                             TransformOrigin="Origin.TopLeft">
+                        <ActivatorContent>
+                            <MudIconButton Size="Size.Small">
+                                <img src="icons/more.png" alt="More actions" style="width: 20px; height: 20px;" />
+                            </MudIconButton>
+                        </ActivatorContent>
+                        <ChildContent>
+                                    <MudMenuItem OnClick="@(() => ViewDeal(context))">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="icons/view_icon.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1.2rem" />
+                                            View
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => EditDeal(context))">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="icons/edit_icon.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1rem" />
+                                            Edit
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => DownloadReport(context))">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="icons/Frame 1261155191.png" alt="More actions" style="width: 20px; height: 20px; margin-right:1rem" />
+                                            Download Report
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => OpenSharePoint(context))">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="icons/Icons/appoint.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1rem" />
+                                            SharePoint
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => SendMessage(context))">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="icons/Icons/message.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1rem" />
+                                            Message
+                                        </div>
+                                    </MudMenuItem>
+                            
+                        </ChildContent>
+                    </MudMenu>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudCard>
+
+    <!-- Snackbar for notifications -->
+    <MudSnackbarProvider />
+</MudContainer>
+
+@code {
+    private string selectedClient = "ABC Training";
+    private string selectedDeal = "";
+
+    [Inject] ISnackbar SnackbarService { get; set; }
+
+    private List<DealRecord> deals = new List<DealRecord>
+    {
+        new DealRecord
+        {
+            DealName = "Deal Name",
+            SetaNumber = "xxx xxx xxx",
+            Learners = 7,
+            Recruited = "7/7",
+            Status = "COMPETENT",
+            UngradedAttempts = 0,
+            ProgressStatus = "IN PROGRESS",
+            Feedback = "Deal is on track"
+        },
+        new DealRecord
+        {
+            DealName = "Deal Name",
+            SetaNumber = "xxx xxx xxx",
+            Learners = 16,
+            Recruited = "8/16",
+            Status = "COMPETENT",
+            UngradedAttempts = 4,
+            ProgressStatus = "REGISTRATION",
+            Feedback = "Awaiting documents"
+        },
+        new DealRecord
+        {
+            DealName = "Deal Name",
+            SetaNumber = "xxx xxx xxx",
+            Learners = 18,
+            Recruited = "17/18",
+            Status = "AT RISK",
+            UngradedAttempts = 8,
+            ProgressStatus = "SETA MODERATION",
+            Feedback = "Learners are not completing their work"
+        },
+        new DealRecord
+        {
+            DealName = "Deal Name",
+            SetaNumber = "xxx xxx xxx",
+            Learners = 9,
+            Recruited = "3/9",
+            Status = "COMPETENT",
+            UngradedAttempts = 2,
+            ProgressStatus = "INDUCTION",
+            Feedback = "Deal is on track"
+        }
+    };
+
+    private Color GetStatusColor(string status)
+    {
+        return status switch
+        {
+            "COMPETENT" => Color.Success,
+            "AT RISK" => Color.Error,
+            "INCOMPLETE" => Color.Warning,
+            _ => Color.Default
+        };
+    }
+
+    private Color GetProgressStatusColor(string status)
+    {
+        return status switch
+        {
+            "IN PROGRESS" => Color.Info,
+            "REGISTRATION" => Color.Warning,
+            "SETA MODERATION" => Color.Secondary,
+            "INDUCTION" => Color.Primary,
+            "COMPLETED" => Color.Success,
+            _ => Color.Default
+        };
+    }
+
+    // Action methods for menu items
+    private void ViewDeal(DealRecord deal)
+    {
+        SnackbarService.Add($"Viewing deal: {deal.DealName}", Severity.Info);
+        // Add your view logic here
+    }
+
+    private void EditDeal(DealRecord deal)
+    {
+        SnackbarService.Add($"Editing deal: {deal.DealName}", Severity.Info);
+        // Add your edit logic here
+    }
+
+    private void DownloadReport(DealRecord deal)
+    {
+        SnackbarService.Add($"Downloading report for: {deal.DealName}", Severity.Success);
+        // Add your download logic here
+    }
+
+    private void OpenSharePoint(DealRecord deal)
+    {
+        SnackbarService.Add($"Opening SharePoint for: {deal.DealName}", Severity.Info);
+        // Add your SharePoint logic here
+    }
+
+    private void SendMessage(DealRecord deal)
+    {
+        SnackbarService.Add($"Sending message for: {deal.DealName}", Severity.Info);
+        // Add your messaging logic here
+    }
+
+    public class DealRecord
+    {
+        public string DealName { get; set; } = "";
+        public string SetaNumber { get; set; } = "";
+        public int Learners { get; set; }
+        public string Recruited { get; set; } = "";
+        public string Status { get; set; } = "";
+        public int UngradedAttempts { get; set; }
+        public string ProgressStatus { get; set; } = "";
+        public string Feedback { get; set; } = "";
+    }
+}

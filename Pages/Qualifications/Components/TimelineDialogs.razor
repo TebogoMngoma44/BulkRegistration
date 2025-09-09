@@ -1,0 +1,277 @@
+﻿@using MudBlazor
+
+@* 
+@attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView Context="TimelineDialogs">
+        <Authorized>
+*@
+
+@if (IsVisible)
+{
+    <MudOverlay Visible="true" OnClick="OnClose" Class="stage-modal-overlay">
+        <MudPaper Class="stage-modal-content" @onclick:stopPropagation="true">
+            <MudStack Spacing="0">
+                <!-- Dialog Header -->
+                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Start" Class="modal-header">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudAvatar Style="@GetHeaderAvatarStyle()" Size="Size.Small">
+                            @if (!string.IsNullOrEmpty(GetDialogIcon()))
+                            {
+                                <MudIcon Icon="@GetDialogIcon()" Style="color: white; font-size: 0.9rem;" />
+                            }
+                        </MudAvatar>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6" Class="modal-title">@Title</MudText>
+                            <MudChip T="string" Style="@GetStatusChipStyle()" Size="Size.Small" Class="status-chip">
+                                @GetDialogStatus()
+                            </MudChip>
+                        </MudStack>
+                    </MudStack>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                   OnClick="OnClose"
+                                   Class="close-button"
+                                   Size="Size.Small" />
+                </MudStack>
+
+                <MudDivider />
+
+                <!-- Date and Duration Headers -->
+                <MudGrid Class="mb-3">
+                    <MudItem xs="6">
+                        <MudStack AlignItems="AlignItems.Center" Spacing="0">
+                            <MudText Style="color: #9e9e9e; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">DATE</MudText>
+                            <MudText Style="color: #1e3a5f; font-size: 12px; font-weight: 600;">@GetCompletionDate()</MudText>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudStack AlignItems="AlignItems.Center" Spacing="0">
+                            <MudText Style="color: #9e9e9e; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">DURATION</MudText>
+                            <MudText Style="color: #1e3a5f; font-size: 12px; font-weight: 600;">@GetDuration()</MudText>
+                        </MudStack>
+                    </MudItem>
+                </MudGrid>
+
+                <MudDivider Class="mb-3" />
+
+                <!-- Step Details -->
+                <MudStack Spacing="0">
+                    @foreach (var detail in GetStepDetails())
+                    {
+                        <MudPaper Class="step-detail-card" Elevation="0">
+                            <MudAvatar Style="@detail.IconStyle" Size="Size.Small" Class="step-detail-icon">
+                                <MudIcon Icon="@detail.Icon" Style="color: white; font-size: 0.7rem;" />
+                            </MudAvatar>
+                            <MudStack Spacing="0" Class="step-detail-content">
+                                <MudText Class="step-detail-title">@detail.Title</MudText>
+                                <MudText Class="step-detail-description">@detail.Description</MudText>
+                            </MudStack>
+                        </MudPaper>
+                    }
+                </MudStack>
+            </MudStack>
+        </MudPaper>
+    </MudOverlay>
+}
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public int StepNumber { get; set; }
+    [Parameter] public bool IsCompletedCourse { get; set; } = false;
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private string GetHeaderAvatarStyle() =>
+        IsCompletedCourse ? "background-color: #28a745; width: 32px; height: 32px; box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);" :
+        StepNumber <= 3 ? "background-color: #28a745; width: 32px; height: 32px; box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);" :
+        StepNumber == 4 ? "background-color: #1e3a5f; width: 32px; height: 32px; box-shadow: 0 2px 6px rgba(30, 58, 95, 0.3);" :
+        "background-color: #6c757d; width: 32px; height: 32px; box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);";
+
+    private string GetStatusChipStyle() =>
+        IsCompletedCourse ? "background-color: #d4edda; color: #155724; font-weight: 600; padding: 6px 16px; border-radius: 16px; font-size: 12px;" :
+        StepNumber <= 3 ? "background-color: #d4edda; color: #155724; font-weight: 600; padding: 6px 16px; border-radius: 16px; font-size: 12px;" :
+        StepNumber == 4 ? "background-color: #cce7ff; color: #1e3a5f; font-weight: 600; padding: 6px 16px; border-radius: 16px; font-size: 12px;" :
+        "background-color: #f8f9fa; color: #6c757d; font-weight: 600; padding: 6px 16px; border-radius: 16px; font-size: 12px;";
+
+    private string GetDialogIcon() =>
+        IsCompletedCourse ? Icons.Material.Filled.Check :
+        StepNumber <= 3 ? Icons.Material.Filled.Check :
+        StepNumber == 4 ? "" :
+        Icons.Material.Filled.RadioButtonUnchecked;
+
+    private string GetDialogStatus() =>
+        IsCompletedCourse ? "Completed" :
+        StepNumber <= 3 ? "Completed" :
+        StepNumber == 4 ? "Current" :
+        "Pending";
+
+    private bool ShowPercentage() => !IsCompletedCourse && StepNumber == 4;
+
+    private string GetCompletionDate() =>
+        IsCompletedCourse ? "Completed: 2024" :
+        StepNumber <= 3 ? "Completed: January 2025" :
+        StepNumber == 4 ? "Started: March 2025" :
+        StepNumber == 5 ? "Expected: December 2025" :
+        StepNumber == 6 ? "Expected: January 2026" :
+        StepNumber == 7 ? "Expected: February 2026" :
+        StepNumber == 8 ? "Expected: March 2026" :
+        StepNumber == 9 ? "Expected: December 2025" :
+        "Not Started";
+
+    private string GetDuration() =>
+        IsCompletedCourse ? "Successfully finished" :
+        StepNumber <= 3 ? "2 weeks" :
+        StepNumber == 4 ? "Expected: November 2025" :
+        StepNumber == 5 ? "Expected: 2 weeks" :
+        StepNumber == 6 ? "Expected: 1 week" :
+        StepNumber == 7 ? "Expected: 3 weeks" :
+        StepNumber == 8 ? "Expected: 1 week" :
+        StepNumber == 9 ? "Expected: 2 weeks" :
+        "TBD";
+
+    private List<StepDetail> GetRegistrationDetails()
+    {
+        if (IsCompletedCourse)
+        {
+            return new List<StepDetail>
+            {
+                new("SETA Learnership Enrollment", "Successfully enrolled in SETA-accredited Business Administration Services qualification", Icons.Material.Filled.School, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Document Verification", "All required documents verified and validated by SpecCon Holdings", Icons.Material.Filled.Description, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Course Registration", "Registration confirmed with all course details and requirements", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Payment Processing", "Course fees processed and payment agreements finalized", Icons.Material.Filled.CreditCard, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Learner Agreement", "Learnership agreement signed and submitted to SETA", Icons.Material.Filled.Assignment, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("SETA Registration", "Official registration submitted to Services SETA for approval", Icons.Material.Filled.Business, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;")
+            };
+        }
+        else
+        {
+            return new List<StepDetail>
+            {
+                new("SETA Learnership Enrollment", "Currently enrolled in SETA-accredited Business Administration Services qualification", Icons.Material.Filled.School, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Document Verification", "All required documents verified and validated by SpecCon Holdings", Icons.Material.Filled.Description, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Course Registration", "Registration confirmed with all course details and requirements", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Payment Processing", "Course fees processed and payment agreements finalized", Icons.Material.Filled.CreditCard, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Learner Agreement", "Learnership agreement signed and submitted to SETA", Icons.Material.Filled.Assignment, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("SETA Registration", "Official registration submitted to Services SETA for approval", Icons.Material.Filled.Business, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;")
+            };
+        }
+    }
+
+    private List<StepDetail> GetStepDetails()
+    {
+        if (IsCompletedCourse && StepNumber != 1)
+        {
+            return new List<StepDetail>
+            {
+                new("Stage Completed", "This stage was successfully completed as part of the Office Administration qualification", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;")
+            };
+        }
+
+        return StepNumber switch
+        {
+            1 => GetRegistrationDetails(),
+            2 => new List<StepDetail>
+            {
+                new("Welcome Session", "Comprehensive orientation and welcome session completed", Icons.Material.Filled.EmojiPeople, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Platform Access", "Learning management system access granted and verified", Icons.Material.Filled.Computer, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Course Materials", "All digital learning materials downloaded and organized", Icons.Material.Filled.LibraryBooks, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Mentor Assignment", "Dedicated learning mentor assigned and introduced", Icons.Material.Filled.Person, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Initial Assessment", "Baseline assessment completed to determine starting competency level", Icons.Material.Filled.Assignment, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Learning Plan", "Personalized learning plan developed based on assessment results", Icons.Material.Filled.Schedule, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            3 => new List<StepDetail>
+            {
+                new("Learning Materials", "All course materials and resources provided and organized", Icons.Material.Filled.MenuBook, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Assessment Guides", "Comprehensive assessment guidelines and rubrics received", Icons.Material.Filled.Assignment, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Study Schedule", "Personalized study schedule and milestone timeline created", Icons.Material.Filled.Schedule, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Support Resources", "Additional learning support resources and tools made available", Icons.Material.Filled.Support, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Workplace Integration", "Integration plan for workplace-based learning activities", Icons.Material.Filled.Business, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Progress Tracking", "Learning progress tracking system setup and configured", Icons.Material.Filled.TrendingUp, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            4 => new List<StepDetail>
+            {
+                new("Overall Progress: 75%", "Excellent progress maintained across all learning modules", Icons.Material.Filled.TrendingUp, "background-color: #6f42c1; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Modules Completed: 18/24", "Strong completion rate with high-quality submissions", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Current Focus", "Currently working on Module 2 - Workplace Essentials", Icons.Material.Filled.MyLocation, "background-color: #dc3545; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Evidence Collection", "Workplace evidence being collected and documented systematically", Icons.Material.Filled.Folder, "background-color: #fd7e14; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Facilitator Support", "Regular check-ins and feedback sessions with assigned facilitator", Icons.Material.Filled.Support, "background-color: #ffc107; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Assessment Status", "All submitted assessments meeting or exceeding SETA standards", Icons.Material.Filled.Assignment, "background-color: #17a2b8; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            5 => new List<StepDetail>
+            {
+                new("Portfolio Review", "Internal assessor will conduct comprehensive review of learner portfolio", Icons.Material.Filled.Description, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Unit Standards Assessment", "Assessment of all unit standards against SETA competency requirements", Icons.Material.Filled.Assessment, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Evidence Evaluation", "Detailed evaluation of workplace evidence and practical demonstrations", Icons.Material.Filled.FindInPage, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Competency Demonstration", "Practical competency demonstration in workplace settings", Icons.Material.Filled.Build, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Facilitator Assessment", "Final facilitator assessment and competency verification", Icons.Material.Filled.Person, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Quality Assurance", "Internal quality assurance review and validation process", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            6 => new List<StepDetail>
+            {
+                new("Assessment Review", "Internal moderator reviews assessment decisions and evidence quality", Icons.Material.Filled.RateReview, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Standards Verification", "Verification that assessment standards have been maintained", Icons.Material.Filled.VerifiedUser, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Quality Assurance", "Quality assurance of assessment processes and decisions", Icons.Material.Filled.Security, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Moderation Report", "Completion of internal moderation documentation and reports", Icons.Material.Filled.Assignment, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Consistency Check", "Ensuring consistency with SETA assessment criteria and standards", Icons.Material.Filled.CompareArrows, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Moderator Approval", "Final approval from internal moderator for SETA submission", Icons.Material.Filled.Approval, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            7 => new List<StepDetail>
+            {
+                new("SETA External Moderation", "External moderation by Services SETA appointed moderator", Icons.Material.Filled.Business, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Portfolio Audit", "Comprehensive audit of learner portfolio and all evidence", Icons.Material.Filled.Folder, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Process Review", "Review of assessment and internal moderation processes", Icons.Material.Filled.FindInPage, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Standards Compliance", "Verification of compliance with SETA national standards", Icons.Material.Filled.Gavel, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Moderation Report", "Completion of SETA external moderation report", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Final Approval", "SETA external moderator approval for qualification", Icons.Material.Filled.ThumbUp, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            8 => new List<StepDetail>
+            {
+                new("Qualification Confirmed", "Official confirmation of SETA qualification achievement", Icons.Material.Filled.School, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Final Documentation", "Completion of all required SETA documentation and records", Icons.Material.Filled.Description, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("SETA Approval", "Final approval from Services SETA for qualification completion", Icons.Material.Filled.CheckCircle, "background-color: #28a745; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Achievement Recognition", "Recognition of successful SETA qualification completion", Icons.Material.Filled.EmojiEvents, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Results Processing", "Processing of final results and competency achievement", Icons.Material.Filled.Assessment, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Status Update", "Update of learner status to qualified in SETA systems", Icons.Material.Filled.Update, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            9 => new List<StepDetail>
+            {
+                new("Certificate Production", "Production of official SETA certificate by Services SETA", Icons.Material.Filled.Description, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Digital Verification", "Digital verification and authentication setup in SETA systems", Icons.Material.Filled.VerifiedUser, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Certificate Delivery", "Delivery of physical SETA certificate to learner", Icons.Material.Filled.LocalShipping, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Digital Copy", "Provision of digital certificate copy and verification", Icons.Material.Filled.CloudDownload, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Registry Update", "Update of SETA national qualifications registry and database", Icons.Material.Filled.Storage, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;"),
+                new("Completion Celebration", "Celebration of successful SETA qualification completion", Icons.Material.Filled.Celebration, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;")
+            },
+            _ => new List<StepDetail>
+            {
+                new("Pending", "This stage will be available once previous steps are completed", Icons.Material.Filled.HourglassEmpty, "background-color: #6c757d; width: 20px; height: 20px; border-radius: 50%;")
+            }
+        };
+    }
+
+    private class StepDetail
+    {
+        public string Title { get; }
+        public string Description { get; }
+        public string Icon { get; }
+        public string IconStyle { get; }
+
+        public StepDetail(string title, string description, string icon, string iconStyle)
+        {
+            Title = title;
+            Description = description;
+            Icon = icon;
+            IconStyle = iconStyle;
+        }
+    }
+}
+
+                 

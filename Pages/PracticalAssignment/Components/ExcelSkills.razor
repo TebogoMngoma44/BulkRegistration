@@ -1,0 +1,101 @@
+﻿@* Components/PracticalAssignment/ExcelSkills.razor *@
+@attribute [Authorize]
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@
+<MudStack Spacing="3">
+    <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Class="section-title">
+        <MudIcon Icon="@Icons.Material.Filled.Psychology" Style="color: #8b5cf6; font-size: 20px;" />
+        <MudText Typo="Typo.h6" Style="font-weight: 700; color: #1f2937; font-size: 18px;">Required Excel Skills</MudText>
+    </MudStack>
+
+    <MudPaper Class="steps-section" Elevation="1">
+        <MudStack Spacing="2">
+            @foreach (var (skill, index) in skills.Select((s, i) => (s, i + 1)))
+            {
+                <MudPaper Class="skill-item" Elevation="0" Style="background: transparent;">
+                    <MudAvatar Class="skill-number">@index</MudAvatar>
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.subtitle1" Style="font-weight: 700; color: #1f2937; font-size: 18px;">@skill.Title</MudText>
+                        <MudText Style="color: #6b7280; font-size: 15px; line-height: 1.6;">@skill.Description</MudText>
+                    </MudStack>
+                </MudPaper>
+            }
+        </MudStack>
+    </MudPaper>
+</MudStack>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    private readonly (string Title, string Description)[] skills = {
+        ("Data Import & Cleaning", "Import CSV data, remove duplicates, handle missing values, format data types"),
+        ("Advanced Formulas", "VLOOKUP, INDEX/MATCH, SUMIFS, COUNTIFS, array formulas, nested IF statements"),
+        ("Pivot Tables & Analysis", "Create pivot tables, group data, calculate percentages, add calculated fields"),
+        ("Charts & Visualizations", "Column, line, pie charts, combo charts, conditional formatting"),
+        ("Dashboard Creation", "Combine charts, tables, and KPIs into executive dashboard")
+    };
+}
+<style>
+    .steps-section {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 32px;
+        margin-bottom: 32px;
+    }
+
+    .skill-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 32px;
+        position: relative;
+    }
+
+        .skill-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 48px;
+            width: 2px;
+            height: calc(100% - 24px);
+            background: #e5e7eb;
+            z-index: 0;
+        }
+
+    .skill-number {
+        background: #1e3a5f;
+        color: white;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 18px;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>

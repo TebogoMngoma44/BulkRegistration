@@ -1,0 +1,256 @@
+@page "/auth/access"
+
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div Style="min-height: 100vh; width: 100vw; background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #312e81 100%); position: fixed; top: 0; left: 0; overflow: hidden; margin: 0; padding: 0;">
+
+    <!-- Top Navigation Bar -->
+    <MudAppBar Elevation="0" Style="background: #FFFFFF; border-bottom: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; width: 100vw; height: 96px; padding: 16px 32px;">
+        <MudGrid AlignItems="Center" Justify="Justify.SpaceBetween" Class="flex-grow-1" Style="width: 100%;">
+            <!-- SpecCon Holdings Logo -->
+            <MudItem>
+                <div style="width: 67px; height: 64px; display: flex; align-items: center; justify-content: center;">
+                    <!-- Keep SpecCon Holdings logo here -->
+                    <img src="~/images/logo.png" alt="SpecCon Holdings" style="width: 67px; height: 64px; object-fit: contain;" />
+                </div>
+            </MudItem>
+
+            <!-- Navigation Menu -->
+            <MudItem>
+                <div style="display: flex; flex-direction: row; align-items: center; padding: 0px; gap: 59px; margin: 0 auto; width: 1238px; height: 54px;">
+                    <!-- My Dashboard -->
+                    <MudButton Variant="Variant.Text"
+                               Style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8px 40px 9px; width: 197px; height: 54px; border-radius: 60px; background: transparent; color: #12265E; text-transform: none; font-family: Roboto; font-weight: 600; font-size: 18px; line-height: 21px; flex: none; order: 0;">
+                        My Dashboard
+                    </MudButton>
+
+                    <!-- My Qualifications (Active) -->
+                    <MudButton Variant="Variant.Filled"
+                               Style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8px 40px 9px; width: 221px; height: 54px; background: #12265E; border-radius: 60px; color: #FFFFFF; text-transform: none; font-family: Roboto; font-weight: 600; font-size: 18px; line-height: 21px; flex: none; order: 1;">
+                        My Qualifications
+                    </MudButton>
+
+                    <!-- My Achievements -->
+                    <MudButton Variant="Variant.Text"
+                               Style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8px 40px 9px; width: 225px; height: 54px; border-radius: 60px; background: transparent; color: #12265E; text-transform: none; font-family: Roboto; font-weight: 600; font-size: 18px; line-height: 21px; flex: none; order: 2;">
+                        My Achievements
+                    </MudButton>
+
+                    <!-- My Messages -->
+                    <MudButton Variant="Variant.Text"
+                               Style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8px 40px 9px; width: 193px; height: 54px; border-radius: 60px; background: transparent; color: #12265E; text-transform: none; font-family: Roboto; font-weight: 600; font-size: 18px; line-height: 21px; flex: none; order: 3;">
+                        My Messages
+                    </MudButton>
+
+                    <!-- Quick Tips -->
+                    <MudButton Variant="Variant.Text"
+                               Style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8px 40px 9px; width: 166px; height: 54px; border-radius: 60px; background: transparent; color: #12265E; text-transform: none; font-family: Roboto; font-weight: 600; font-size: 18px; line-height: 21px; flex: none; order: 4;">
+                        Quick Tips
+                    </MudButton>
+                </div>
+            </MudItem>
+
+            <!-- Right Side Actions -->
+            <MudItem>
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Style="gap: 12px;">
+                    <!-- Supervised Exam Chip -->
+                    <div Style="background: #DC3545; border-radius: 20px; padding: 6px 12px; width: 167px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                        <MudText Style="font-family: Roboto; font-weight: 700; font-size: 12px; color: #FFFFFF; text-align: center;">
+                            🔒 SUPERVISED EXAM
+                        </MudText>
+                    </div>
+
+                    <!-- Notification Icon -->
+                    <MudIconButton Icon="@Icons.Material.Filled.Notifications"
+                                   Style="color: #12265E; width: 36px; height: 37px; padding: 8px;" />
+
+                    <!-- User Avatar -->
+                    <MudAvatar Style="background: #12265E; color: #FFFFFF; width: 40px; height: 40px; border-radius: 20px; font-family: Roboto; font-weight: 700; font-size: 16px;">
+                        JS
+                    </MudAvatar>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudAppBar>
+
+    <!-- Main Content -->
+    <div Class="d-flex align-center justify-center" Style="min-height: 100vh; width: 100vw; padding: 24px; padding-top: 120px; box-sizing: border-box;">
+        <MudPaper Elevation="0" Class="pa-8" Style="border-radius: 20px; max-width: 480px; width: 100%; background: rgba(255,255,255,0.98); box-shadow: 0 25px 50px rgba(0,0,0,0.15);">
+
+            <!-- Lock Icon -->
+            <div Class="d-flex justify-center mb-4">
+                <MudAvatar Size="Size.Large" Style="background: #1e3a8a; width: 64px; height: 64px;">
+                    <MudIcon Icon="@Icons.Material.Filled.Lock" Style="color: #fbbf24; font-size: 28px;" />
+                </MudAvatar>
+            </div>
+
+            <!-- Title -->
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-3" Style="color: #1e293b; font-weight: 600;">
+                Final Examination Access
+            </MudText>
+
+            <!-- Subtitle -->
+            <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-6" Style="color: #64748b; line-height: 1.4;">
+                This is a supervised final examination. Please enter the password to begin.
+            </MudText>
+
+            <!-- Important Warning -->
+            <MudAlert Severity="Severity.Warning" Class="mb-6" Style="border-radius: 8px; background: #fef3c7; border: 1px solid #fbbf24; color: #92400e;">
+                <MudText Typo="Typo.body2" Style="font-size: 14px;">
+                    <strong>Important:</strong> This examination is monitored and supervised. Ensure your proctor is present before proceeding. Any violation of examination rules will result in automatic disqualification.
+                </MudText>
+            </MudAlert>
+
+            <!-- Form -->
+            <MudForm @ref="form" Model="@model">
+                <!-- Password Field -->
+                <MudStack Spacing="3">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mb-2" Style="color: #374151; font-weight: 500;">
+                            Password
+                        </MudText>
+                        <MudTextField @bind-Value="model.Password"
+                                      Placeholder="Enter password"
+                                      InputType="@(showPassword? InputType.Text: InputType.Password)"
+                                      Variant="Variant.Outlined"
+                                      FullWidth="true"
+                                      Style="border-radius: 8px;"
+                                      Adornment="Adornment.End"
+                                      AdornmentIcon="@(showPassword? Icons.Material.Filled.VisibilityOff : Icons.Material.Filled.Visibility)"
+                                      OnAdornmentClick="@TogglePasswordVisibility" />
+                    </div>
+
+                    <!-- Checkbox -->
+                    <MudCheckBox T="bool" @bind-Checked="model.AgreementAccepted"
+                                 Label="I understand the examination rules and conditions"
+                                 Style="color: #374151;" />
+
+                    <!-- Submit Button -->
+                    <MudButton Variant="Variant.Filled"
+                             
+                             
+                               OnClick="@BeginExamination">
+                        <span style="font-family: 'Roboto'; font-weight: 700; font-style: bold; font-size: 16px; line-height: 100%; letter-spacing: 0%; text-align: center; vertical-align: middle; width: 400.91px; height: 52px; line-height: 19px; display: flex; align-items: center; justify-content: center; color: white; flex: none; order: 0; flex-grow: 0; background: #12265E; border-radius: 8px; opacity: 1; padding-top: 16px; padding-right: 103.96px; padding-bottom: 17px; padding-left: 103.95px;">
+                            🚀 Begin Final Examination
+                        </span>
+                    </MudButton>
+                </MudStack>
+            </MudForm>
+        </MudPaper>
+    </div>
+</div>
+
+@code {
+    private MudForm form;
+    private ExamAccessModel model = new();
+    private bool showPassword = false;
+
+    public class ExamAccessModel
+    {
+        public string Password { get; set; } = string.Empty;
+        public bool AgreementAccepted { get; set; } = false;
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        showPassword = !showPassword;
+    }
+
+    private async Task BeginExamination()
+    {
+        if (model.AgreementAccepted && !string.IsNullOrWhiteSpace(model.Password))
+        {
+            // Add your examination logic here
+            // Example: validate password, navigate to exam, etc.
+
+            // NavigationManager.NavigateTo("/examination");
+        }
+    }
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .mud-appbar {
+        position: fixed !important;
+        height: 96px !important;
+        background: #FFFFFF !important;
+    }
+
+    .mud-button-text:hover {
+        background: rgb(18, 38, 94, 0.1) !important;
+    }
+
+    .mud-button-filled:hover {
+        background: #0f1f47 !important;
+    }
+
+    .mud-input-outlined .mud-input-outlined-border {
+        border-radius: 8px !important;
+        border-color: #d1d5db !important;
+    }
+
+    .mud-input-outlined:hover .mud-input-outlined-border {
+        border-color: #1e3a8a !important;
+    }
+
+    .mud-input-outlined.mud-input-outlined-filled .mud-input-outlined-border {
+        border-color: #1e3a8a !important;
+        border-width: 2px !important;
+    }
+
+    .mud-alert-warning {
+        background: #fef3c7 !important;
+        border: 1px solid #fbbf24 !important;
+        color: #92400e !important;
+    }
+
+    .mud-checkbox .mud-button-root {
+        color: #1e3a8a !important;
+    }
+
+    .mud-checkbox.mud-checked .mud-button-root {
+        color: #1e3a8a !important;
+    }
+
+    /* Custom animations for a more polished feel */
+    .mud-paper {
+        animation: slideUp 0.4s ease-out;
+    }
+
+    @@keyframes slideUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Focus states */
+    .mud-input-outlined.mud-input-focused .mud-input-outlined-border {
+        border-color: #1e3a8a !important;
+        border-width: 2px !important;
+        box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1) !important;
+    }
+</style>

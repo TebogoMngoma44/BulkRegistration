@@ -1,0 +1,827 @@
+﻿@* @attribute [Authorize] *@
+@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="ModuleSection">
+        <Authorized>
+*@
+
+<MudCard Class="modules-card">
+    <MudCardContent>
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="modules-header">
+            <MudText Typo="Typo.h5" Class="section-title" Style="color: #1e3a5f !important;">
+                Current Qualification: @GetQualificationDisplayName()
+            </MudText>
+            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                <MudChip T="string" Class="@GetQualificationStatusChipClass()" Size="Size.Medium" OnClick="ToggleExpanded">
+                    @GetQualificationStatusText()
+                    <MudIcon Icon="@(IsExpanded? Icons.Material.Filled.KeyboardArrowUp : Icons.Material.Filled.KeyboardArrowDown)"
+                             Size="Size.Small" Class="chip-icon" />
+                </MudChip>
+            </MudStack>
+        </MudStack>
+
+        <MudCollapse @bind-Expanded="IsExpanded" AnimationDuration="0.3">
+            @if (IsQualificationCompleted())
+            {
+                <!-- Header for Completed Courses -->
+                <MudGrid Class="table-header" Spacing="0">
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">MODULE</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">DESCRIPTION</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="1" Class="header-column">
+                        <MudText Typo="Typo.body2">PROGRESS</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">FEEDBACK</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">SCORE PERCENTAGE</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">TIME TO COMPLETE</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="1" Class="last-header-column">
+                        <MudText Typo="Typo.body2">UNITS</MudText>
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <!-- Header for Current Courses -->
+                <MudGrid Class="table-header" Spacing="0">
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">MODULE</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="3" Class="header-column">
+                        <MudText Typo="Typo.body2">DESCRIPTION</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">PROGRESS</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">FEEDBACK</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" Class="header-column">
+                        <MudText Typo="Typo.body2">INTRODUCTION</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="1" Class="last-header-column">
+                        <MudText Typo="Typo.body2">UNITS</MudText>
+                    </MudItem>
+                </MudGrid>
+            }
+
+            @foreach (var module in GetFilteredModules())
+            {
+                <MudPaper Class="module-section" Elevation="1">
+                    @if (IsQualificationCompleted())
+                    {
+                        <!-- Layout for Completed Courses -->
+                        <MudGrid Spacing="2" AlignItems="AlignItems.Center">
+                            <MudItem xs="12" sm="2">
+                                <MudStack Spacing="1">
+                                    <MudText Typo="Typo.body1" Class="module-number">Module @module.ModuleNumber</MudText>
+                                    <MudText Typo="Typo.body2" Class="module-name">@module.ModuleName</MudText>
+                                </MudStack>
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                <MudText Typo="Typo.body2">@module.Description</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="1">
+                                <MudChip T="string" Class="@GetProgressChipClass(module.ProgressPercentage)" Size="Size.Medium">
+                                    @module.ProgressPercentage%
+                                </MudChip>
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                @if (module.FeedbackStatus == "New Feedback")
+                                {
+                                    <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" Class="feedback-button feedback-button-new">
+                                        View Feedback
+                                        
+                                    </MudButton>
+                                }
+                                else if (module.FeedbackStatus == "View Feedback")
+                                {
+                                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Small" Class="feedback-button feedback-button-view"
+                                               OnClick="(() => HandleNavigateToFeedback(module.ModuleNumber))">
+                                        View Feedback
+                                    </MudButton>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2" Class="feedback-text">@module.FeedbackStatus</MudText>
+                                }
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                <MudStack Spacing="0" AlignItems="AlignItems.Center">
+                                    <MudText Typo="Typo.h6" Class="score-percentage">@GetModuleScorePercentage(module)%</MudText>
+                                </MudStack>
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                <MudStack Spacing="0" AlignItems="AlignItems.Center">
+                                    <MudText Typo="Typo.body1" Class="time-complete">@GetModuleTimeToComplete(module)</MudText>
+                                </MudStack>
+                            </MudItem>
+                            <MudItem xs="12" sm="1">
+                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Class="units-button"
+                                           OnClick="(() => ToggleUnits(module))">
+                                    @(module.ShowUnits ? "Hide Units" : "Show Units")
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <!-- Layout for Current Courses -->
+                        <MudGrid Spacing="2" AlignItems="AlignItems.Center">
+                            <MudItem xs="12" sm="2">
+                                <MudStack Spacing="1">
+                                    <MudText Typo="Typo.body1" Class="module-number">Module @module.ModuleNumber</MudText>
+                                    <MudText Typo="Typo.body2" Class="module-name">@module.ModuleName</MudText>
+                                </MudStack>
+                            </MudItem>
+                            <MudItem xs="12" sm="3">
+                                <MudText Typo="Typo.body2">@module.Description</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                @if (module.IsLocked)
+                                {
+                                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                        <MudIcon Icon="@Icons.Material.Filled.Lock" Color="Color.Warning" Size="Size.Small" />
+                                        <MudText Typo="Typo.body2" Class="locked-text">Locked</MudText>
+                                    </MudStack>
+                                }
+                                else
+                                {
+                                    <MudChip T="string" Class="@GetProgressChipClass(module.ProgressPercentage)" Size="Size.Medium">
+                                        @module.ProgressPercentage%
+                                    </MudChip>
+                                }
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                @if (module.FeedbackStatus == "New Feedback")
+                                {
+                                    <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" Class="feedback-button feedback-button-new">
+                                       View Feeback
+                                        
+                                    </MudButton>
+                                }
+                                else if (module.FeedbackStatus == "View Feedback")
+                                {
+                                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Small" Class="feedback-button feedback-button-view"
+                                               OnClick="(() => HandleNavigateToFeedback(module.ModuleNumber))">
+                                        View Feedback
+                                    </MudButton>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2" Class="feedback-text">@module.FeedbackStatus</MudText>
+                                }
+                            </MudItem>
+                            <MudItem xs="12" sm="2">
+                                <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Small" Class="introduction-button">
+                                    Introduction
+                                </MudButton>
+                            </MudItem>
+                            <MudItem xs="12" sm="1">
+                                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Class="units-button"
+                                           OnClick="(() => ToggleUnits(module))">
+                                    @(module.ShowUnits ? "Hide Units" : "Show Units")
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    }
+
+                    @if (module.ShowUnits && module.Units.Any())
+                    {
+                        <MudDivider Class="my-4" />
+                        <MudPaper Class="units-section">
+                            <!-- Units Header -->
+                            <MudGrid Class="units-table-header" Spacing="0">
+                                <MudItem xs="2" Class="units-header-column">
+                                    <MudText Typo="Typo.body2">UNIT STANDARD</MudText>
+                                </MudItem>
+                                <MudItem xs="3" Class="units-header-column">
+                                    <MudText Typo="Typo.body2">UNIT</MudText>
+                                </MudItem>
+                                <MudItem xs="2" Class="units-header-column">
+                                    <MudText Typo="Typo.body2">TYPE</MudText>
+                                </MudItem>
+                                <MudItem xs="1" Class="units-header-column">
+                                    <MudText Typo="Typo.body2">PROGRESS</MudText>
+                                </MudItem>
+                                <MudItem xs="2" Class="units-header-column">
+                                    <MudText Typo="Typo.body2">ACTIONS</MudText>
+                                </MudItem>
+                                <MudItem xs="2" Class="units-header-column-last">
+                                    <MudText Typo="Typo.body2">SUBMIT</MudText>
+                                </MudItem>
+                            </MudGrid>
+
+                            <!-- Units Rows -->
+                            @foreach (var unit in module.Units)
+                            {
+                                <MudGrid Spacing="0" AlignItems="AlignItems.Center" Class="unit-data-row">
+                                    <MudItem xs="2" Class="unit-cell">
+                                        <MudText Typo="Typo.body2">@unit.UnitStandard</MudText>
+                                    </MudItem>
+                                    <MudItem xs="3" Class="unit-cell">
+                                        <MudText Typo="Typo.body2">@unit.UnitName</MudText>
+                                    </MudItem>
+                                    <MudItem xs="2" Class="unit-cell">
+                                        <MudText Typo="Typo.body2">@unit.Type</MudText>
+                                    </MudItem>
+                                    <MudItem xs="1" Class="unit-cell">
+                                        @if (unit.ProgressStatus == "Completed")
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Class="progress-status-completed">
+                                                @unit.ProgressStatus
+                                            </MudChip>
+                                        }
+                                        else if (unit.ProgressStatus == "20%" || unit.ProgressStatus == "30%" || unit.ProgressStatus == "75%")
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Class="progress-status-progress">
+                                                @unit.ProgressStatus
+                                            </MudChip>
+                                        }
+                                        else if (unit.ProgressStatus == "Not Started")
+                                        {
+                                            <MudChip T="string" Size="Size.Small" Class="progress-status-not-started">
+                                                @unit.ProgressStatus
+                                            </MudChip>
+                                        }
+                                    </MudItem>
+                                    <MudItem xs="2" Class="unit-cell">
+                                        @if (unit.Type == "Workplace Evidence")
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="action-button notification-button">
+                                                Send notification to facilitator
+                                            </MudButton>
+                                        }
+                                        else if (unit.ProgressStatus == "Completed")
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="action-button review-button">
+                                                Review
+                                            </MudButton>
+                                        }
+                                        else if (unit.ProgressStatus == "Not Started")
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="action-button start-button">
+                                                Start
+                                            </MudButton>
+                                        }
+                                        else if (unit.ProgressStatus == "75%" || unit.ProgressStatus == "30%")
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="action-button continue-button">
+                                                Continue
+                                            </MudButton>
+                                        }
+                                    </MudItem>
+                                    <MudItem xs="2" Class="unit-cell">
+                                        @if (unit.ProgressStatus == "Completed")
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="submit-button submitted-button">
+                                                Submitted
+                                            </MudButton>
+                                        }
+                                        else if (unit.ProgressStatus == "75%" || unit.ProgressStatus == "30%")
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="submit-button submit-active-button">
+                                                Submit
+                                            </MudButton>
+                                        }
+                                        else
+                                        {
+                                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="submit-button not-available-button">
+                                                Not Available
+                                            </MudButton>
+                                        }
+                                    </MudItem>
+                                </MudGrid>
+                            }
+                        </MudPaper>
+                    }
+                </MudPaper>
+                @if (module != GetFilteredModules().Last())
+                {
+                    <MudSpacer />
+                }
+            }
+        </MudCollapse>
+    </MudCardContent>
+</MudCard>
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+
+@code {
+    [Parameter] public bool? Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public SetaQualificationModel Qualification { get; set; } = new();
+    [Parameter] public bool IsExpanded { get; set; } = true;
+    [Parameter] public EventCallback<bool> IsExpandedChanged { get; set; }
+    [Parameter] public EventCallback<int> OnNavigateToFeedback { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (Value.HasValue && Value.Value != IsExpanded)
+        {
+            IsExpanded = Value.Value;
+        }
+    }
+
+    private async Task ToggleExpanded()
+    {
+        IsExpanded = !IsExpanded;
+
+        if (ValueChanged.HasDelegate)
+        {
+            await ValueChanged.InvokeAsync(IsExpanded);
+        }
+
+        await IsExpandedChanged.InvokeAsync(IsExpanded);
+    }
+
+    private async Task HandleNavigateToFeedback(int moduleNumber)
+    {
+        await OnNavigateToFeedback.InvokeAsync(moduleNumber);
+    }
+
+    private void ToggleUnits(Module module)
+    {
+        module.ShowUnits = !module.ShowUnits;
+    }
+
+    private IEnumerable<Module> GetFilteredModules()
+    {
+        return Qualification.Modules.Where(m => m.ModuleNumber <= 3);
+    }
+
+    private string GetProgressChipClass(int progressPercentage)
+    {
+        if (progressPercentage == 100)
+            return "progress-chip progress-chip-completed";
+        else if (progressPercentage >= 50)
+            return "progress-chip progress-chip-current";
+        else
+            return "progress-chip progress-chip-pending";
+    }
+
+    // Method to determine if the entire qualification is completed
+    private bool IsQualificationCompleted()
+    {
+        // Check if the qualification status is "COMPLETED"
+        if (Qualification.Status?.ToUpper() == "COMPLETED")
+            return true;
+
+        // Alternative: Check if overall progress is 100%
+        if (Qualification.OverallProgress >= 100)
+            return true;
+
+        // Alternative: Check if all filtered modules are 100% complete
+        var filteredModules = GetFilteredModules();
+        return filteredModules.Any() && filteredModules.All(m => m.ProgressPercentage == 100);
+    }
+
+    // Method to get the qualification status text
+    private string GetQualificationStatusText()
+    {
+        return IsQualificationCompleted() ? "COMPLETED" : "IN PROGRESS";
+    }
+
+    // Method to get the qualification status chip class
+    private string GetQualificationStatusChipClass()
+    {
+        return IsQualificationCompleted() ? "status-chip status-chip-completed" : "status-chip";
+    }
+
+    // Method to get formatted qualification display name
+    private string GetQualificationDisplayName()
+    {
+        if (Qualification == null || string.IsNullOrEmpty(Qualification.QualificationName))
+            return "No Qualification Selected";
+
+        // If you want to include NQF level in the display
+        if (Qualification.NQFLevel > 0)
+        {
+            return $"{Qualification.QualificationName} NQF {Qualification.NQFLevel}";
+        }
+
+        return Qualification.QualificationName;
+    }
+
+    // Method to get module score percentage based on progress and completion
+    private int GetModuleScorePercentage(Module module)
+    {
+        // For completed modules, calculate score based on progress percentage
+        // You can customize this logic based on your business rules
+        if (module.ProgressPercentage == 100)
+        {
+            // For completed modules, you might want to show actual scores
+            // This is a placeholder calculation - adjust based on your scoring system
+            return Math.Max(85, Math.Min(95, 85 + (module.UnitsCompleted * 2)));
+        }
+
+        // For non-completed modules, return progress percentage or 0
+        return module.ProgressPercentage >= 100 ? module.ProgressPercentage : 0;
+    }
+
+    // Method to get module time to complete based on module complexity
+    private string GetModuleTimeToComplete(Module module)
+    {
+        // Calculate time based on total units or use predefined values
+        return module.TotalUnits switch
+        {
+            <= 3 => "4 weeks",
+            <= 5 => "6 weeks",
+            <= 8 => "8 weeks",
+            _ => "10 weeks"
+        };
+    }
+
+    private string GetUnitProgressClass(string progressStatus)
+    {
+        return progressStatus switch
+        {
+            "Completed" => "unit-progress-completed",
+            "Not Started" => "unit-progress-not-started",
+            "In Progress" => "unit-progress-in-progress",
+            "20%" => "unit-progress-in-progress",
+            _ => "unit-progress-not-started",
+        };
+    }
+}
+
+    <style>
+    .modules-card {
+        background: white;
+        border-radius: 16px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+    }
+
+    .modules-header {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-weight: 600;
+        color: #1e3a5f;
+    }
+
+    .status-chip {
+        background-color: #e0f2f7 !important;
+        color: #1e3a5f !important;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid #1e3a5f !important;
+        text-transform: uppercase;
+        box-shadow: none !important;
+    }
+
+    .status-chip-completed {
+        background-color: #d4edda !important;
+        color: #155724 !important;
+        border: 1px solid #155724 !important;
+    }
+
+    .chip-icon {
+        color: #1e3a5f !important;
+        margin-left: 4px;
+    }
+
+    /* Custom Table Header Styles */
+    .table-header {
+        background: none;
+        color: white;
+        padding: 0;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+        .table-header .header-column,
+        .table-header .last-header-column {
+            background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+            padding: 16px 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .table-header .header-column {
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .table-header .last-header-column {
+            border-right: none;
+        }
+
+        .table-header .mud-text {
+            color: inherit;
+            font-weight: inherit;
+            font-size: inherit;
+            text-transform: inherit;
+            letter-spacing: inherit;
+        }
+
+    .module-section {
+        padding: 20px;
+        margin-bottom: 16px;
+        border-radius: 12px;
+        border-left: 4px solid #e9ecef;
+    }
+
+    .module-number {
+        font-weight: 700;
+        color: #1e3a5f;
+        margin-bottom: 4px;
+        line-height: 1.3;
+    }
+
+    .module-name {
+        color: #6c757d;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    .locked-text {
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .introduction-button {
+        background-color: #1e3a5f !important;
+        color: white;
+        text-transform: none;
+        border-radius: 20px;
+        white-space: nowrap;
+        padding: 8px 16px;
+        font-size: 12px;
+        box-shadow: none;
+    }
+
+    .score-percentage {
+        font-weight: 600;
+        color: #155724;
+        font-size: 16px;
+        text-align: center;
+        background-color: #d4edda;
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: inline-block;
+        min-width: 60px;
+    }
+
+    .time-complete {
+        font-weight: 600;
+        color: #1e3a5f;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .progress-chip {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+        min-width: 60px;
+        box-shadow: none;
+    }
+
+    .progress-chip-completed {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .progress-chip-current {
+        background-color: #1e3a5f;
+        color: white;
+    }
+
+    .progress-chip-pending {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .feedback-button {
+        border-radius: 20px;
+        position: relative;
+        text-transform: none;
+        font-weight: 600;
+        box-shadow: none;
+        padding: 8px 16px;
+        overflow: visible;
+    }
+
+    .feedback-button-new {
+        background-color: #4CAF50 !important;
+        color: white !important;
+    }
+
+    .feedback-button-view {
+        background-color: #4CAF50 !important;
+        color: white !important;
+    }
+
+    
+
+    .feedback-text {
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .units-button {
+        background-color: #1e3a5f !important;
+        color: white;
+        text-transform: none;
+        border-radius: 20px;
+        white-space: nowrap;
+        padding: 8px 16px;
+        font-size: 12px;
+        box-shadow: none;
+    }
+
+    .units-section {
+        background-color: #f8f9fa;
+        padding: 0;
+        border-radius: 8px;
+        margin-top: 16px;
+        overflow: hidden;
+    }
+
+    /* Units Table Header */
+    .units-table-header {
+        background: none;
+        margin: 0;
+        width: 100%;
+    }
+
+    .units-header-column,
+    .units-header-column-last {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        padding: 12px 16px;
+        color: white;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .units-header-column {
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .units-header-column-last {
+        border-right: none;
+    }
+
+    .units-table-header .mud-text {
+        color: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        text-transform: inherit;
+        letter-spacing: inherit;
+    }
+
+    /* Units Data Rows */
+    .unit-data-row {
+        background: white;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .unit-data-row:last-child {
+            border-bottom: none;
+        }
+
+    .unit-cell {
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        min-height: 50px;
+    }
+
+    /* Progress Status Chips */
+    .progress-status-completed {
+        background-color: #d4edda;
+        color: #155724;
+        font-weight: 600;
+        font-size: 11px;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    .progress-status-progress {
+        background-color: #1e3a5f;
+        color: white;
+        font-weight: 600;
+        font-size: 11px;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    .progress-status-not-started {
+        background-color: #f8d7da;
+        color: #721c24;
+        font-weight: 600;
+        font-size: 11px;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    /* Action Buttons */
+    .action-button {
+        font-size: 11px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        text-transform: none;
+        white-space: nowrap;
+    }
+
+    .review-button {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .start-button,
+    .continue-button {
+        background-color: #1e3a5f;
+        color: white;
+    }
+
+    .notification-button {
+        background-color: #dc3545;
+        color: white;
+        font-size: 10px;
+        padding: 6px 8px;
+    }
+
+    /* Submit Buttons */
+    .submit-button {
+        font-size: 11px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        text-transform: none;
+        white-space: nowrap;
+    }
+
+    .submitted-button {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .submit-active-button {
+        background-color: #1e3a5f;
+        color: white;
+    }
+
+    .not-available-button {
+        background-color: #e9ecef;
+        color: #6c757d;
+    }
+
+    /* Unauthorized Styles */
+    .unauthorized-content {
+        padding: 60px 40px;
+        text-align: center;
+    }
+
+    .unauthorized-title {
+        font-weight: 600;
+        color: #757575;
+        margin-bottom: 16px;
+    }
+
+    .unauthorized-text {
+        color: #9e9e9e;
+        max-width: 400px;
+        margin: 0 auto 24px;
+        line-height: 1.6;
+    }
+</style>

@@ -1,0 +1,333 @@
+﻿@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models
+
+@* 
+@attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView Context="QualificationTimeline">
+        <Authorized>
+*@
+
+<MudCard Style="@cardStyle">
+    <MudCardContent Style="@cardContentStyle">
+        <MudText Typo="Typo.h5" Style="@titleStyle">
+            SETA Qualification Progress Timeline
+        </MudText>
+
+        <!-- Desktop/Tablet Timeline -->
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudContainer Style="@timelineContainerStyle">
+                <MudPaper Style="@progressLineBackgroundStyle" Elevation="0"></MudPaper>
+                <MudPaper Style="@progressLineFilledStyle(IsCompleted ? 9 : 3, IsCompleted ? 1.0 : 0.5)" Elevation="0"></MudPaper>
+
+                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Start" Style="position: relative; z-index: 2;">
+                    @foreach (var step in steps)
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Style="@stepStackStyle" @onclick="() => HandleStepClick(step.Number)">
+                            <MudAvatar Style="@step.AvatarStyle">
+                                @if (!string.IsNullOrEmpty(step.Icon))
+                                {
+                                    <MudIcon Icon="@step.Icon" Style="color: white; font-size: 1.1rem;" />
+                                }
+                                else if (!string.IsNullOrEmpty(step.Text))
+                                {
+                                    <MudText Style="@step.TextStyle">@step.Text</MudText>
+                                }
+                            </MudAvatar>
+                            <MudText Style="@stepTitleStyle">@step.Title</MudText>
+                            <MudText Style="@step.StatusStyle">@step.Status</MudText>
+                        </MudStack>
+                    }
+                </MudStack>
+            </MudContainer>
+        </MudHidden>
+
+        <!-- Mobile Timeline (Vertical) -->
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudContainer Style="@mobileTimelineContainerStyle">
+                <!-- Vertical progress line -->
+                <MudPaper Style="@mobileProgressLineBackgroundStyle" Elevation="0"></MudPaper>
+                <MudPaper Style="@mobileProgressLineFilledStyle(IsCompleted ? 9 : 3, IsCompleted ? 1.0 : 0.5)" Elevation="0"></MudPaper>
+
+                <MudStack Spacing="4" Style="position: relative; z-index: 2;">
+                    @foreach (var step in steps)
+                    {
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="@mobileStepStackStyle" @onclick="() => HandleStepClick(step.Number)">
+                            <MudAvatar Style="@GetMobileAvatarStyle(step.AvatarStyle)">
+                                @if (!string.IsNullOrEmpty(step.Icon))
+                                {
+                                    <MudIcon Icon="@step.Icon" Style="color: white; font-size: 1rem;" />
+                                }
+                                else if (!string.IsNullOrEmpty(step.Text))
+                                {
+                                    <MudText Style="@GetMobileTextStyle(step.TextStyle)">@step.Text</MudText>
+                                }
+                            </MudAvatar>
+                            <MudStack Spacing="1" Style="flex: 1;">
+                                <MudText Style="@mobileStepTitleStyle">@step.Title</MudText>
+                                <MudText Style="@step.StatusStyle">@step.Status</MudText>
+                            </MudStack>
+                        </MudStack>
+                    }
+                </MudStack>
+            </MudContainer>
+        </MudHidden>
+    </MudCardContent>
+</MudCard>
+
+<!-- Timeline Step Dialog -->
+<TimelineDialogs IsVisible="showDialog"
+                 Title="@dialogTitle"
+                 StepNumber="selectedStep"
+                 IsCompletedCourse="@IsCompleted"
+                 OnClose="CloseDialog" />
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter]
+    public SetaQualificationModel Qualification { get; set; } = new();
+
+    private bool IsCompleted => Qualification?.QualificationName?.Contains("FET Certificate: Project Management") == true ||
+                               Qualification?.QualificationName?.Contains("Completed") == true;
+
+    private bool showDialog = false;
+    private string dialogTitle = "";
+    private int selectedStep = 1;
+
+    private const int TotalSteps = 9;
+    private const int AvatarSize = 50;
+    private const int MobileAvatarSize = 40;
+    private const int LineThickness = 4;
+
+    // Responsive card styles
+    private string cardStyle = "background: white; border-radius: clamp(8px, 2vw, 12px); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); margin: clamp(16px, 4vw, 20px);";
+    private string cardContentStyle = "padding: clamp(20px, 5vw, 30px) !important;";
+    private string titleStyle = "font-size: clamp(16px, 3vw, 18px); font-weight: 600; color: #1e3a5f; margin-bottom: clamp(24px, 6vw, 40px); text-align: center;";
+
+    // Desktop timeline styles
+    private string timelineContainerStyle = "position: relative; padding: 20px 0; min-height: 100px;";
+    private string progressLineBackgroundStyle = $"position: absolute; top: {AvatarSize / 2 + 20}px; left: 0; right: 0; height: {LineThickness}px; background-color: #e0e0e0; z-index: 1;";
+
+    // Mobile timeline styles
+    private string mobileTimelineContainerStyle = "position: relative; padding: 20px 0;";
+    private string mobileProgressLineBackgroundStyle = $"position: absolute; left: {MobileAvatarSize / 2 + 12}px; top: 0; bottom: 0; width: {LineThickness}px; background-color: #e0e0e0; z-index: 1;";
+
+    private string progressLineFilledStyle(int lastFullyCompletedStep, double currentStepProgress = 0)
+    {
+        double totalSegments = TotalSteps - 1;
+        double segmentsPassed = Math.Min((lastFullyCompletedStep - 1) + currentStepProgress, totalSegments);
+        double filledWidthPercentage = (segmentsPassed / totalSegments) * 100;
+
+        return $"position: absolute; top: {AvatarSize / 2 + 20}px; left: 0; width: {filledWidthPercentage}%; height: {LineThickness}px; background-color: #28a745; z-index: 1; transition: width 0.8s ease-in-out;";
+    }
+
+    private string mobileProgressLineFilledStyle(int lastFullyCompletedStep, double currentStepProgress = 0)
+    {
+        double totalSegments = TotalSteps - 1;
+        double segmentsPassed = Math.Min((lastFullyCompletedStep - 1) + currentStepProgress, totalSegments);
+        double filledHeightPercentage = (segmentsPassed / totalSegments) * 100;
+
+        return $"position: absolute; left: {MobileAvatarSize / 2 + 12}px; top: 0; height: {filledHeightPercentage}%; width: {LineThickness}px; background-color: #28a745; z-index: 1; transition: height 0.8s ease-in-out;";
+    }
+
+    // Desktop step styles
+    private string stepStackStyle = "cursor: pointer; flex: 1; text-align: center; position: relative; z-index: 3; transition: transform 0.2s ease;";
+    private string stepTitleStyle = "font-size: clamp(9px, 1.5vw, 11px); font-weight: 500; color: #1e3a5f; margin-top: 8px; line-height: 1.2; text-align: center; padding: 0 2px;";
+
+    // Mobile step styles
+    private string mobileStepStackStyle = "cursor: pointer; position: relative; z-index: 3; transition: transform 0.2s ease; padding: 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.5);";
+    private string mobileStepTitleStyle = "font-size: 14px; font-weight: 500; color: #1e3a5f; line-height: 1.3;";
+
+    // Status styles
+    private string completedStatusStyle = "font-size: clamp(8px, 1.2vw, 9px); color: #28a745; font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.3px;";
+    private string inProgressStatusStyle = "font-size: clamp(8px, 1.2vw, 9px); color: #1e3a5f; font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.3px;";
+    private string pendingStatusStyle = "font-size: clamp(8px, 1.2vw, 9px); color: #9e9e9e; font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.3px;";
+
+    // Desktop avatar styles
+    private string completedAvatarStyle = $"background-color: #28a745; width: {AvatarSize}px; height: {AvatarSize}px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 3;";
+    private string inProgressAvatarStyle = $"background-color: #1e3a5f; width: {AvatarSize}px; height: {AvatarSize}px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 3;";
+    private string pendingAvatarStyle = $"background-color: #f5f5f5; border: 2px solid #ddd; width: {AvatarSize}px; height: {AvatarSize}px; border-radius: 50%; z-index: 3;";
+
+    // Mobile avatar styles
+    private string GetMobileAvatarStyle(string desktopStyle)
+    {
+        if (desktopStyle.Contains("#28a745"))
+            return $"background-color: #28a745; width: {MobileAvatarSize}px; height: {MobileAvatarSize}px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 3;";
+        else if (desktopStyle.Contains("#1e3a5f"))
+            return $"background-color: #1e3a5f; width: {MobileAvatarSize}px; height: {MobileAvatarSize}px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 3;";
+        else
+            return $"background-color: #f5f5f5; border: 2px solid #ddd; width: {MobileAvatarSize}px; height: {MobileAvatarSize}px; border-radius: 50%; z-index: 3;";
+    }
+
+    private string percentageStyle = "color: white; font-size: clamp(10px, 2vw, 12px); font-weight: 700;";
+    private string numberStyle = "color: #999; font-size: clamp(14px, 2.5vw, 16px); font-weight: 600;";
+
+    private string GetMobileTextStyle(string? desktopStyle)
+    {
+        if (desktopStyle?.Contains("white") == true)
+            return "color: white; font-size: 10px; font-weight: 700;";
+        else
+            return "color: #999; font-size: 14px; font-weight: 600;";
+    }
+
+    private List<TimelineStep> steps => IsCompleted ? CompletedSteps : InProgressSteps;
+
+    private List<TimelineStep> CompletedSteps => new()
+    {
+        new(1, "Registration", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(2, "Induction", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(3, "Documentation Received", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(4, "Qualification in Progress", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(5, "Internal Assessment", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(6, "Internal Moderation", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(7, "SETA Moderation", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(8, "Completed", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(9, "SETA Certificate Available", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+    };
+
+    private List<TimelineStep> InProgressSteps => new()
+    {
+        new(1, "Registration", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(2, "Induction", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(3, "Documentation Received", "COMPLETED", completedAvatarStyle, completedStatusStyle, Icons.Material.Filled.Check),
+        new(4, "Qualification in Progress", "IN PROGRESS", inProgressAvatarStyle, inProgressStatusStyle, null, "75%", percentageStyle),
+        new(5, "Internal Assessment", "PENDING", pendingAvatarStyle, pendingStatusStyle, null, "5", numberStyle),
+        new(6, "Internal Moderation", "PENDING", pendingAvatarStyle, pendingStatusStyle, null, "6", numberStyle),
+        new(7, "SETA Moderation", "PENDING", pendingAvatarStyle, pendingStatusStyle, null, "7", numberStyle),
+        new(8, "Completed", "PENDING", pendingAvatarStyle, pendingStatusStyle, null, "8", numberStyle),
+        new(9, "SETA Certificate Available", "PENDING", pendingAvatarStyle, pendingStatusStyle, null, "9", numberStyle),
+    };
+
+    private void HandleStepClick(int step)
+    {
+        selectedStep = step;
+        dialogTitle = step switch
+        {
+            1 => "Registration Stage",
+            2 => "Induction Stage",
+            3 => "Documentation Received",
+            4 => "Qualification in Progress",
+            5 => "Internal Assessment",
+            6 => "Internal Moderation",
+            7 => "SETA Moderation",
+            8 => "Qualification Completed",
+            9 => "SETA Certificate Available",
+            _ => ""
+        };
+
+        showDialog = true;
+        StateHasChanged();
+    }
+
+    protected override void OnParametersSet()
+    {
+        StateHasChanged();
+    }
+
+    private void CloseDialog()
+    {
+        showDialog = false;
+        StateHasChanged();
+    }
+
+    private class TimelineStep
+    {
+        public int Number { get; }
+        public string Title { get; }
+        public string Status { get; }
+        public string AvatarStyle { get; }
+        public string StatusStyle { get; }
+        public string? Icon { get; }
+        public string? Text { get; }
+        public string? TextStyle { get; }
+
+        public TimelineStep(int number, string title, string status, string avatarStyle, string statusStyle, string? icon = null, string? text = null, string? textStyle = null)
+        {
+            Number = number;
+            Title = title;
+            Status = status;
+            AvatarStyle = avatarStyle;
+            StatusStyle = statusStyle;
+            Icon = icon;
+            Text = text;
+            TextStyle = textStyle;
+        }
+    }
+}
+
+<style>
+    /* Hover effects for interactive elements */
+    .mud-stack:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 960px) {
+        .mud-card
+
+    {
+        margin: 12px !important;
+    }
+
+    }
+
+    @@media (max-width: 600px) {
+        .mud-card
+
+    {
+        margin: 8px !important;
+        border-radius: 8px !important;
+    }
+
+    .mud-card-content {
+        padding: 16px !important;
+    }
+
+    }
+
+    /* Animation for timeline */
+    .mud-container {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    @@keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Mobile timeline enhancements */
+    @@media (max-width: 599px) {
+        .mobile-step-item
+
+    {
+        padding: 12px 8px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background: rgba(30, 58, 95, 0.02);
+        border: 1px solid rgba(30, 58, 95, 0.1);
+    }
+
+    .mobile-step-item:hover {
+        background: rgba(30, 58, 95, 0.05);
+        transform: translateX(4px);
+    }
+
+    }
+</style>

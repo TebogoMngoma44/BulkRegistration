@@ -1,0 +1,75 @@
+﻿@* Components/PracticalAssignment/TopNavigation.razor *@
+@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models.PracticalAssignment
+@attribute [Authorize]
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudAppBar Elevation="0" Style="background: white; height: 70px; border-bottom: 1px solid #e5e7eb;">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="d-flex align-center justify-space-between pa-3" Style="height: 100%;">
+        <!-- Logo -->
+        <MudPaper Class="d-flex align-center justify-center"
+                  Style="background-color: #1e3a8a; border-radius: 6px; width: 40px; height: 40px; box-shadow: none;">
+            <MudText Typo="Typo.subtitle2" Style="color: white; font-weight: bold; font-size: 0.9rem;">SC</MudText>
+        </MudPaper>
+        
+        <!-- Navigation Items -->
+        <MudContainer Class="d-flex align-center justify-center flex-grow-1 pa-0">
+            @if (NavigationItems != null)
+            {
+                @foreach (var item in NavigationItems)
+                {
+                    <MudButton Variant="@(item.IsActive ? Variant.Filled : Variant.Text)"
+                               Href="@item.Route"
+                               Class="mx-1"
+                               Style="@GetNavButtonStyle(item.IsActive)">
+                        @item.Text
+                    </MudButton>
+                }
+            }
+        </MudContainer>
+        
+        <!-- User Profile -->
+        <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+            @if (UserProfile != null)
+            {
+                <MudBadge Content="@UserProfile.NotificationCount" 
+                          Color="Color.Warning" 
+                          Overlap="true" 
+                          Visible="@(UserProfile.NotificationCount > 0)">
+                    <MudIconButton Icon="@Icons.Material.Filled.Notifications"
+                                   Style="color: #6b7280;"
+                                   Size="Size.Medium" />
+                </MudBadge>
+                
+                <MudAvatar Style="background-color: #1e3a8a; font-weight: 600; width: 32px; height: 32px; font-size: 0.8rem; color: white;">
+                    @UserProfile.Initials
+                </MudAvatar>
+            }
+        </MudStack>
+    </MudContainer>
+</MudAppBar>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public List<NavigationItem>? NavigationItems { get; set; }
+    [Parameter] public UserProfile? UserProfile { get; set; }
+    
+    private string GetNavButtonStyle(bool isActive)
+    {
+        var baseStyle = "border-radius: 20px; font-weight: 500; font-size: 14px; padding: 8px 20px; min-height: 36px; text-transform: none; margin: 0 4px;";
+        
+        return isActive ?
+            baseStyle + " background-color: #1e3a8a !important; color: white !important;" :
+            baseStyle + " color: #374151 !important; background-color: transparent !important;";
+    }
+}

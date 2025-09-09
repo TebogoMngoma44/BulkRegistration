@@ -1,0 +1,635 @@
+﻿@page "/FAQ/FaqHelp"
+@layout BlankLayout
+@using MudBlazor
+
+
+<!-- FAQ & Help Section - Main Content Container -->
+<MudContainer MaxWidth="MaxWidth.Large" Class="main-content-container">
+    <!-- FAQ Header -->
+    <MudStack AlignItems="AlignItems.Center" Spacing="2" Class="faq-header-section">
+        <MudText Typo="Typo.h4" Class="faq-title">
+            FAQ & Help
+        </MudText>
+
+        <MudText Typo="Typo.body1" Class="faq-subtitle">
+            Find answers to common questions and get help with your learning journey
+        </MudText>
+
+        <!-- Search Bar -->
+        <MudStack Class="search-container">
+            <MudStack Class="search-wrapper">
+                <MudTextField T="string"
+                              @bind-Value="searchQuery"
+                              Placeholder="Search for help topics..."
+                              Variant="Variant.Outlined"
+                              Class="faq-search-field"
+                              FullWidth="true"
+                              Immediate="true"
+                              OnKeyUp="@HandleSearchInput" />
+                @if (showSuggestions && filteredSuggestions.Any())
+                {
+                    <MudPaper Class="search-suggestions-dropdown" Elevation="2">
+                        <MudList T="string" Dense="true">
+                            @foreach (var suggestion in filteredSuggestions)
+                            {
+                                <MudListItem T="string" OnClick="@(() => SelectSuggestion(suggestion))" Class="search-suggestion-item-wrapper">
+                                    <MudText Class="search-suggestion-item">
+                                        @suggestion
+                                    </MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    </MudPaper>
+                }
+            </MudStack>
+        </MudStack>
+    </MudStack>
+
+    <!-- FAQ Content Sections -->
+    <MudStack Class="faq-content-sections">
+        <MudStack Spacing="4" Class="pa-0">
+            <!-- Getting Started Section -->
+            <MudStack Spacing="1">
+                <MudStack Class="faq-section-header" Style="padding-top: 0;">
+                    <!-- First section doesn't need top padding -->
+                    <MudStack Row Class="faq-section-title-row">
+                        <MudText Class="faq-section-emoji">🚀</MudText>
+                        <MudText Typo="Typo.h5" Class="faq-section-title">
+                            Getting Started
+                        </MudText>
+                    </MudStack>
+                    <MudDivider Class="faq-section-line" />
+                </MudStack>
+
+                <MudStack Spacing="1" Class="faq-questions-list">
+                    <!-- Course Materials -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("course-materials"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I access my course materials?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("course-materials") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("course-materials"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Log in to the Learning Platform with your registered email and password<br />
+                                2. Navigate to "My Courses" from the dashboard and select your qualification<br />
+                                3. Click on the relevant module to view study guides, videos, and downloadable resources
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Submit Assignments -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("submit-assignments"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I submit assignments?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("submit-assignments") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("submit-assignments"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Go to "Assessments" section in your course module and click the assignment<br />
+                                2. Review requirements, click "Upload Submission" and select your completed file<br />
+                                3. Add comments if required and click "Submit Assignment" before the deadline
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- File Formats -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("file-formats"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                What file formats are accepted for submissions?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("file-formats") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("file-formats"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Documents: PDF, Word (.doc, .docx), PowerPoint (.ppt, .pptx), Excel (.xls, .xlsx)<br />
+                                2. Images: JPEG, PNG, GIF and compressed files: ZIP, RAR<br />
+                                3. Maximum file size is 25MB per submission
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Navigate Platform -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("navigate-platform"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I navigate the learning platform?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("navigate-platform") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("navigate-platform"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Main Dashboard shows current courses, deadlines, and announcements<br />
+                                2. "My Courses" for modules, "Assessments" for submissions, "Messages" for communication<br />
+                                3. Use the top navigation bar and search function to quickly find specific content
+                            </MudText>
+                        </MudPaper>
+                    }
+                </MudStack>
+            </MudStack>
+
+            <!-- Technical Support Section -->
+            <MudStack Spacing="1">
+                <MudStack Class="faq-section-header">
+                    <MudStack Row Class="faq-section-title-row">
+                        <MudText Class="faq-section-emoji">🔧</MudText>
+                        <MudText Typo="Typo.h5" Class="faq-section-title">
+                            Technical Support
+                        </MudText>
+                    </MudStack>
+                    <MudDivider Class="faq-section-line" />
+                </MudStack>
+
+                <MudStack Spacing="1" Class="faq-questions-list">
+                    <!-- Login Issues -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("login-issues"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                I'm having trouble logging in. What should I do?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("login-issues") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("login-issues"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Check your credentials and click "Forgot Password" if needed<br />
+                                2. Clear browser cache and try a different browser (Chrome, Firefox, or Edge)<br />
+                                3. Contact IT Support at support@example.com if issues persist
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Video Issues -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("video-issues"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                Videos won't play or are buffering constantly. How can I fix this?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("video-issues") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("video-issues"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Check internet speed (minimum 5 Mbps required) and use wired connection if possible<br />
+                                2. Update browser, disable extensions, and lower video quality to 480p<br />
+                                3. Download videos for offline viewing or access during off-peak hours
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Personal Information -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("personal-info"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I update my personal information?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("personal-info") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("personal-info"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Log in and click your profile icon, then select "My Profile" or "Account Settings"<br />
+                                2. Update contact details, address, emergency contacts, and banking details<br />
+                                3. Click "Save Changes" - contact your facilitator for ID number or qualification changes
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Platform Performance -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("platform-performance"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                The platform is running slowly. What can I do?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("platform-performance") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("platform-performance"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Clear browser cache, close unnecessary tabs, and restart your browser<br />
+                                2. Ensure 4GB RAM, update browser/OS, and close background applications<br />
+                                3. Check network usage and try accessing at different times
+                            </MudText>
+                        </MudPaper>
+                    }
+                </MudStack>
+            </MudStack>
+
+            <!-- Assessments & Progress Section -->
+            <MudStack Spacing="1">
+                <MudStack Class="faq-section-header">
+                    <MudStack Row Class="faq-section-title-row">
+                        <MudText Class="faq-section-emoji">📋</MudText>
+                        <MudText Typo="Typo.h5" Class="faq-section-title">
+                            Assessments & Progress
+                        </MudText>
+                    </MudStack>
+                    <MudDivider Class="faq-section-line" />
+                </MudStack>
+
+                <MudStack Spacing="1" Class="faq-questions-list">
+                    <!-- Assessment Feedback -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("assessment-feedback"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                When will I receive feedback on my assessments?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("assessment-feedback") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("assessment-feedback"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Formative assessments: 3-5 business days, Summative: 7-10 days, Projects: 10-14 days<br />
+                                2. You'll receive email notification with detailed comments and improvement areas<br />
+                                3. Contact your assessor if feedback is delayed beyond expected timeframe
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Track Progress -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("track-progress"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I track my learning progress?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("track-progress") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("track-progress"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Navigate to "My Progress" to view completion percentages and upcoming deadlines<br />
+                                2. Each module shows completed units, assessment scores, and time spent<br />
+                                3. Access Portfolio of Evidence for submission history and progress reports
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Assignment Extensions -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("assignment-extensions"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                Can I request an extension for an assignment?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("assignment-extensions") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("assignment-extensions"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Valid reasons: medical emergencies, family issues, technical problems, work commitments<br />
+                                2. Contact facilitator 48 hours before deadline using "Create Message" feature<br />
+                                3. Provide supporting documentation and proposed new deadline
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Failed Assessment -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("failed-assessment"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                What happens if I fail an assessment?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("failed-assessment") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("failed-assessment"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Receive detailed feedback, additional resources, and consultation opportunity<br />
+                                2. Review feedback, complete extra learning activities, and resubmit within timeframe<br />
+                                3. Maximum 2 resubmission attempts - additional coaching available if needed
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Course Requirements -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("course-requirements"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I know if I'm meeting course requirements?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("course-requirements") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("course-requirements"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Check "Module Information" for outcomes and download qualification handbook<br />
+                                2. Green checkmarks show completion, yellow shows partial, red shows missing work<br />
+                                3. Monthly facilitator reviews and automated reminders keep you on track
+                            </MudText>
+                        </MudPaper>
+                    }
+                </MudStack>
+            </MudStack>
+
+            <!-- Communication & Support Section -->
+            <MudStack Spacing="1">
+                <MudStack Class="faq-section-header">
+                    <MudStack Row Class="faq-section-title-row">
+                        <MudText Class="faq-section-emoji">💭</MudText>
+                        <MudText Typo="Typo.h5" Class="faq-section-title">
+                            Communication & Support
+                        </MudText>
+                    </MudStack>
+                    <MudDivider Class="faq-section-line" />
+                </MudStack>
+
+                <MudStack Spacing="1" Class="faq-questions-list">
+                    <!-- Contact Types -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("contact-types"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                Who should I contact for different types of issues?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("contact-types") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("contact-types"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Facilitator: course content and learning guidance, Assessor: assessment queries<br />
+                                2. IT Help Desk: platform issues (support@example.com or 0800 123 456)<br />
+                                3. Student Services: personal updates, Learning Coordinator: schedule changes
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Response Times -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("response-times"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How quickly can I expect a response to my messages?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("response-times") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("response-times"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Urgent technical: 4 hours, Academic: 24 hours, Administrative: 48 hours<br />
+                                2. Business hours: Monday-Friday 8AM-5PM<br />
+                                3. Priority given to deadline-affecting issues and platform access problems
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Effective Messaging -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("effective-messaging"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                How do I create and send messages effectively?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("effective-messaging") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("effective-messaging"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Use clear subject line, include course details and error messages<br />
+                                2. Mention steps already taken and urgency level for deadlines<br />
+                                3. Include screenshots, student ID, and device/browser info for technical issues
+                            </MudText>
+                        </MudPaper>
+                    }
+
+                    <!-- Appointments -->
+                    <MudPaper Class="faq-question-card" Elevation="0" @onclick="@(() => ToggleQuestion("appointments"))">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                            <MudText Typo="Typo.body1" Class="faq-question-text">
+                                Can I schedule appointments with my facilitator or assessor?
+                            </MudText>
+                            <MudText Class="@($"faq-dropdown-arrow {(IsExpanded("appointments") ? "expanded" : "")}")">▼</MudText>
+                        </MudStack>
+                    </MudPaper>
+                    @if (IsExpanded("appointments"))
+                    {
+                        <MudPaper Class="faq-answer-card" Elevation="0">
+                            <MudText Typo="Typo.body2" Class="faq-answer-text">
+                                1. Available for academic support, progress reviews, assessment guidance, and portfolio reviews<br />
+                                2. Use "Create Message" to request appointment with preferred dates and purpose<br />
+                                3. Choose virtual (Teams/Zoom) or phone - usually scheduled within 3-5 business days
+                            </MudText>
+                        </MudPaper>
+                    }
+                </MudStack>
+            </MudStack>
+
+            <!-- Still Need Help Section -->
+            <MudStack Spacing="3">
+                <MudPaper Class="help-banner" Elevation="1">
+                    <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                        <MudText Typo="Typo.h6" Class="help-banner-title">
+                            Still Need Help?
+                        </MudText>
+
+                        <MudText Typo="Typo.body1" Class="help-banner-text" Style="color: #12265E !important;">
+                            If you couldn't find the answer to your question, don't hesitate to reach out to our support team. We're here to help you succeed in your learning journey.
+                        </MudText>
+
+                        <MudButton Variant="Variant.Filled"
+                                   Class="help-action-button"
+                                   Style="background-color: #12265E !important; color: white !important; font-weight: 600 !important; padding: 12px 24px !important; border-radius: 6px !important; text-transform: none !important;"
+                                   OnClick="@(() => NavigateToCreateMessage())">
+                            Send Message
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            </MudStack>
+        </MudStack>
+    </MudStack>
+</MudContainer>
+
+@code {
+    private string searchQuery = "";
+    private bool showSuggestions = false;
+    private List<string> filteredSuggestions = new List<string>();
+    private System.Timers.Timer searchTimer;
+    private HashSet<string> expandedQuestions = new HashSet<string>();
+
+    // List of all FAQ questions for search suggestions
+    private readonly List<string> faqQuestions = new List<string>
+    {
+        // Getting Started - Clean suggestions without question marks
+        "Access course materials",
+        "How to access course materials",
+        "Submit assignments",
+        "How to submit assignments",
+        "Accepted file formats for submissions",
+        "Navigate the learning platform",
+        "How to navigate the platform",
+
+        // Technical Support - Clean suggestions
+        "Login troubleshooting",
+        "How to fix login issues",
+        "Video playback issues",
+        "How to fix video problems",
+        "Update personal information",
+        "How to update profile",
+        "Platform performance issues",
+        "How to improve platform speed",
+
+        // Assessments & Progress - Clean suggestions
+        "Assessment feedback timeline",
+        "How to get feedback",
+        "Track learning progress",
+        "How to track progress",
+        "Request assignment extension",
+        "How to request extension",
+        "Failed assessment process",
+        "How to handle failed assessment",
+        "Meeting course requirements",
+        "How to meet requirements",
+
+        // Communication & Support - Clean suggestions
+        "Contact support for issues",
+        "How to contact support",
+        "Message response times",
+        "How to get quick responses",
+        "Effective messaging tips",
+        "How to write effective messages",
+        "Schedule appointments",
+        "How to schedule appointments",
+
+        // Additional keywords for better search
+        "how", "how do", "how to", "what", "when", "where", "why",
+        "course materials", "submit", "assignments", "file formats", "navigation",
+        "login", "logging in", "password", "videos", "buffering", "playback",
+        "personal information", "profile", "update details", "platform performance",
+        "slow", "feedback", "assessments", "grades", "progress", "tracking",
+        "extension", "deadline", "fail", "requirements", "contact", "support",
+        "response time", "messages", "communication", "appointments", "facilitator",
+        "assessor", "help", "technical issues", "problems"
+    };
+
+    protected override void OnInitialized()
+    {
+        searchTimer = new System.Timers.Timer(300);
+        searchTimer.Elapsed += async (sender, e) => await SearchWithDelay();
+        searchTimer.AutoReset = false;
+    }
+
+    private void HandleSearchInput(KeyboardEventArgs e)
+    {
+        searchTimer.Stop();
+        searchTimer.Start();
+
+        if (string.IsNullOrWhiteSpace(searchQuery))
+        {
+            showSuggestions = false;
+            filteredSuggestions.Clear();
+        }
+    }
+
+    private async Task SearchWithDelay()
+    {
+        await InvokeAsync(() =>
+        {
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                filteredSuggestions = faqQuestions
+                    .Where(x => x.Contains(searchQuery, StringComparison.InvariantCultureIgnoreCase))
+                    .Take(8)
+                    .ToList();
+
+                showSuggestions = filteredSuggestions.Any();
+            }
+            else
+            {
+                showSuggestions = false;
+                filteredSuggestions.Clear();
+            }
+            StateHasChanged();
+        });
+    }
+
+    private void SelectSuggestion(string suggestion)
+    {
+        searchQuery = suggestion;
+        showSuggestions = false;
+        StateHasChanged();
+    }
+
+    private async Task<IEnumerable<string>> SearchFAQ(string value, CancellationToken cancellationToken)
+    {
+        // Keeping this for backward compatibility if needed
+        if (string.IsNullOrWhiteSpace(value))
+            return new List<string>();
+
+        await Task.Delay(5, cancellationToken);
+
+        return faqQuestions
+            .Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase))
+            .Take(8)
+            .ToList();
+    }
+
+    private void NavigateToCreateMessage()
+    {
+        // Handle navigation to create message page
+        // Example: NavigationManager.NavigateTo("/create-message");
+    }
+
+    private void OnNotificationClick()
+    {
+        // Handle notification click
+        // Example: Show notification panel or navigate to notifications page
+    }
+
+    private void ToggleQuestion(string questionId)
+    {
+        if (expandedQuestions.Contains(questionId))
+        {
+            expandedQuestions.Remove(questionId);
+        }
+        else
+        {
+            expandedQuestions.Add(questionId);
+        }
+        StateHasChanged();
+    }
+
+    private bool IsExpanded(string questionId)
+    {
+        return expandedQuestions.Contains(questionId);
+    }
+
+    public void Dispose()
+    {
+        searchTimer?.Dispose();
+    }
+}

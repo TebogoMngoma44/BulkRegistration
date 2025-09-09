@@ -1,0 +1,629 @@
+﻿@page "/module-feedback/{moduleId:int}"
+@layout BlankLayout
+@using System.ComponentModel.DataAnnotations
+@attribute [Authorize]
+
+@* @attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView Context="ModuleFeedback">
+        <Authorized> *@
+
+<!-- Navigation Bar -->
+<MudAppBar Elevation="1" Style="background-color: white; color: #333; height: 70px; border-bottom: 1px solid #e0e0e0;">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding: 0 16px;">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%; height: 70px;">
+            <!-- Logo -->
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <img src="images/SpecCon-Logo.png"
+                     alt="SpecCon Holdings Logo"
+                     style="height: 50px; width: auto;" />
+            </MudStack>
+
+            <!-- Navigation Links - Hidden on mobile -->
+            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Dashboard
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" 
+                               Style="color: white; text-transform: none; padding: 8px 20px; border-radius: 25px; background: #1e3a5f; font-weight: 500; box-shadow: none;">
+                        My Qualifications
+                    </MudButton>
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Achievements
+                    </MudButton>
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Messages
+                    </MudButton>
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        Quick Tips
+                    </MudButton>
+                </MudStack>
+            </MudHidden>
+
+            <!-- User Profile and Notifications -->
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                <!-- Mobile Menu Button -->
+                <MudHidden Breakpoint="Breakpoint.LgAndUp">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" 
+                                   Style="color: #1e3a5f;" />
+                </MudHidden>
+                
+                <MudBadge Content="1" Color="Color.Warning" Overlap="true">
+                    <MudIconButton Icon="@Icons.Material.Filled.Notifications" 
+                                   Style="color: #ff9800; background: transparent; width: 40px; height: 40px;" />
+                </MudBadge>
+                <MudAvatar Style="background: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: 16px;">
+                    JS
+                </MudAvatar>
+            </MudStack>
+        </MudStack>
+    </MudContainer>
+</MudAppBar>
+
+<!-- Breadcrumb/Back Button -->
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding-top: 90px; padding-left: 16px; padding-right: 16px; padding-bottom: 0;">
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <div style="padding-left: 84px;">
+            <MudButton Variant="Variant.Filled" 
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       Style="background: #1e3a5f; color: white; text-transform: none; border-radius: 25px; padding: 8px 20px; margin-bottom: 20px; font-weight: 500;"
+                       Href="/qualifications">
+                Back
+            </MudButton>
+        </div>
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+        <MudButton Variant="Variant.Filled" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Style="background: #1e3a5f; color: white; text-transform: none; border-radius: 25px; padding: 8px 20px; margin-bottom: 20px; font-weight: 500;"
+                   Href="/qualifications">
+            Back
+        </MudButton>
+    </MudHidden>
+</MudContainer>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-4" Style="max-width: 1200px; background-color: #f5f5f5; min-height: 100vh; padding-top: 20px; padding-bottom: 20px;">
+
+    <!-- Header Section -->
+    <MudPaper Elevation="1" Style="background: #1e3a5f; border-radius: 8px; margin-bottom: 20px; color: white; text-align: center; padding: 30px;">
+        <MudText Typo="Typo.h4" Style="font-weight: 600; margin-bottom: 5px; color: white; font-size: clamp(20px, 4vw, 24px);">
+            Module Feedback
+        </MudText>
+        <MudText Typo="Typo.body1" Style="color: rgba(255,255,255,0.9); font-size: clamp(14px, 2.5vw, 16px);">
+            Communication in the Workplace - Module @ModuleId
+        </MudText>
+    </MudPaper>
+
+    <!-- Assessment Feedback Section -->
+    <MudPaper Elevation="1" Style="background: white; border-radius: 8px; margin-bottom: 20px;">
+        <!-- Assessment Feedback Header -->
+        <MudPaper Elevation="0" Style="background: #f1f3f4; padding: 20px; border-radius: 8px 8px 0 0; border-bottom: 1px solid #e0e0e0;">
+            <MudText Typo="Typo.h5" Style="font-weight: 600; color: #333; margin-bottom: 20px; font-size: clamp(16px, 3vw, 20px);">
+                Assessment Feedback
+            </MudText>
+            
+            <!-- Assessor Info - Responsive -->
+            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudAvatar Style="background-color: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: 16px;">
+                            @GetInitials(feedback.AssessorName)
+                        </MudAvatar>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle1" Style="font-weight: 600; color: #333; margin: 0;">
+                                @feedback.AssessorName
+                            </MudText>
+                            <MudText Typo="Typo.body2" Style="color: #666; margin: 0;">
+                                @feedback.AssessorTitle
+                            </MudText>
+                        </MudStack>
+                    </MudStack>
+                    <MudText Typo="Typo.body2" Style="color: #666;">
+                        @feedback.DateProvided.ToString("MMM dd, yyyy 'at' h:mm tt")
+                    </MudText>
+                </MudStack>
+            </MudHidden>
+            <!-- Mobile Version -->
+            <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                <MudStack Spacing="3">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudAvatar Style="background-color: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: 16px;">
+                            @GetInitials(feedback.AssessorName)
+                        </MudAvatar>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.subtitle1" Style="font-weight: 600; color: #333; margin: 0; font-size: 16px;">
+                                @feedback.AssessorName
+                            </MudText>
+                            <MudText Typo="Typo.body2" Style="color: #666; margin: 0; font-size: 14px;">
+                                @feedback.AssessorTitle
+                            </MudText>
+                        </MudStack>
+                    </MudStack>
+                    <MudText Typo="Typo.body2" Style="color: #666; text-align: center; font-size: 13px;">
+                        @feedback.DateProvided.ToString("MMM dd, yyyy 'at' h:mm tt")
+                    </MudText>
+                </MudStack>
+            </MudHidden>
+        </MudPaper>
+        
+        <MudCardContent Style="padding: 25px;">
+            <!-- Performance Title -->
+            <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin-bottom: 15px; font-size: clamp(14px, 2.5vw, 16px);">
+                @feedback.PerformanceTitle
+            </MudText>
+
+            <!-- Performance Description -->
+            <MudText Typo="Typo.body1" Style="color: #555; line-height: 1.6; margin-bottom: 25px; font-size: 14px;">
+                @feedback.PerformanceDescription
+            </MudText>
+
+            <!-- Strengths Section -->
+            @if (feedback.Strengths.Any())
+            {
+                <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin-bottom: 15px; font-size: clamp(14px, 2.5vw, 16px);">
+                    Strengths Identified:
+                </MudText>
+
+                <MudStack Style="margin-bottom: 25px; margin-left: 15px;">
+                    @foreach (var strength in feedback.Strengths)
+                    {
+                        <MudText Typo="Typo.body1" Style="color: #555; line-height: 1.5; margin-bottom: 5px; font-size: 14px;">
+                            • @strength
+                        </MudText>
+                    }
+                </MudStack>
+            }
+
+            <!-- Areas of Excellence Section -->
+            @if (feedback.AreasOfExcellence.Any())
+            {
+                <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin-bottom: 15px; font-size: clamp(14px, 2.5vw, 16px);">
+                    Areas of Excellence:
+                </MudText>
+
+                <MudStack Style="margin-bottom: 25px; margin-left: 15px;">
+                    @foreach (var excellence in feedback.AreasOfExcellence)
+                    {
+                        <MudText Typo="Typo.body1" Style="color: #555; line-height: 1.5; margin-bottom: 5px; font-size: 14px;">
+                            • @excellence
+                        </MudText>
+                    }
+                </MudStack>
+            }
+
+            <!-- Areas for Improvement Section -->
+            @if (feedback.AreasForImprovement.Any())
+            {
+                <MudText Typo="Typo.h6" Style="font-weight: 600; color: #d32f2f; margin-bottom: 15px; font-size: clamp(14px, 2.5vw, 16px);">
+                    Areas for Improvement:
+                </MudText>
+
+                <MudStack Style="margin-bottom: 25px; margin-left: 15px;">
+                    @foreach (var improvement in feedback.AreasForImprovement)
+                    {
+                        <MudText Typo="Typo.body1" Style="color: #555; line-height: 1.5; margin-bottom: 5px; font-size: 14px;">
+                            • @improvement
+                        </MudText>
+                    }
+                </MudStack>
+            }
+
+            <!-- Final Grade Section - Empty Blue Banner -->
+            <MudPaper Elevation="0" Style="background: #1e3a5f; color: white; padding: 15px; border-radius: 6px; margin-bottom: 20px; text-align: center;">
+            </MudPaper>
+            
+            <!-- Congratulations Message -->
+            <MudText Typo="Typo.body1" Style="color: #555; line-height: 1.6; margin-bottom: 15px; text-align: left; font-size: 14px;">
+                @feedback.CongratulationsMessage
+            </MudText>
+        </MudCardContent>
+    </MudPaper>
+
+    <!-- Reply Section -->
+    <MudPaper Elevation="1" Style="background: white; border-radius: 8px; margin-bottom: 20px;">
+        <!-- Reply Header -->
+        <MudPaper Elevation="0" Style="background: #1e3a5f; color: white; padding: 15px 20px; border-radius: 8px 8px 0 0;">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <MudIcon Icon="@Icons.Material.Filled.Reply" Style="color: white;" />
+                <MudText Typo="Typo.h6" Style="font-weight: 600; color: white; margin: 0; font-size: clamp(14px, 2.5vw, 16px);">
+                    Reply to Assessor
+                </MudText>
+            </MudStack>
+        </MudPaper>
+
+        <!-- Reply Content -->
+        <MudCardContent Style="padding: 25px;">
+            <MudForm @ref="replyForm" Model="replyModel">
+                <MudTextField T="string"
+                              @bind-Value="replyModel.ReplyText"
+                              Variant="Variant.Outlined"
+                              Lines="6"
+                              Placeholder="Type your reply to the assessor... You can ask questions, request clarification, or share your thoughts about the feedback."
+                              Style="margin-bottom: 15px;"
+                              Counter="1000"
+                              MaxLength="1000"
+                              Required="true"
+                              RequiredError="Please enter your reply message" />
+
+                <!-- Responsive Controls -->
+                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudStack Row="true" Spacing="4">
+                            <MudCheckBox T="bool" @bind-Checked="replyModel.IsUrgent" Label="Mark as urgent" Color="Color.Primary" />
+                            <MudCheckBox T="bool" @bind-Checked="replyModel.RequestFollowUp" Label="Request follow-up meeting" Color="Color.Primary" />
+                        </MudStack>
+
+                        <MudStack Row="true" Spacing="2">
+                            <MudButton Variant="Variant.Filled"
+                                       Style="background-color: #6c757d; color: white; text-transform: none; min-width: 120px;"
+                                       OnClick="@SaveDraft"
+                                       Disabled="@isProcessing">
+                                @if (isSavingDraft)
+                                {
+                                    <MudProgressCircular Color="Color.Default" Size="Size.Small" Indeterminate="true" />
+                                    <span style="margin-left: 8px;">Saving...</span>
+                                }
+                                else
+                                {
+                                    <span>Save Draft</span>
+                                }
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       Style="background-color: #1e3a5f; color: white; text-transform: none; min-width: 120px;"
+                                       OnClick="@SendReply"
+                                       Disabled="@isProcessing">
+                                @if (isSendingReply)
+                                {
+                                    <MudProgressCircular Color="Color.Default" Size="Size.Small" Indeterminate="true" />
+                                    <span style="margin-left: 8px;">Sending...</span>
+                                }
+                                else
+                                {
+                                    <span>Send Reply</span>
+                                }
+                            </MudButton>
+                        </MudStack>
+                    </MudStack>
+                </MudHidden>
+                <!-- Mobile Version - Stacked -->
+                <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                    <MudStack Spacing="3">
+                        <MudStack Spacing="2">
+                            <MudCheckBox T="bool" @bind-Checked="replyModel.IsUrgent" Label="Mark as urgent" Color="Color.Primary" />
+                            <MudCheckBox T="bool" @bind-Checked="replyModel.RequestFollowUp" Label="Request follow-up meeting" Color="Color.Primary" />
+                        </MudStack>
+
+                        <MudStack Row="true" Spacing="2" Justify="Justify.Center">
+                            <MudButton Variant="Variant.Filled"
+                                       Style="background-color: #6c757d; color: white; text-transform: none; flex: 1; max-width: 150px;"
+                                       OnClick="@SaveDraft"
+                                       Disabled="@isProcessing">
+                                @if (isSavingDraft)
+                                {
+                                    <MudProgressCircular Color="Color.Default" Size="Size.Small" Indeterminate="true" />
+                                    <span style="margin-left: 8px;">Saving...</span>
+                                }
+                                else
+                                {
+                                    <span>Save Draft</span>
+                                }
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       Style="background-color: #1e3a5f; color: white; text-transform: none; flex: 1; max-width: 150px;"
+                                       OnClick="@SendReply"
+                                       Disabled="@isProcessing">
+                                @if (isSendingReply)
+                                {
+                                    <MudProgressCircular Color="Color.Default" Size="Size.Small" Indeterminate="true" />
+                                    <span style="margin-left: 8px;">Sending...</span>
+                                }
+                                else
+                                {
+                                    <span>Send Reply</span>
+                                }
+                            </MudButton>
+                        </MudStack>
+                    </MudStack>
+                </MudHidden>
+            </MudForm>
+        </MudCardContent>
+    </MudPaper>
+
+    <!-- Feedback History Section -->
+    <MudPaper Elevation="1" Style="background: white; border-radius: 8px; margin-bottom: 20px;">
+        <MudPaper Elevation="0" Style="background: #f1f3f4; padding: 15px 20px; border-radius: 8px 8px 0 0; border-bottom: 1px solid #e0e0e0;">
+            <!-- Desktop Version -->
+            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin: 0;">
+                        Feedback History
+                    </MudText>
+                    <MudButton Variant="Variant.Filled"
+                               Size="Size.Small"
+                               Style="background-color: #1e3a5f; color: white; text-transform: none; border-radius: 20px; padding: 6px 16px;"
+                               OnClick="@ViewDrafts">
+                        View Drafts
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Size="Size.Small"
+                               Style="background-color: #1e3a5f; color: white; text-transform: none; border-radius: 20px; padding: 6px 16px;"
+                               Href="/feedback-history">
+                        View History
+                    </MudButton>
+                </MudStack>
+            </MudHidden>
+            <!-- Mobile Version - Stacked -->
+            <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin: 0; text-align: center;">
+                        Feedback History
+                    </MudText>
+                    <MudStack Row="true" Spacing="2" Justify="Justify.Center">
+                        <MudButton Variant="Variant.Filled"
+                                   Size="Size.Small"
+                                   Style="background-color: #1e3a5f; color: white; text-transform: none; border-radius: 20px; padding: 6px 16px; font-size: 12px;"
+                                   OnClick="@ViewDrafts">
+                            View Drafts
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Size="Size.Small"
+                                   Style="background-color: #1e3a5f; color: white; text-transform: none; border-radius: 20px; padding: 6px 16px; font-size: 12px;"
+                                   Href="/feedback-history">
+                            View History
+                        </MudButton>
+                    </MudStack>
+                </MudStack>
+            </MudHidden>
+        </MudPaper>
+    </MudPaper>
+
+</MudContainer>
+
+<!-- Snackbar for notifications -->
+<MudSnackbarProvider />
+
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public int ModuleId { get; set; }
+
+    private MudForm? replyForm;
+    private ReplyModel replyModel = new();
+    
+    private bool isProcessing = false;
+    private bool isSavingDraft = false;
+    private bool isSendingReply = false;
+
+    // Sample data - in real application, this would come from a service
+    private AssessmentFeedback feedback = new();
+    private List<FeedbackHistoryItem> feedbackHistory = new();
+
+    [Inject] private ISnackbar SnackbarService { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFeedbackData();
+        await LoadFeedbackHistory();
+    }
+
+    private async Task LoadFeedbackData()
+    {
+        // Simulate loading data - replace with actual service call
+        await Task.Delay(100);
+        
+        feedback = new AssessmentFeedback
+        {
+            AssessorName = "Sarah Johnson",
+            AssessorTitle = "Senior Assessor",
+            DateProvided = new DateTime(2025, 4, 18, 14, 30, 0),
+            PerformanceTitle = $"Outstanding Performance on Module {ModuleId}",
+            PerformanceDescription = "Your submission demonstrates exceptional understanding of workplace communication principles and practical application of professional interaction skills.",
+            Strengths = new List<string>
+            {
+                "Excellent grasp of workplace safety protocols and procedures",
+                "Strong demonstration of time management strategies",
+                "Outstanding conflict resolution skills in practical scenarios",
+                "Professional approach to giving and receiving feedback"
+            },
+            AreasOfExcellence = new List<string>
+            {
+                "Role-play scenarios were handled with maturity and professionalism",
+                "Written assessments showed clear understanding of concepts",
+                "Workplace evidence portfolio exceeded expectations"
+            },
+            AreasForImprovement = new List<string>(), // Empty for this excellent performance
+            FinalGrade = 92,
+            CongratulationsMessage = "Congratulations on achieving distinction level performance. Your work sets an excellent standard for future modules. Keep up the excellent work!"
+        };
+    }
+
+    private async Task SaveDraft()
+    {
+        if (replyForm != null)
+        {
+            await replyForm.Validate();
+            if (!replyForm.IsValid) return;
+        }
+
+        if (string.IsNullOrWhiteSpace(replyModel.ReplyText))
+        {
+            SnackbarService.Add("Please enter your reply message", Severity.Warning);
+            return;
+        }
+
+        isSavingDraft = true;
+        isProcessing = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate saving - replace with actual service call
+            await Task.Delay(1000);
+            
+            SnackbarService.Add("Draft saved successfully!", Severity.Success);
+        }
+        catch
+        {
+            SnackbarService.Add("Failed to save draft. Please try again.", Severity.Error);
+        }
+        finally
+        {
+            isSavingDraft = false;
+            isProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task SendReply()
+    {
+        if (replyForm != null)
+        {
+            await replyForm.Validate();
+            if (!replyForm.IsValid) return;
+        }
+
+        if (string.IsNullOrWhiteSpace(replyModel.ReplyText))
+        {
+            SnackbarService.Add("Please enter your reply message", Severity.Warning);
+            return;
+        }
+
+        isSendingReply = true;
+        isProcessing = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate sending - replace with actual service call
+            await Task.Delay(1500);
+            
+            // Clear the form after successful send
+            replyModel = new ReplyModel();
+            
+            SnackbarService.Add("Reply sent successfully!", Severity.Success);
+        }
+        catch
+        {
+            SnackbarService.Add("Failed to send reply. Please try again.", Severity.Error);
+        }
+        finally
+        {
+            isSendingReply = false;
+            isProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ViewDrafts()
+    {
+        // Navigate to drafts page or show drafts modal
+        SnackbarService.Add("View Drafts functionality coming soon!", Severity.Info);
+        await Task.CompletedTask;
+    }
+
+    private async Task LoadFeedbackHistory()
+    {
+        // Simulate loading history - replace with actual service call
+        await Task.Delay(100);
+        
+        feedbackHistory = new List<FeedbackHistoryItem>
+        {
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 4, 10),
+                Title = "Module 1 Progress Update:",
+                Content = "Great progress on your initial submissions. Your understanding of workplace communication principles is developing well. Please focus on completing the remaining units for final assessment.",
+                AdditionalInfo = "Current Progress: 80% complete"
+            },
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 4, 3),
+                Title = "Unit 1.1 & 1.2 Feedback:",
+                Content = "Excellent work on the workplace safety and time management units. Your practical examples demonstrate real-world application of the concepts. Consider expanding on conflict resolution techniques for the next units.",
+                AdditionalInfo = "Grade: Unit 1.1 - 88%, Unit 1.2 - 90%"
+            },
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 3, 28),
+                Title = "Module 1 Introduction:",
+                Content = "Welcome to Module 1! I'm excited to work with you on developing your workplace communication skills. Please review the module materials and don't hesitate to reach out if you have any questions.",
+                AdditionalInfo = "Expected completion: April 2025"
+            }
+        };
+    }
+
+    private string GetInitials(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return "??";
+        
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length >= 2)
+            return $"{parts[0][0]}{parts[1][0]}".ToUpper();
+        
+        return parts[0].Length >= 2 ? parts[0].Substring(0, 2).ToUpper() : parts[0].ToUpper();
+    }
+
+    private string GetGradeLevel(int grade)
+    {
+        return grade switch
+        {
+            >= 85 => "Distinction",
+            >= 70 => "Merit",
+            >= 50 => "Pass",
+            _ => "Fail"
+        };
+    }
+
+    // Models
+    public class AssessmentFeedback
+    {
+        public string AssessorName { get; set; } = "";
+        public string AssessorTitle { get; set; } = "";
+        public DateTime DateProvided { get; set; }
+        public string PerformanceTitle { get; set; } = "";
+        public string PerformanceDescription { get; set; } = "";
+        public List<string> Strengths { get; set; } = new();
+        public List<string> AreasOfExcellence { get; set; } = new();
+        public List<string> AreasForImprovement { get; set; } = new();
+        public int FinalGrade { get; set; }
+        public string CongratulationsMessage { get; set; } = "";
+    }
+
+    public class FeedbackHistoryItem
+    {
+        public string AssessorName { get; set; } = "";
+        public string AssessorTitle { get; set; } = "";
+        public DateTime Date { get; set; }
+        public string Title { get; set; } = "";
+        public string Content { get; set; } = "";
+        public string AdditionalInfo { get; set; } = "";
+    }
+
+    public class ReplyModel
+    {
+        [Required(ErrorMessage = "Please enter your reply message")]
+        [StringLength(1000, ErrorMessage = "Reply must be less than 1000 characters")]
+        public string ReplyText { get; set; } = "";
+        
+        public bool IsUrgent { get; set; } = false;
+        public bool RequestFollowUp { get; set; } = false;
+    }
+}

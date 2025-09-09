@@ -1,0 +1,160 @@
+﻿
+@attribute [Authorize]
+
+ 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+<MudStack Spacing="2" AlignItems="AlignItems.Center" Class="action-buttons-container">
+    <MudStack Row Spacing="2" Justify="Justify.Center" Style="flex-wrap: wrap;">
+        <MudButton Variant="Variant.Filled"
+                   Class="action-button submit-button"
+                   OnClick="HandleSubmit"
+                   Disabled="@(!HasFiles || IsSubmitting)">
+            <MudIcon Icon="@Icons.Material.Filled.Assignment" Style="margin-right: 6px; font-size: 18px;" />
+            @if (IsSubmitting)
+            {
+                <span>Submitting...</span>
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Style="margin-left: 8px;" />
+            }
+            else
+            {
+                <span>Submit Final Assignment</span>
+            }
+        </MudButton>
+
+        <MudButton Variant="Variant.Outlined"
+                   Class="action-button secondary-button"
+                   OnClick="HandleRequestHelp">
+            <MudIcon Icon="@Icons.Material.Filled.HelpOutline" Style="margin-right: 6px; font-size: 18px;" />
+            Request Extension
+        </MudButton>
+
+        <MudButton Variant="Variant.Outlined"
+                   Class="action-button secondary-button"
+                   OnClick="HandleBookLabTime">
+            <MudIcon Icon="@Icons.Material.Filled.Computer" Style="margin-right: 6px; font-size: 18px;" />
+            Contact Support
+        </MudButton>
+    </MudStack>
+
+    <!-- Save Progress Button - Separate row below -->
+    <MudButton Variant="Variant.Text"
+               Class="action-button"
+               Style="color: #6b7280 !important; min-width: auto !important;"
+               OnClick="HandleSaveProgress">
+        <MudIcon Icon="@Icons.Material.Filled.Save" Style="margin-right: 6px; font-size: 16px;" />
+        Save Progress
+    </MudButton>
+</MudStack>
+                  </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> 
+
+@code {
+    [Parameter] public bool IsSubmitting { get; set; }
+    [Parameter] public bool HasFiles { get; set; }
+    [Parameter] public EventCallback OnSubmit { get; set; }
+    [Parameter] public EventCallback OnSaveProgress { get; set; }
+    [Parameter] public EventCallback OnRequestHelp { get; set; }
+    [Parameter] public EventCallback OnBookLabTime { get; set; }
+
+    private async Task HandleSubmit()
+    {
+        await OnSubmit.InvokeAsync();
+    }
+
+    private async Task HandleSaveProgress()
+    {
+        await OnSaveProgress.InvokeAsync();
+    }
+
+    private async Task HandleRequestHelp()
+    {
+        if (OnRequestHelp.HasDelegate)
+        {
+            await OnRequestHelp.InvokeAsync();
+        }
+        else
+        {
+            // Default behavior
+            Snackbar.Add("Extension request submitted. You will receive a response within 24 hours.", Severity.Info);
+        }
+    }
+
+    private async Task HandleBookLabTime()
+    {
+        if (OnBookLabTime.HasDelegate)
+        {
+            await OnBookLabTime.InvokeAsync();
+        }
+        else
+        {
+            // Default behavior
+            Snackbar.Add("Support request submitted. A technical support agent will contact you soon.", Severity.Info);
+        }
+    }
+}
+
+<style>
+    .action-buttons-container {
+        text-align: center;
+        padding: 24px 0;
+    }
+
+    .action-button {
+        text-transform: none !important;
+        font-weight: 500 !important;
+        border-radius: 6px !important;
+        padding: 10px 24px !important;
+        min-width: 160px !important;
+        font-size: 14px !important;
+        margin: 0 8px 12px 8px !important;
+        height: 40px !important;
+    }
+
+    /* Primary Submit Button - Blue filled */
+    .submit-button {
+        background: #4f6fa8 !important;
+        color: white !important;
+        border: none !important;
+    }
+
+        .submit-button:hover {
+            background: #3d5a8c !important;
+        }
+
+        .submit-button:disabled {
+            background: #9ca3af !important;
+            color: white !important;
+            cursor: not-allowed !important;
+        }
+
+    /* Save Progress Button - Gray filled */
+    .save-button {
+        background: #6b7280 !important;
+        color: white !important;
+        border: none !important;
+    }
+
+        .save-button:hover {
+            background: #4b5563 !important;
+        }
+
+    /* Secondary buttons - White with border */
+    .secondary-button {
+        border: 1px solid #d1d5db !important;
+        color: #374151 !important;
+        background: white !important;
+    }
+
+        .secondary-button:hover {
+            background: #f9fafb !important;
+            border-color: #9ca3af !important;
+        }
+</style>

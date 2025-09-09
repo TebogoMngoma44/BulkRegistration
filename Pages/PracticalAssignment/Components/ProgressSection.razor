@@ -1,0 +1,130 @@
+﻿@* Components/PracticalAssignment/ProgressSection.razor *@
+@using MudBlazor
+@attribute [Authorize]
+
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudPaper Class="content-section" Elevation="2">
+    <MudPaper Style="background: white; padding: 12px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" Elevation="0">
+        <MudText Typo="Typo.h6" Style="font-weight: 600; color: #1f2937; margin-bottom: 12px; font-size: 16px;">Assignment Progress</MudText>
+
+        <!-- Progress Bar -->
+        <MudPaper Style="background: #e5e7eb; height: 6px; border-radius: 3px; margin-bottom: 8px;" Elevation="0">
+            <MudPaper Style="@($"background: #1e3a5f; height: 100%; width: {ProgressPercentage}%; border-radius: 3px; transition: width 0.3s ease;")" Elevation="0"></MudPaper>
+        </MudPaper>
+        <MudText Style="color: #1e3a5f; font-size: 16px; margin-bottom: 12px;">@CompletedTasks of @TotalTasks tasks completed (@ProgressPercentage%)</MudText>
+
+        <!-- Task List -->
+        <MudStack Spacing="1">
+            @for (int i = 0; i < TaskStates.Length; i++)
+            {
+                var index = i; // Capture for closure
+                               <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Class="progress-item" @onclick="() => HandleTaskToggle(index)">
+                                   <MudPaper Class="@GetCheckboxClass(index)" Elevation="0">
+                        @if (TaskStates[index])
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Check" Style="font-size: 12px;" />
+                        }
+                    </MudPaper>
+                    <MudText Style="@GetTextStyle(index)">@GetTaskText(index)</MudText>
+                </MudStack>
+            }
+        </MudStack>
+    </MudPaper>
+</MudPaper>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public bool[] TaskStates { get; set; } = Array.Empty<bool>();
+    [Parameter] public EventCallback<int> OnTaskToggle { get; set; }
+
+    private readonly string[] taskTexts = {
+        "Downloaded sample datasets",
+        "Data import and cleaning completed",
+        "Basic formulas implemented",
+        "First pivot table created",
+        "Advanced formulas (VLOOKUP, INDEX/MATCH)",
+        "Charts and visualizations",
+        "Dashboard creation"
+    };
+
+    private int CompletedTasks => TaskStates.Count(x => x);
+    private int TotalTasks => TaskStates.Length;
+    private int ProgressPercentage => TotalTasks > 0 ? (CompletedTasks * 100) / TotalTasks : 0;
+
+    private string GetTaskText(int index) => index < taskTexts.Length ? taskTexts[index] : "";
+
+    private string GetCheckboxClass(int index)
+    {
+        return TaskStates[index] ? "progress-checkbox completed" : "progress-checkbox";
+    }
+
+    private string GetTextStyle(int index)
+    {
+        var baseStyle = "flex: 1; font-size: 16px;";
+        if (TaskStates[index])
+        {
+            return baseStyle + " text-decoration: line-through; color: #6c757d;";
+        }
+        return baseStyle + " color: #1e3a5f;";
+    }
+
+    private async Task HandleTaskToggle(int index)
+    {
+        await OnTaskToggle.InvokeAsync(index);
+    }
+}
+
+<style>
+    .content-section {
+        background: white;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .progress-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 1px solid #e2e8f0;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .progress-item:hover {
+            background-color: #f8f9fa;
+        }
+
+    .progress-checkbox {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #d1d5db;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+        .progress-checkbox.completed {
+            background: #1e3a5f;
+            border-color: #1e3a5f;
+            color: white;
+        }
+</style>

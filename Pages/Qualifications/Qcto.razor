@@ -1,0 +1,666 @@
+﻿@page "/Qualifications/qcto"
+
+@attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+            <MudContainer MaxWidth="MaxWidth.Large" Class="pa-0">
+              
+
+                <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="my-4 px-4">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Indeterminate="true" />
+                        <MudText>Loading qualifications...</MudText>
+                    }
+                    else
+                    {
+                        @* Header Section *@
+                        <MudStack AlignItems="AlignItems.Center" Spacing="2" Class="mb-8 text-center">
+                            <MudText Typo="Typo.h3" Color="Color.Primary" Class="mb-4 gradient-text">
+                                My Qualifications
+                            </MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-6 subtext-style">
+                                Track your educational journey and manage your QCTO-accredited qualifications
+                            </MudText>
+                
+                            @* Qualification Selector *@
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Justify="Justify.Center" Class="mt-6">
+                                <MudText Typo="Typo.subtitle1" Color="Color.Primary">Select Qualification:</MudText>
+                                <MudSelect T="string" 
+                                          Value="selectedQualificationName" 
+                                          ValueChanged="OnQualificationChanged" 
+                                          Variant="Variant.Outlined" 
+                                          Class="qualification-select">
+                                    @foreach (var qual in qualifications)
+                                    {
+                                        <MudSelectItem Value="@qual.Name">@qual.Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudStack>
+                        </MudStack>
+
+                        @* Progress Bar Section *@
+                        <MudPaper Elevation="3" Class="pa-6 mb-8 progress-card">
+                            @if (currentQualification != null)
+                            {
+                                <MudText Typo="Typo.h6" Class="mb-1 progress-title">@currentQualification.Name</MudText>
+                                <MudText Typo="Typo.subtitle2" Class="mb-4 progress-subtitle">
+                                    NQF Level @currentQualification.NQFLevel • @currentQualification.Status
+                                </MudText>
+
+                                @* Custom Progress Bar *@
+                                <MudPaper Class="mb-6 custom-progress-container">
+                                    <MudPaper Class="custom-progress-bar" Style="@($"width: {currentQualification.OverallProgress}%")"></MudPaper>
+                                </MudPaper>
+
+                                <MudGrid Spacing="2" Justify="Justify.SpaceBetween">
+                                    <MudItem xs="6" sm="3" Class="d-flex flex-column align-center">
+                                        <MudText Typo="Typo.h5" Class="progress-stat-number">@currentQualification.OverallProgress%</MudText>
+                                        <MudText Typo="Typo.body2" Class="progress-stat-label">Overall Progress</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6" sm="3" Class="d-flex flex-column align-center">
+                                        <MudText Typo="Typo.h5" Class="progress-stat-number">@currentQualification.UnitsCompleted/@currentQualification.TotalUnits</MudText>
+                                        <MudText Typo="Typo.body2" Class="progress-stat-label">Units Completed</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6" sm="3" Class="d-flex flex-column align-center">
+                                        <MudText Typo="Typo.h5" Class="progress-stat-number">@currentQualification.MonthsRemaining</MudText>
+                                        <MudText Typo="Typo.body2" Class="progress-stat-label">Months Remaining</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6" sm="3" Class="d-flex flex-column align-center">
+                                        <MudText Typo="Typo.h5" Class="progress-stat-number">@currentQualification.Status</MudText>
+                                        <MudText Typo="Typo.body2" Class="progress-stat-label">Status</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            }
+                        </MudPaper>
+
+                        @* Timeline Section *@
+                        <MudPaper Elevation="2" Class="pa-4 mb-8">
+                            <MudText Typo="Typo.h5" Class="mb-4">QCTO Qualification Progress Timeline</MudText>
+                
+                            <MudStack Row Spacing="4" Class="justify-center timeline-container">
+                                @if (currentQualification != null)
+                                {
+                                    @foreach (var (item, index) in currentQualification.TimelineItems.Select((item, index) => (item, index)))
+                                    {
+                                        <MudStack AlignItems="AlignItems.Center" Class="timeline-item">
+                                            <MudAvatar Size="Size.Medium" 
+                                                     Color="@QCTOQualificationService.GetTimelineColor(item.Status)" 
+                                                     Class="timeline-avatar"
+                                                     Style="cursor: pointer;"
+                                                     @onclick="@(() => OpenStageModal(item))">
+                                                @if (item.Status == TimelineStatus.Completed)
+                                                {
+                                                    <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Small" Color="Color.Surface" />
+                                                }
+                                                else
+                                                {
+                                                    <MudText Typo="Typo.caption" Color="@(item.Status == TimelineStatus.InProgress ? Color.Surface : Color.Secondary)">
+                                                        @item.Number
+                                                    </MudText>
+                                                }
+                                            </MudAvatar>
+                                            <MudStack AlignItems="AlignItems.Center" Spacing="1" Class="mt-3">
+                                                <MudText Typo="Typo.body2" Align="Align.Center" Class="timeline-title">
+                                                    @item.Title
+                                                </MudText>
+                                                <MudText Typo="Typo.caption" Align="Align.Center" Color="Color.Secondary">
+                                                    @item.StatusText
+                                                </MudText>
+                                            </MudStack>
+                                        </MudStack>
+                                    }
+                                }
+                            </MudStack>
+                        </MudPaper>
+
+                        @* Qualification Information Section *@
+                        <MudPaper Elevation="2" Class="pa-4 mb-8">
+                            <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mb-4">
+                                <MudText Typo="Typo.h5">Qualification Information</MudText>
+                                <MudButton Variant="Variant.Filled"
+                                          Color="Color.Primary"
+                                          StartIcon="@(showQualificationInfo ? Icons.Material.Filled.Remove : Icons.Material.Filled.Add)"
+                                          OnClick="@ToggleQualificationInfo"
+                                          Class="toggle-button">
+                                    Details
+                                </MudButton>
+                            </MudStack>
+                
+                            <MudCollapse Expanded="showQualificationInfo">
+                                @if (currentQualification != null)
+                                {
+                                    <MudGrid Spacing="3">
+                                        @{
+                                            var qualInfoItems = new[]
+                                            {
+                                                ("Deal Number", currentQualification.QualificationInfo.DealNumber),
+                                                ("Client Company", currentQualification.QualificationInfo.ClientCompany),
+                                                ("Facilitator", currentQualification.QualificationInfo.Facilitator),
+                                                ("Chief Learning Officer", currentQualification.QualificationInfo.ChiefLearningOfficer),
+                                                ("Start Date", currentQualification.QualificationInfo.StartDate.ToString("dd MMMM yyyy")),
+                                                ("Expected End Date", currentQualification.QualificationInfo.ExpectedEndDate.ToString("dd MMMM yyyy")),
+                                                ("SETA", currentQualification.QualificationInfo.SETA),
+                                                ("Qualification Code", currentQualification.QualificationInfo.QualificationCode),
+                                                ("NQF Level", currentQualification.QualificationInfo.NQFLevel),
+                                                ("Credits", currentQualification.QualificationInfo.Credits),
+                                                ("Programme Duration", currentQualification.QualificationInfo.ProgrammeDuration),
+                                                ("Workplace Mentor", currentQualification.QualificationInfo.WorkplaceMentor)
+                                            };
+                                        }
+                            
+                                        @foreach (var (label, value) in qualInfoItems)
+                                        {
+                                            <MudItem xs="12" sm="6" md="4">
+                                                <MudPaper Elevation="1" Class="pa-4 info-card">
+                                                    <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mb-1 info-label">
+                                                        @label.ToUpper()
+                                                    </MudText>
+                                                    <MudText Typo="Typo.body2" Color="Color.Dark">
+                                                        @value
+                                                    </MudText>
+                                                </MudPaper>
+                                            </MudItem>
+                                        }
+                                    </MudGrid>
+                                }
+                            </MudCollapse>
+                        </MudPaper>
+
+                        @* Current Qualification Table Section *@
+                        <MudPaper Elevation="2" Class="pa-4 mb-8">
+                            <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mb-4" @onclick="ToggleCurrentQualificationTable" Style="cursor: pointer;">
+                                <MudText Typo="Typo.h5">Current Qualification: @(currentQualification?.Name ?? "N/A")</MudText>
+                                @if (currentQualification != null)
+                                {
+                                    <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                                        <MudChip T="string" 
+                                                Text="@currentQualification.Status.ToUpper()" 
+                                                Color="@QCTOQualificationService.GetStatusColor(currentQualification.Status)"
+                                                Size="Size.Small" />
+                                        <MudIcon Icon="@(showCurrentQualificationTable ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)" />
+                                    </MudStack>
+                                }
+                            </MudStack>
+                
+                            <MudCollapse Expanded="showCurrentQualificationTable">
+                                @if (currentQualification != null)
+                                {
+                                    <MudTable Items="@currentQualification.Modules" 
+                                             Dense="true" 
+                                             Hover="true" 
+                                             Striped="true"
+                                             Elevation="0"
+                                             Class="qualification-table">
+                                        <HeaderContent>
+                                            <MudTh Class="table-header">Module</MudTh>
+                                            <MudTh Class="table-header">Description</MudTh>
+                                            <MudTh Class="table-header">Progress</MudTh>
+                                            <MudTh Class="table-header">Feedback</MudTh>
+                                            <MudTh Class="table-header">Introduction</MudTh>
+                                            <MudTh Class="table-header">Units</MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate Context="module">
+                                            @{
+                                                var moduleIndex = currentQualification.Modules.IndexOf(module);
+                                            }
+                                            <MudTd Class="table-cell">
+                                                <MudStack Spacing="1">
+                                                    <MudText Typo="Typo.subtitle1" Color="Color.Primary">
+                                                        @module.Name
+                                                    </MudText>
+                                                    <MudText Typo="Typo.body2" Color="Color.Secondary" Class="subtext-style">
+                                                        @module.Subtitle
+                                                    </MudText>
+                                                </MudStack>
+                                            </MudTd>
+                                            <MudTd Class="table-cell">
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary" Class="subtext-style">
+                                                    @module.Description
+                                                </MudText>
+                                            </MudTd>
+                                            <MudTd Class="table-cell">
+                                                <MudChip T="string" 
+                                                        Color="@module.ProgressColor" 
+                                                        Size="Size.Small" 
+                                                        Text="@module.Progress" />
+                                            </MudTd>
+                                            <MudTd Class="table-cell">
+                                                <MudButton Variant="Variant.Text" 
+                                                          Size="Size.Small"
+                                                          Class="feedback-btn">
+                                                    View Feedback
+                                                </MudButton>
+                                            </MudTd>
+                                            <MudTd Class="table-cell">
+                                                <MudButton Variant="Variant.Text" 
+                                                          Size="Size.Small"
+                                                          Class="introduction-btn">
+                                                    Introduction
+                                                </MudButton>
+                                            </MudTd>
+                                            <MudTd Class="table-cell">
+                                                <MudButton Variant="Variant.Text" 
+                                                          Size="Size.Small"
+                                                          StartIcon="@(moduleUnitsExpanded.ContainsKey(moduleIndex) && moduleUnitsExpanded[moduleIndex] ? Icons.Material.Filled.KeyboardArrowUp : Icons.Material.Filled.KeyboardArrowDown)"
+                                                          OnClick="@(() => ToggleModuleUnits(moduleIndex))"
+                                                          Class="@(moduleUnitsExpanded.ContainsKey(moduleIndex) && moduleUnitsExpanded[moduleIndex] ? "units-btn-hide" : "units-btn")">
+                                                    @(moduleUnitsExpanded.ContainsKey(moduleIndex) && moduleUnitsExpanded[moduleIndex] ? "Hide Units" : "Show Units")
+                                                </MudButton>
+                                            </MudTd>
+                                        </RowTemplate>
+                                        <ChildRowContent Context="module">
+                                            @{
+                                                var moduleIndex = currentQualification.Modules.IndexOf(module);
+                                            }
+                                            @if (moduleUnitsExpanded.ContainsKey(moduleIndex) && moduleUnitsExpanded[moduleIndex])
+                                            {
+                                                <MudTr>
+                                                    <MudTd colspan="6" Class="pa-0">
+                                                        <MudPaper Elevation="1" Class="ma-2 pa-4 units-detail-card">
+                                                            <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-3">
+                                                                Unit Details - @module.Name
+                                                            </MudText>
+                                                
+                                                            <MudTable Items="@module.Units" 
+                                                                     Dense="true" 
+                                                                     Hover="true" 
+                                                                     Elevation="0"
+                                                                     Class="units-table">
+                                                                <HeaderContent>
+                                                                    <MudTh Class="table-header">Unit Standard</MudTh>
+                                                                    <MudTh Class="table-header">Unit</MudTh>
+                                                                    <MudTh Class="table-header">Type</MudTh>
+                                                                    <MudTh Class="table-header">Progress</MudTh>
+                                                                    <MudTh Class="table-header">Actions</MudTh>
+                                                                    <MudTh Class="table-header">Submit</MudTh>
+                                                                </HeaderContent>
+                                                                <RowTemplate Context="unit">
+                                                                    <MudTd Class="units-cell">
+                                                                        <MudText Typo="Typo.body2">@unit.UnitStandard</MudText>
+                                                                    </MudTd>
+                                                                    <MudTd Class="units-cell">
+                                                                        <MudText Typo="Typo.body2">@unit.UnitName</MudText>
+                                                                    </MudTd>
+                                                                    <MudTd Class="units-cell">
+                                                                        <MudText Typo="Typo.body2">@unit.Type</MudText>
+                                                                    </MudTd>
+                                                                    <MudTd Class="units-cell">
+                                                                        <MudChip T="string" 
+                                                                                Color="@unit.ProgressColor" 
+                                                                                Size="Size.Small" 
+                                                                                Text="@unit.Progress" />
+                                                                    </MudTd>
+                                                                    <MudTd Class="units-cell">
+                                                                        <MudChip T="string" 
+                                                                                Color="@unit.ActionColor" 
+                                                                                Size="Size.Small" 
+                                                                                Text="@unit.Actions" />
+                                                                    </MudTd>
+                                                                    <MudTd Class="units-cell">
+                                                                        <MudChip T="string" 
+                                                                                Color="@unit.SubmitColor" 
+                                                                                Size="Size.Small" 
+                                                                                Text="@unit.Submit" />
+                                                                    </MudTd>
+                                                                </RowTemplate>
+                                                            </MudTable>
+                                                        </MudPaper>
+                                                    </MudTd>
+                                                </MudTr>
+                                            }
+                                        </ChildRowContent>
+                                    </MudTable>
+                                }
+                            </MudCollapse>
+                        </MudPaper>
+                    }
+                </MudContainer>
+            </MudContainer>
+
+            @* Certificate Downloads Section *@
+            <MudContainer Class="pa-4">
+                <MudPaper Elevation="0" Class="mb-4 text-center">
+                    <MudText Typo="Typo.h4" Class="mb-2">📜 Certificate Downloads</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary" Class="subtext-style">
+                        Download official QCTO module completion certificates
+                    </MudText>
+                </MudPaper>
+
+                <MudPaper Elevation="2" Class="pa-4">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Indeterminate="true" />
+                    }
+                    else
+                    {
+                        <MudTable Items="@certificates" 
+                                 Dense="true" 
+                                 Hover="true" 
+                                 Striped="true"
+                                 Elevation="0"
+                                 Class="certificates-table">
+                            <HeaderContent>
+                                <MudTh Class="table-header">Module</MudTh>
+                                <MudTh Class="table-header">Details</MudTh>
+                                <MudTh Class="table-header">Completion</MudTh>
+                                <MudTh Class="table-header">Grade</MudTh>
+                                <MudTh Class="table-header">Status</MudTh>
+                                <MudTh Class="table-header">Download</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd Class="table-cell">
+                                    <MudChip T="string" Color="Color.Primary" Size="Size.Small" Class="module-badge">
+                                        @context.ModuleNumber
+                                    </MudChip>
+                                </MudTd>
+                                <MudTd Class="table-cell">
+                                    <MudStack Spacing="1">
+                                        <MudText Typo="Typo.subtitle1" Color="Color.Primary">
+                                            @context.ModuleName
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="subtext-style">
+                                            @context.ModuleCode
+                                        </MudText>
+                                    </MudStack>
+                                </MudTd>
+                                <MudTd Class="table-cell">
+                                    <MudStack Spacing="1">
+                                        <MudText Typo="Typo.body1">
+                                            @context.CompletionDate.ToString("dd MMMM yyyy")
+                                        </MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary" Class="subtext-style">
+                                            @context.TimeAgo
+                                        </MudText>
+                                    </MudStack>
+                                </MudTd>
+                                <MudTd Class="table-cell">
+                                    <MudStack Spacing="1">
+                                        <MudText Typo="Typo.h6">@context.GradePercentage%</MudText>
+                                        <MudChip T="string" 
+                                                Color="@QCTOQualificationService.GetGradeColor(context.GradeStatus)"
+                                                Size="Size.Small"
+                                                Text="@context.GradeStatus" />
+                                    </MudStack>
+                                </MudTd>
+                                <MudTd Class="table-cell">
+                                    <MudChip T="string" 
+                                            Color="Color.Success" 
+                                            Size="Size.Small"
+                                            Icon="@Icons.Material.Filled.CheckCircle"
+                                            Text="Available" />
+                                </MudTd>
+                                <MudTd Class="table-cell">
+                                    <MudButton Variant="Variant.Filled"
+                                              Color="Color.Success"
+                                              StartIcon="@Icons.Material.Filled.Download"
+                                              OnClick="@(() => DownloadCertificate(context.CertificateId))"
+                                              Class="download-button">
+                                        Download Certificate
+                                    </MudButton>
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+
+                        @if (!certificates.Any())
+                        {
+                            <MudPaper Elevation="0" Class="pa-8 text-center">
+                                <MudText Typo="Typo.h2" Class="mb-4">🎓</MudText>
+                                <MudText Typo="Typo.h5" Class="mb-2">No Certificates Available Yet</MudText>
+                                <MudText Typo="Typo.body1" Color="Color.Secondary">
+                                    Complete modules to unlock certificates
+                                </MudText>
+                            </MudPaper>
+                        }
+                    }
+                </MudPaper>
+            </MudContainer>
+
+            @* Stage Modal *@
+        <MudDialog @bind-IsVisible="showStageModal" Options="dialogOptions" Class="stage-modal">
+            @if (selectedTimelineItem != null)
+            {
+                <MudDialogProvider />
+                <MudContainer Class="stage-modal-content">
+                    <MudPaper Class="stage-modal-header" Elevation="0">
+                        <MudText Typo="Typo.h5" Class="stage-modal-title">@selectedTimelineItem.Title</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.Close" 
+                                       Class="stage-modal-close" 
+                                       OnClick="CloseStageModal" />
+                    </MudPaper>
+            
+                    <MudContainer Class="text-center">
+                        <MudPaper Class="@($"stage-progress-circle {GetStageProgressClass(selectedTimelineItem.Status)}")" Elevation="0">
+                            @if (selectedTimelineItem.Status == TimelineStatus.Completed)
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Check" Size="Size.Large" Style="color: white;" />
+                            }
+                            else
+                            {
+                                <MudText>@selectedTimelineItem.Number</MudText>
+                            }
+                        </MudPaper>
+
+                        <MudText Class="@($"stage-status-badge {GetStageStatusClass(selectedTimelineItem.Status)}")">
+                            @selectedTimelineItem.StatusText
+                        </MudText>
+                    </MudContainer>
+            
+                    <MudContainer Class="stage-details">
+                        <MudPaper Class="stage-detail-item" Elevation="0">
+                            <MudIcon Icon="@Icons.Material.Filled.Info" Class="stage-detail-icon" />
+                            <MudContainer>
+                                <MudText Class="stage-detail-title" Typo="Typo.subtitle1">Stage Information</MudText>
+                                <MudText Class="stage-detail-description" Typo="Typo.body2">
+                                    @QCTOQualificationService.GetStageDescription(selectedTimelineItem.Title, selectedTimelineItem.Status)
+                                </MudText>
+                            </MudContainer>
+                        </MudPaper>
+
+                        <MudPaper Class="stage-detail-item" Elevation="0">
+                            <MudIcon Icon="@Icons.Material.Filled.Schedule" Class="stage-detail-icon" />
+                            <MudContainer>
+                                <MudText Class="stage-detail-title" Typo="Typo.subtitle1">Timeline Status</MudText>
+                                <MudText Class="stage-detail-description" Typo="Typo.body2">
+                                    Current status: @selectedTimelineItem.StatusText
+                                </MudText>
+                            </MudContainer>
+                        </MudPaper>
+
+                        @if (selectedTimelineItem.Status == TimelineStatus.InProgress)
+                        {
+                            <MudPaper Class="stage-detail-item" Elevation="0">
+                                <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Class="stage-detail-icon" />
+                                <MudContainer>
+                                    <MudText Class="stage-detail-title" Typo="Typo.subtitle1">Next Steps</MudText>
+                                    <MudText Class="stage-detail-description" Typo="Typo.body2">
+                                        This stage is currently in progress. Please complete the required activities to move to the next stage.
+                                    </MudText>
+                                </MudContainer>
+                            </MudPaper>
+                        }
+
+                        @if (selectedTimelineItem.Status == TimelineStatus.Completed)
+                        {
+                            <MudPaper Class="stage-detail-item" Elevation="0">
+                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="stage-detail-icon" />
+                                <MudContainer>
+                                    <MudText Class="stage-detail-title" Typo="Typo.subtitle1">Completed</MudText>
+                                    <MudText Class="stage-detail-description" Typo="Typo.body2">
+                                        This stage has been successfully completed and verified.
+                                    </MudText>
+                                </MudContainer>
+                            </MudPaper>
+                        }
+                    </MudContainer>
+                </MudContainer>
+            }
+        </MudDialog>
+
+@code {
+    private DialogOptions dialogOptions = new()
+    {
+        CloseButton = false,
+        BackdropClick = false,
+        MaxWidth = MaxWidth.Medium,
+        FullWidth = true,
+        CloseOnEscapeKey = true
+    };
+}
+        </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    // Component State
+    private string selectedQualificationName { get; set; } = string.Empty;
+    private Qualification? currentQualification;
+    private List<Qualification> qualifications = new();
+    private List<CertificateInfo> certificates = new();
+    private Dictionary<int, bool> moduleUnitsExpanded = new();
+    private bool showQualificationInfo = false;
+    private bool showCurrentQualificationTable = true;
+    private bool isLoading = true;
+    
+    // Modal State
+    private bool showStageModal = false;
+    private TimelineItem? selectedTimelineItem = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            isLoading = true;
+            
+            // Load data from service
+            qualifications = await QCTOQualificationService.GetQualificationsAsync();
+            certificates = await QCTOQualificationService.GetCertificatesAsync();
+            
+            // Set default qualification
+            selectedQualificationName = qualifications.FirstOrDefault()?.Name ?? string.Empty;
+            await UpdateCurrentQualification();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading data: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    // Event Handlers
+    private async Task OnQualificationChanged(string newQualificationName)
+    {
+        selectedQualificationName = newQualificationName;
+        await UpdateCurrentQualification();
+        StateHasChanged();
+    }
+
+    private async Task UpdateCurrentQualification()
+    {
+        currentQualification = await QCTOQualificationService.GetQualificationByNameAsync(selectedQualificationName);
+        if (currentQualification != null)
+        {
+            InitializeModuleUnitsExpanded();
+        }
+        else
+        {
+            Snackbar.Add("Qualification not found.", Severity.Error);
+        }
+    }
+
+    private void InitializeModuleUnitsExpanded()
+    {
+        moduleUnitsExpanded.Clear();
+        if (currentQualification != null)
+        {
+            for (int i = 0; i < currentQualification.Modules.Count; i++)
+            {
+                moduleUnitsExpanded[i] = false;
+            }
+        }
+    }
+
+    private void ToggleModuleUnits(int moduleIndex)
+    {
+        if (moduleUnitsExpanded.ContainsKey(moduleIndex))
+        {
+            moduleUnitsExpanded[moduleIndex] = !moduleUnitsExpanded[moduleIndex];
+        }
+        else
+        {
+            moduleUnitsExpanded[moduleIndex] = true;
+        }
+        StateHasChanged();
+    }
+
+    private void ToggleCurrentQualificationTable()
+    {
+        showCurrentQualificationTable = !showCurrentQualificationTable;
+        StateHasChanged();
+    }
+
+    private void ToggleQualificationInfo()
+    {
+        showQualificationInfo = !showQualificationInfo;
+        StateHasChanged();
+    }
+
+    private async Task DownloadCertificate(string certificateId)
+    {
+        try
+        {
+            await QCTOQualificationService.DownloadCertificateAsync(certificateId);
+            Snackbar.Add($"Certificate {certificateId} downloaded successfully!", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error downloading certificate: {ex.Message}", Severity.Error);
+        }
+    }
+
+    // Stage Modal Methods
+    private void OpenStageModal(TimelineItem timelineItem)
+    {
+        selectedTimelineItem = timelineItem;
+        showStageModal = true;
+        StateHasChanged();
+    }
+
+    private void CloseStageModal()
+    {
+        showStageModal = false;
+        selectedTimelineItem = null;
+        StateHasChanged();
+    }
+
+    private string GetStageProgressClass(TimelineStatus status)
+    {
+        return status switch
+        {
+            TimelineStatus.Completed => "completed",
+            TimelineStatus.InProgress => "in-progress",
+            TimelineStatus.Pending => "pending",
+            _ => "pending"
+        };
+    }
+
+    private string GetStageStatusClass(TimelineStatus status)
+    {
+        return status switch
+        {
+            TimelineStatus.Completed => "completed",
+            TimelineStatus.InProgress => "in-progress",
+            TimelineStatus.Pending => "pending",
+            _ => "pending"
+        };
+    }
+}

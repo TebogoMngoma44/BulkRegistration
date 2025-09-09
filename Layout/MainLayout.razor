@@ -1,0 +1,162 @@
+﻿@using System.Security.Claims
+@using MudBlazor
+
+@inherits LayoutComponentBase
+
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="_currentTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+
+
+<MudLayout>
+    <MudAppBar Elevation="1" Style="background-color: #fff; color: #1E3A5F; height: 70px;">
+        <div style="display: flex; align-items: center; width: 100%; flex-wrap: nowrap;">
+            <MudImage ObjectFit="ObjectFit.Fill" Height="40" Width="40" Src="/images/SpecCon_Blue.png" Elevation="0" Class="rounded-lg mr-4" />
+            <NavMenu />
+            <MudSpacer />
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: nowrap;">
+                <MudIconButton Size="MudBlazor.Size.Medium" OnClick="@(e => Notifications())" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: gold;" />
+               
+
+                    <MudButton Class="rounded-pill" Variant="Variant.Text" OnClick="@(() => OpenDrawer(Anchor.End))" Style="padding: 0;">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: #2E3168; border: 2px solid #2196f3;">
+                        <MudIcon Icon="@Icons.Material.Filled.Person" Style="font-size: 24px; color: #fff" />
+                    </div>
+                </MudButton>
+            </div>
+        </div>
+    </MudAppBar>
+ 
+
+    <MudDrawer @bind-Open="@open" Width="@width" Height="@height" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
+        <MudDrawerHeader>
+        </MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink Href="/myprofile" Icon="@Icons.Material.Filled.Fingerprint"  Match="NavLinkMatch.Prefix">My Profile</MudNavLink>
+            <MudNavLink Href="/myprofile" Icon="@Icons.Material.Filled.Support" Match="NavLinkMatch.Prefix">Support</MudNavLink>
+            <MudNavLink Href="/auth/logout" Icon="@Icons.Material.Filled.Logout" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
+        </MudNavMenu>
+        <MudSpacer />
+        <MudText Class="text-center" Style="font-family: roboto; font-size: 0.6rem; color: #191919">v1.0.2.1</MudText>
+    </MudDrawer>
+    <MudMainContent Style="padding: 20px; padding-top: 140px;">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool open;
+    Anchor anchor;
+    string width = "100%";
+    string height = "100%";
+    public bool? Role { get; set; }
+    private bool _isDarkMode;
+    private MudThemeProvider? _mudThemeProvider;
+    private bool isInitialized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+        await Task.CompletedTask;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            InvokeAsync(LoadDataAsync);
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            _mudThemeProvider = new MudThemeProvider();
+
+            if (!await _authService.Validate())
+            {
+                await _authService.Logout();
+            }
+        }
+        catch (Exception ex)
+        {
+            await _authService.Logout();
+            throw new InvalidOperationException("An error occurred while starting the service.", ex);
+        }
+        finally
+        {
+            StateHasChanged(); 
+        }
+    }
+
+    // Removed ToggleDrawer method as it's no longer needed for horizontal nav
+
+    public void Dispose() { }
+
+    async Task Notifications()
+    {
+        await Task.CompletedTask;
+        throw new NotImplementedException();
+    }
+
+    void ThemeToggle() => _isDarkMode = !_isDarkMode;
+
+    void OpenDrawer(Anchor anchor)
+    {
+        open = true;
+        this.anchor = anchor;
+
+        switch (anchor)
+        {
+            case Anchor.Start:
+                width = "200px";
+                height = "100%";
+                break;
+            case Anchor.End:
+                width = "300px";
+                height = "100%";
+                break;
+            case Anchor.Bottom:
+                width = "100%";
+                height = "200px";
+                break;
+            case Anchor.Top:
+                width = "100%";
+                height = "350px";
+                break;
+        }
+    }
+
+    private readonly MudTheme _currentTheme = new()
+        {
+            PaletteLight = new PaletteLight
+            {
+                Primary = "#2E3168",
+                Secondary = "#212121",
+                Info = "#fff",
+                Success = "#2ECC40",
+                Warning = "#FFC107",
+                Error = "#FF0000",
+                AppbarBackground = "#212121",
+                TextPrimary = "#2E3168",
+                TextSecondary = "#212121",
+                // more color properties
+            },
+            PaletteDark = new PaletteDark
+            {
+                Primary = "#6585e0",
+                Secondary = "#607D8B",
+                Info = "#a4c2dd",
+                Success = "#2ECC40",
+                Warning = "#dc2d7e",
+                Error = "#de2000",
+                AppbarBackground = "#121212",
+                TextPrimary = "#E0E0E0",
+                TextSecondary = "#BDBDBD",
+                // more color properties
+            }
+        };
+}

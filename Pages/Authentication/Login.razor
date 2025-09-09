@@ -1,0 +1,133 @@
+﻿@page "/auth/login"
+
+@layout BlankLayout
+
+<PageTitle>Speccon - Log in</PageTitle>
+<MudGrid style="height: 100vh; margin: 0; padding: 0;">
+    <MudItem xs="12" style="height: 70px; background-color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 3px solid #2E3168;">
+        <MudItem xs="12" sm="6" style="display: flex; align-items: center;">
+            <MudText Typo="Typo.h5" Style="text-align: center;">eLearning</MudText>
+        </MudItem>
+    </MudItem>
+    <MudItem xs="12" sm="8" style="background-color: #fff; display: flex; justify-content: center; align-items: center; height: 95vh; margin: 0; padding: 0;">
+        <MudPaper Elevation="0" style="padding: 40px; border-radius: 12px; max-width: 400px; min-width: 400px; margin: auto;">
+            <div style="display: flex; justify-content: center;">
+                <img src="/images/SpecCon_Blue.png" alt="Login Image" style="width: 100px; height: auto; object-fit: cover; filter: brightness(95%);" />
+            </div>
+           
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <MudText Color="Color.Error" Style="text-align: center; margin-top: 5px;">@errorMessage</MudText>
+            }
+            <EditForm Model="@model" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator />
+                <MudItem xs="12" sm="12" md="12" Style="margin-top: 20px">
+                    <MudTextField @bind-Value="model.Email" InputType="InputType.Text" Label="Email" Variant="Variant.Outlined" Class="d-flex mt-5" FullWidth></MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12" Style="margin-top: 20px">
+                    <MudTextField @bind-Value="model.Password" InputType="InputType.Password" Label="Password" Variant="Variant.Outlined" Class="d-flex mt-5" FullWidth></MudTextField>
+                </MudItem>
+                <MudButton ButtonType="ButtonType.Submit" Disabled="@_processing" Class="mt-5" Variant="Variant.Filled" Color="MudBlazor.Color.Primary" Style="width: 100%; height: 56px; border-radius: 5px;">
+                    @if (_processing)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="MudBlazor.Size.Small" Indeterminate="true" />
+                        <MudText Class="ms-2">Just a moment...</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Log in</MudText>
+                    }
+                </MudButton>
+            </EditForm>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="4" style="padding: 0; margin: 0; position: relative;">
+        <div class="page-loader">
+            <div class="logo-container">
+                <img src="images/SpecCon_White.png" class="logo" alt="Logo" />
+            </div>
+            <MudText Typo="Typo.h5" Style="text-align: center; color: white; z-index: 1; margin-top: 120px">Welcome</MudText>
+        </div>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+    private readonly LoginModel model = new LoginModel();
+    private string errorMessage = string.Empty;
+    private bool _processing = false;
+    private bool isInitialized = false;
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            if (isInitialized) return;
+            isInitialized = true;
+        }
+        catch (Exception)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            InvokeAsync(LoadDataAsync); // Call the async method
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            await Task.Delay(100);
+        }
+        catch (Exception)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+        finally
+        {
+            StateHasChanged(); // Refresh the UI
+        }
+    }
+
+
+    private async Task HandleLogin(EditContext context)
+    {
+        _processing = true;
+        if (context.Validate())
+        {
+            var result = await _authService.Login(model);
+            if (!result.Success)
+            {
+                _processing = false;
+                errorMessage = result.Message;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(result.Token))
+                {
+                    _processing = false;
+                    NavigationManager.NavigateTo("/");
+                }
+                else
+                {
+                    _processing = false;
+                    errorMessage = result.Message;  // Show failure message
+                }
+            }
+        }
+    }
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+}

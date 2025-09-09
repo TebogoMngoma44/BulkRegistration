@@ -1,0 +1,541 @@
+﻿body {
+}
+/* Stage Modal Styles */
+
+@keyframes modalSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes modalSlideInMobile {
+    0% {
+        opacity: 0;
+        transform: translateY(100%) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.stage-modal-overlay {
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.stage-modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    margin-bottom: 12px;
+}
+
+.modal-title {
+    color: #1e3a5f;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.close-button {
+    color: #9e9e9e;
+    background: transparent;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+    .close-button:hover {
+        color: #1e3a5f;
+        background-color: #f5f5f5;
+        transform: scale(1.1);
+    }
+
+.status-section {
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.status-avatar {
+    transition: all 0.3s ease;
+    margin-bottom: 6px;
+}
+
+    .status-avatar:hover {
+        transform: scale(1.05);
+    }
+
+.status-chip {
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.step-detail-card {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #1e3a5f;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+}
+
+    .step-detail-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-left-color: #2c4a6b;
+    }
+
+    .step-detail-card:last-child {
+        margin-bottom: 0;
+    }
+
+.step-detail-icon {
+    flex-shrink: 0;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.step-detail-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.step-detail-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 2px;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.step-detail-description {
+    color: #6c757d;
+    font-size: 11px;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.completion-info {
+    background-color: #f1f3f4;
+    padding: 8px;
+    border-radius: 6px;
+    margin-top: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+    .completion-info:hover {
+        background-color: #e8eaed;
+    }
+
+.completion-title {
+    color: #1e3a5f;
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.completion-subtitle {
+    color: #6c757d;
+    font-size: 10px;
+}
+
+/* Tablet Styles */
+@media (max-width: 960px) and (min-width: 769px) {
+    .stage-modal-content {
+        padding: 20px;
+        max-width: 500px;
+    }
+
+    .modal-title {
+        font-size: 16px;
+    }
+
+    .step-detail-card {
+        padding: 14px;
+    }
+
+    .step-detail-title {
+        font-size: 15px;
+    }
+
+    .step-detail-description {
+        font-size: 12px;
+    }
+
+    .step-detail-icon {
+        margin-right: 12px;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .stage-modal-overlay {
+        padding: 12px;
+        align-items: flex-end;
+    }
+
+    .stage-modal-content {
+        padding: 20px 16px;
+        width: 100%;
+        max-width: none;
+        max-height: 85vh;
+        border-radius: 16px 16px 0 0;
+        animation: modalSlideInMobile 0.3s ease;
+    }
+
+    .modal-header {
+        margin-bottom: 16px;
+    }
+
+    .modal-title {
+        font-size: 16px;
+        text-align: center;
+        padding-right: 40px; /* Space for close button */
+    }
+
+    .close-button {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+    }
+
+    .status-section {
+        margin-bottom: 20px;
+    }
+
+    .status-avatar {
+        margin-bottom: 10px;
+    }
+
+    .status-chip {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+
+    .step-detail-card {
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border-left-width: 3px;
+    }
+
+        .step-detail-card:hover {
+            transform: none; /* Disable hover transforms on mobile */
+        }
+
+    .step-detail-icon {
+        margin-right: 12px;
+    }
+
+    .step-detail-title {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    .step-detail-description {
+        font-size: 12px;
+        line-height: 1.3;
+    }
+
+    .completion-info {
+        padding: 12px;
+        margin-top: 16px;
+    }
+
+    .completion-title {
+        font-size: 13px;
+    }
+
+    .completion-subtitle {
+        font-size: 11px;
+    }
+
+    /* Mobile scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .stage-modal-overlay {
+        padding: 8px;
+    }
+
+    .stage-modal-content {
+        padding: 16px 12px;
+        max-height: 90vh;
+    }
+
+    .modal-title {
+        font-size: 15px;
+        padding-right: 35px;
+    }
+
+    .close-button {
+        top: 12px;
+        right: 12px;
+    }
+
+    .status-section {
+        margin-bottom: 16px;
+    }
+
+    .step-detail-card {
+        padding: 10px;
+        margin-bottom: 8px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .step-detail-icon {
+        margin-right: 0;
+        margin-bottom: 8px;
+        align-self: center;
+    }
+
+    .step-detail-content {
+        text-align: center;
+    }
+
+    .step-detail-title {
+        font-size: 13px;
+    }
+
+    .step-detail-description {
+        font-size: 11px;
+    }
+
+    .completion-info {
+        padding: 10px;
+    }
+
+    .completion-title {
+        font-size: 12px;
+    }
+
+    .completion-subtitle {
+        font-size: 10px;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+    .stage-modal-content {
+        padding: 12px 8px;
+    }
+
+    .modal-title {
+        font-size: 14px;
+    }
+
+    .step-detail-card {
+        padding: 8px;
+    }
+
+    .step-detail-title {
+        font-size: 12px;
+    }
+
+    .step-detail-description {
+        font-size: 10px;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .stage-modal-overlay {
+        align-items: center;
+        padding: 10px;
+    }
+
+    .stage-modal-content {
+        max-height: 95vh;
+        border-radius: 12px;
+        animation: modalSlideIn 0.3s ease;
+    }
+
+    .status-section {
+        margin-bottom: 12px;
+    }
+
+    .step-detail-card {
+        padding: 8px;
+        margin-bottom: 6px;
+    }
+
+    .completion-info {
+        margin-top: 12px;
+        padding: 8px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .stage-modal-overlay {
+        position: static;
+        background: none;
+        backdrop-filter: none;
+    }
+
+    .stage-modal-content {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        max-height: none;
+        overflow: visible;
+        animation: none;
+    }
+
+    .close-button {
+        display: none;
+    }
+
+    .step-detail-card:hover {
+        transform: none;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .stage-modal-overlay, .stage-modal-content, .close-button, .status-avatar, .step-detail-card, .completion-info {
+        animation: none;
+        transition: none;
+    }
+
+        .close-button:hover,
+        .status-avatar:hover,
+        .step-detail-card:hover,
+        .completion-info:hover {
+            transform: none;
+        }
+}
+
+/* Focus Styles */
+.close-button:focus {
+    outline: 2px solid #1e3a5f;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .stage-modal-content {
+        border: 2px solid #000;
+    }
+
+    .step-detail-card {
+        border: 1px solid #000;
+        border-left: 4px solid #000;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .stage-modal-content {
+        background: #2d3748;
+        color: white;
+    }
+
+    .modal-title {
+        color: #e2e8f0;
+    }
+
+    .close-button {
+        color: #a0aec0;
+    }
+
+        .close-button:hover {
+            color: #e2e8f0;
+            background-color: #4a5568;
+        }
+
+    .step-detail-card {
+        background: #4a5568;
+        border-left-color: #e2e8f0;
+    }
+
+    .step-detail-title {
+        color: #e2e8f0;
+    }
+
+    .step-detail-description {
+        color: #a0aec0;
+    }
+
+    .completion-info {
+        background-color: #4a5568;
+    }
+
+        .completion-info:hover {
+            background-color: #2d3748;
+        }
+
+    .completion-title {
+        color: #e2e8f0;
+    }
+
+    .completion-subtitle {
+        color: #a0aec0;
+    }
+
+    .custom-scrollbar {
+        scrollbar-color: #718096 #4a5568;
+    }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #4a5568;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #718096;
+            border-color: #4a5568;
+        }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #a0aec0;
+            }
+}

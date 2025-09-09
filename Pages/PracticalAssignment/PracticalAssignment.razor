@@ -1,0 +1,788 @@
+﻿@page "/practicalassignment"
+
+@attribute [Authorize]
+
+<PageTitle>Excel Data Analysis - Practical Assignment</PageTitle>
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+ <CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized> 
+<AssignmentLayout>
+    <Navigation>
+        <TopNavigation NavigationItems="navigationItems" UserProfile="userProfile" />
+    </Navigation>
+
+    <Header>
+        <MudPaper Style="margin-top: 70px;" Elevation="0">
+            <AssignmentHeader Assignment="currentAssignment" />
+        </MudPaper>
+    </Header>
+
+    <Content>
+        <MudContainer MaxWidth="MaxWidth.False" Class="pa-4" Style="background-color: #f8fafc;">
+            <MudContainer MaxWidth="MaxWidth.Large" Class="pa-0" Style="margin: 0 auto; padding: 0 60px;">
+
+                <!-- Tabbed Interface -->
+                <MudPaper Class="tab-container" Elevation="0">
+                    <MudTabs Elevation="0"
+                             ApplyEffectsToContainer="true"
+                             Class="custom-tabs"
+                             PanelClass="section-content"
+                             @bind-ActivePanelIndex="activeTabIndex"
+                             Style="background: white;">
+
+                        <!-- Overview Tab -->
+                        <MudTabPanel Text="📖 Overview" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.Visibility" Style="font-size: 24px;" />
+                                        Practical Overview
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                    <PracticalOverview />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Requirements Tab -->
+                        <MudTabPanel Text="✅ Requirements" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.FlashOn" Style="font-size: 24px;" />
+                                        Practical Requirements
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                    <PracticalRequirements />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Excel Skills Tab -->
+                        <MudTabPanel Text="🧠 Excel Skills" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.Psychology" Style="font-size: 24px;" />
+                                        Required Excel Skills
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                    <ExcelSkills />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Assessment Criteria Tab -->
+                        <MudTabPanel Text="📊 Assessment" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <AssessmentCriteria />
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Tools & Resources Tab -->
+                        <MudTabPanel Text="🛠️ Tools" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.Build" Style="font-size: 24px;" />
+                                        Required Tools & Resources
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                    <ToolsAndResources />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Download Sample Data Tab -->
+                        <MudTabPanel Text="📥 Download Data" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.Download" Style="font-size: 24px;" />
+                                        Download Sample Data
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                    <DownloadSection />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Submit Assignment Tab -->
+                        <MudTabPanel Text="📤 Submit" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.Upload" Style="font-size: 24px;" />
+                                        Submit Assignment
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                </MudPaper>
+
+                                <!-- Choose Submission Method Section -->
+                                <MudPaper Class="submission-section" Elevation="0">
+                                    <MudText Class="submission-method-header" Typo="Typo.h6" Style="margin: 0; font-weight: 600;">
+                                        Choose Submission Method
+                                    </MudText>
+                                    <MudPaper Style="padding: 24px;" Elevation="0">
+                                        <MudGrid Spacing="3" Justify="Justify.Center">
+                                            <!-- Text Submission -->
+                                            <MudItem xs="12" sm="4">
+                                                <MudPaper Class="submission-method"
+                                                          Style="@GetSubmissionMethodStyle(0)"
+                                                          @onclick="() => SelectSubmissionMethod(0)"
+                                                          Elevation="0">
+                                                    <MudPaper style="margin-bottom: 16px;" Elevation="0">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Edit"
+                                                                 Style="font-size: 48px; color: #1e3a5f;" />
+                                                        @if (selectedSubmissionMethod == 0)
+                                                        {
+                                                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
+                                                                     Style="position: absolute; top: 8px; right: 8px; color: #4caf50; font-size: 20px;" />
+                                                        }
+                                                    </MudPaper>
+                                                    <MudText Typo="Typo.subtitle1" Style="font-weight: 600; margin-bottom: 8px;">
+                                                        Text Submission
+                                                    </MudText>
+                                                    <MudText Typo="Typo.body2" Style="color: #6b7280;">
+                                                        Type your assignment directly in the editor
+                                                    </MudText>
+                                                </MudPaper>
+                                            </MudItem>
+
+                                            <!-- File Upload -->
+                                            <MudItem xs="12" sm="4">
+                                                <MudPaper Class="submission-method"
+                                                          Style="@GetSubmissionMethodStyle(1)"
+                                                          @onclick="() => SelectSubmissionMethod(1)"
+                                                          Elevation="0">
+                                                    <MudPaper style="margin-bottom: 16px;" Elevation="0">
+                                                        <MudIcon Icon="@Icons.Material.Filled.CloudUpload"
+                                                                 Style="font-size: 48px; color: #1e3a5f;" />
+                                                        @if (selectedSubmissionMethod == 1)
+                                                        {
+                                                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
+                                                                     Style="position: absolute; top: 8px; right: 8px; color: #4caf50; font-size: 20px;" />
+                                                        }
+                                                    </MudPaper>
+                                                    <MudText Typo="Typo.subtitle1" Style="font-weight: 600; margin-bottom: 8px;">
+                                                        File Upload
+                                                    </MudText>
+                                                    <MudText Typo="Typo.body2" Style="color: #6b7280;">
+                                                        Upload PDF, DOC, or XLSX files
+                                                    </MudText>
+                                                </MudPaper>
+                                            </MudItem>
+
+                                            <!-- Questions Format -->
+                                            <MudItem xs="12" sm="4">
+                                                <MudPaper Class="submission-method"
+                                                          Style="@GetSubmissionMethodStyle(2)"
+                                                          @onclick="() => SelectSubmissionMethod(2)"
+                                                          Elevation="0">
+                                                    <MudPaper style="margin-bottom: 16px;" Elevation="0">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Quiz"
+                                                                 Style="font-size: 48px; color: #1e3a5f;" />
+                                                        @if (selectedSubmissionMethod == 2)
+                                                        {
+                                                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
+                                                                     Style="position: absolute; top: 8px; right: 8px; color: #4caf50; font-size: 20px;" />
+                                                        }
+                                                    </MudPaper>
+                                                    <MudText Typo="Typo.subtitle1" Style="font-weight: 600; margin-bottom: 8px;">
+                                                        Questions Format
+                                                    </MudText>
+                                                    <MudText Typo="Typo.body2" Style="color: #6b7280;">
+                                                        Answer structured questions and prompts
+                                                    </MudText>
+                                                </MudPaper>
+                                            </MudItem>
+                                        </MudGrid>
+                                    </MudPaper>
+                                </MudPaper>
+
+                                <!-- Conditional Content Based on Selection -->
+                                @if (selectedSubmissionMethod == 0)
+                                {
+                                    <!-- Text Editor Section -->
+                                    <MudPaper Class="submission-section" Elevation="0">
+                                        <MudText Class="submission-method-header" Typo="Typo.h6" Style="margin: 0; font-weight: 600;">
+                                            Write Your Assignment
+                                        </MudText>
+                                        <MudPaper Style="padding: 24px;" Elevation="0">
+                                            <!-- Text Editor Toolbar -->
+                                            <MudPaper class="text-editor-toolbar" Elevation="0">
+                                                <MudButtonGroup Variant="Variant.Text" Size="Size.Small">
+                                                    <MudIconButton Icon="@Icons.Material.Filled.FormatBold" Size="Size.Small" />
+                                                    <MudIconButton Icon="@Icons.Material.Filled.FormatItalic" Size="Size.Small" />
+                                                    <MudIconButton Icon="@Icons.Material.Filled.FormatUnderlined" Size="Size.Small" />
+                                                    <MudIconButton Icon="@Icons.Material.Filled.FormatListNumbered" Size="Size.Small" />
+                                                    <MudIconButton Icon="@Icons.Material.Filled.FormatListBulleted" Size="Size.Small" />
+                                                </MudButtonGroup>
+                                                <MudText Typo="Typo.caption" Class="word-count">
+                                                    Word count: @GetWordCount()
+                                                </MudText>
+                                            </MudPaper>
+
+                                            <MudTextField @bind-Value="assignmentText"
+                                                          Placeholder="Start writing your assignment here..."
+                                                          Lines="8"
+                                                          Variant="Variant.Outlined"
+                                                          Style="border-radius: 0 0 8px 8px;" />
+
+                                            <!-- Assignment Sections -->
+                                            <MudPaper Style="margin-top: 24px;" Elevation="0">
+                                                <MudExpansionPanels Elevation="0">
+                                                    <MudExpansionPanel Text="Executive Summary" Icon="@Icons.Material.Filled.Summarize">
+                                                        <MudPaper Style="padding: 16px; background: #f8f9fa; border-radius: 8px;" Elevation="0">
+                                                            <MudText Typo="Typo.body2" Style="margin-bottom: 8px;">Brief overview of the company, key findings, and main recommendations • 300 words</MudText>
+                                                        </MudPaper>
+                                                    </MudExpansionPanel>
+                                                    <MudExpansionPanel Text="Company Background" Icon="@Icons.Material.Filled.Business">
+                                                        <MudPaper Style="padding: 16px; background: #f8f9fa; border-radius: 8px;" Elevation="0">
+                                                            <MudText Typo="Typo.body2" Style="margin-bottom: 8px;">Overview of the selected company, industry context, and target market • 400 words</MudText>
+                                                        </MudPaper>
+                                                    </MudExpansionPanel>
+                                                    <MudExpansionPanel Text="Current Marketing Strategy Analysis" Icon="@Icons.Material.Filled.Analytics">
+                                                        <MudPaper Style="padding: 16px; background: #f8f9fa; border-radius: 8px;" Elevation="0">
+                                                            <MudText Typo="Typo.body2" Style="margin-bottom: 8px;">Detailed analysis of existing marketing mix, positioning, and channel strategies • 800 words</MudText>
+                                                        </MudPaper>
+                                                    </MudExpansionPanel>
+                                                    <MudExpansionPanel Text="Digital Marketing Evaluation" Icon="@Icons.Material.Filled.PhoneAndroid">
+                                                        <MudPaper Style="padding: 16px; background: #f8f9fa; border-radius: 8px;" Elevation="0">
+                                                            <MudText Typo="Typo.body2" Style="margin-bottom: 8px;">Assessment of digital presence, social media strategy, and online engagement • 600 words</MudText>
+                                                        </MudPaper>
+                                                    </MudExpansionPanel>
+                                                    <MudExpansionPanel Text="Strategic Recommendations" Icon="@Icons.Material.Filled.Lightbulb">
+                                                        <MudPaper Style="padding: 16px; background: #f8f9fa; border-radius: 8px;" Elevation="0">
+                                                            <MudText Typo="Typo.body2" Style="margin-bottom: 8px;">Evidence-based recommendations for marketing strategy improvements • 700 words</MudText>
+                                                        </MudPaper>
+                                                    </MudExpansionPanel>
+                                                    <MudExpansionPanel Text="Conclusion" Icon="@Icons.Material.Filled.Flag">
+                                                        <MudPaper Style="padding: 16px; background: #f8f9fa; border-radius: 8px;" Elevation="0">
+                                                            <MudText Typo="Typo.body2" Style="margin-bottom: 8px;">Summary of key insights and implementation considerations • 200 words</MudText>
+                                                        </MudPaper>
+                                                    </MudExpansionPanel>
+                                                </MudExpansionPanels>
+                                            </MudPaper>
+                                        </MudPaper>
+                                    </MudPaper>
+                                }
+                                else if (selectedSubmissionMethod == 1)
+                                {
+                                    <!-- File Upload Section (Your existing components) -->
+                                    <MudStack Spacing="4">
+                                        <FileUploadSection OnFilesChanged="OnFilesChanged"
+                                                           SelectedFiles="selectedFiles" />
+                                    </MudStack>
+                                }
+                                else if (selectedSubmissionMethod == 2)
+                                {
+                                    <!-- Questions Format Section -->
+                                    <MudPaper Class="submission-section" Elevation="0">
+                                        <MudText Class="submission-method-header" Typo="Typo.h6" Style="margin: 0; font-weight: 600;">
+                                            Answer Assignment Questions
+                                        </MudText>
+                                        <MudPaper Style="padding: 24px;" Elevation="0">
+                                            <MudText Typo="Typo.body1" Style="margin-bottom: 24px; color: #6b7280;">
+                                                Please answer the following structured questions about your Excel data analysis assignment.
+                                            </MudText>
+
+                                            <MudStack Spacing="3">
+                                                <MudTextField @bind-Value="question1Answer"
+                                                              Label="Question 1: Data Overview"
+                                                              Placeholder="Describe the dataset you analyzed and its key characteristics..."
+                                                              Lines="4"
+                                                              Variant="Variant.Outlined" />
+
+                                                <MudTextField @bind-Value="question2Answer"
+                                                              Label="Question 2: Analysis Methods"
+                                                              Placeholder="Explain the Excel functions and analysis techniques you used..."
+                                                              Lines="4"
+                                                              Variant="Variant.Outlined" />
+
+                                                <MudTextField @bind-Value="question3Answer"
+                                                              Label="Question 3: Key Findings"
+                                                              Placeholder="What were the main insights from your analysis..."
+                                                              Lines="4"
+                                                              Variant="Variant.Outlined" />
+
+                                                <MudTextField @bind-Value="question4Answer"
+                                                              Label="Question 4: Recommendations"
+                                                              Placeholder="Based on your analysis, what recommendations would you make..."
+                                                              Lines="4"
+                                                              Variant="Variant.Outlined" />
+                                            </MudStack>
+                                        </MudPaper>
+                                    </MudPaper>
+                                }
+
+                                <!-- Action Buttons Section (Your existing component with new styling) -->
+                                <MudPaper Style="margin-top: 32px;" class="action-buttons-styled" Elevation="0">
+                                    <ActionButtonsSection IsSubmitting="isSubmitting"
+                                                          HasFiles="HasFilesToSubmit()"
+                                                          OnSubmit="OpenSubmissionDialog"
+                                                          OnSaveProgress="SaveProgress" />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                        <!-- Progress Tab -->
+                        <MudTabPanel Text="📈 Progress" Class="custom-tab">
+                            <MudPaper class="tab-content-wrapper" Style="padding: 0;" Elevation="0">
+                                <MudPaper Class="section-header" Elevation="0">
+                                    <MudText Class="section-title">
+                                        <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Style="font-size: 24px;" />
+                                        Assignment Progress
+                                    </MudText>
+                                </MudPaper>
+                                <MudPaper Style="padding: 32px;" Elevation="0">
+                                    <ProgressSection TaskStates="taskStates"
+                                                     OnTaskToggle="ToggleTask" />
+                                </MudPaper>
+                            </MudPaper>
+                        </MudTabPanel>
+
+                    </MudTabs>
+                </MudPaper>
+
+            </MudContainer>
+        </MudContainer>
+    </Content>
+</AssignmentLayout>
+
+<!-- Submission Dialog Component -->
+<SubmissionDialog @bind-IsVisible="showSubmissionDialog"
+                  SelectedFiles="selectedFiles"
+                  IsSubmitting="isSubmitting"
+                  OnSubmit="SubmitAssignment"
+                  OnClose="CloseSubmissionDialog"
+                  SubmissionMethod="selectedSubmissionMethod"
+                  AssignmentText="assignmentText"
+                  Question1Answer="question1Answer"
+                  Question2Answer="question2Answer"
+                  Question3Answer="question3Answer"
+                  Question4Answer="question4Answer" />
+                  </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> 
+
+@code {
+    // Tab state
+    private int activeTabIndex = 0;
+
+    // Main page state
+    private List<NavigationItem>? navigationItems;
+    private UserProfile? userProfile;
+    private PracticalAssignmentModel? currentAssignment;
+
+    // File upload state
+    private List<IBrowserFile> selectedFiles = new();
+
+    // Dialog state
+    private bool showSubmissionDialog = false;
+    private bool isSubmitting = false;
+
+    // Progress state
+    private bool[] taskStates = { true, true, true, true, false, false, false };
+
+    // Submission method state (0 = Text, 1 = File Upload, 2 = Questions)
+    private int selectedSubmissionMethod = 1; // Default to File Upload to match your current setup
+
+    // Text assignment content
+    private string assignmentText = string.Empty;
+
+    // Question answers
+    private string question1Answer = string.Empty;
+    private string question2Answer = string.Empty;
+    private string question3Answer = string.Empty;
+    private string question4Answer = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dashboardData = await PracticalAssignmentService.GetPracticalDashboardDataAsync();
+        currentAssignment = dashboardData.CurrentAssignment;
+        navigationItems = dashboardData.NavigationItems;
+        userProfile = dashboardData.User;
+    }
+
+    private bool HasFilesToSubmit() =>
+        selectedSubmissionMethod switch
+        {
+            0 => !string.IsNullOrWhiteSpace(assignmentText), // Text submission
+            1 => selectedFiles?.Any() == true, // File upload
+            2 => !string.IsNullOrWhiteSpace(question1Answer) ||
+                 !string.IsNullOrWhiteSpace(question2Answer) ||
+                 !string.IsNullOrWhiteSpace(question3Answer) ||
+                 !string.IsNullOrWhiteSpace(question4Answer), // Questions format
+            _ => false
+        };
+
+    private void SelectSubmissionMethod(int method)
+    {
+        selectedSubmissionMethod = method;
+        StateHasChanged();
+    }
+
+    private string GetSubmissionMethodStyle(int method)
+    {
+        var baseStyle = "padding: 24px; text-align: center; border-radius: 12px; cursor: pointer; position: relative;";
+        var borderStyle = selectedSubmissionMethod == method
+            ? "border: 2px solid #1e3a5f;"
+            : "border: 2px solid #e2e8f0;";
+        return baseStyle + borderStyle;
+    }
+
+    private int GetWordCount()
+    {
+        if (string.IsNullOrWhiteSpace(assignmentText))
+            return 0;
+
+        return assignmentText.Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+    }
+
+    private void OnFilesChanged(List<IBrowserFile> files)
+    {
+        selectedFiles = files;
+        StateHasChanged();
+    }
+
+    private void ToggleTask(int taskIndex)
+    {
+        if (taskIndex >= 0 && taskIndex < taskStates.Length)
+        {
+            taskStates[taskIndex] = !taskStates[taskStates.Length];
+            StateHasChanged();
+        }
+    }
+
+    private void OpenSubmissionDialog()
+    {
+        if (!HasFilesToSubmit())
+        {
+            var message = selectedSubmissionMethod switch
+            {
+                0 => "Please write your assignment before submitting.",
+                1 => "Please select files before submitting.",
+                2 => "Please answer at least one question before submitting.",
+                _ => "Please complete your assignment before submitting."
+            };
+            Snackbar.Add(message, Severity.Warning);
+            return;
+        }
+        showSubmissionDialog = true;
+    }
+
+    private void CloseSubmissionDialog()
+    {
+        showSubmissionDialog = false;
+        isSubmitting = false;
+        StateHasChanged();
+    }
+
+    private async Task SubmitAssignment()
+    {
+        if (!HasFilesToSubmit()) return;
+
+        isSubmitting = true;
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(1500); // Simulate submission
+            CloseSubmissionDialog();
+
+            var successMessage = selectedSubmissionMethod switch
+            {
+                0 => "Text assignment submitted successfully!",
+                1 => "File assignment submitted successfully!",
+                2 => "Question responses submitted successfully!",
+                _ => "Assignment submitted successfully!"
+            };
+
+            Snackbar.Add(successMessage, Severity.Success);
+
+            // Mark all tasks as completed
+            for (int i = 0; i < taskStates.Length; i++)
+                taskStates[i] = true;
+
+            // Clear selected content based on submission method
+            switch (selectedSubmissionMethod)
+            {
+                case 0:
+                    assignmentText = string.Empty;
+                    break;
+                case 1:
+                    selectedFiles.Clear();
+                    break;
+                case 2:
+                    question1Answer = string.Empty;
+                    question2Answer = string.Empty;
+                    question3Answer = string.Empty;
+                    question4Answer = string.Empty;
+                    break;
+            }
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Submission failed: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isSubmitting = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task RequestExtension()
+    {
+        // Add your extension request logic here
+        Snackbar.Add("Extension request feature coming soon!", Severity.Info);
+    }
+
+    private async Task ContactSupport()
+    {
+        // Add your contact support logic here
+        Snackbar.Add("Contact support feature coming soon!", Severity.Info);
+    }
+
+    private async Task SaveProgress()
+    {
+        if (currentAssignment == null) return;
+
+        try
+        {
+            var progressData = new { LastAccessed = DateTime.Now, Status = "In Progress" };
+            var success = await PracticalAssignmentService.SaveProgressAsync(currentAssignment.Id, progressData);
+
+            if (success)
+                Snackbar.Add("Progress saved successfully!", Severity.Success);
+            else
+                Snackbar.Add("Failed to save progress. Please try again.", Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error saving progress: {ex.Message}", Severity.Error);
+        }
+    }
+}
+
+<style>
+    .tab-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        overflow: visible;
+        margin-bottom: 24px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .custom-tabs {
+        min-height: 48px;
+        width: 100%;
+        background: white;
+        border-radius: 8px 8px 0 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .custom-tab {
+        padding: 12px 20px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #6b7280 !important;
+        text-transform: none !important;
+        border-radius: 0 !important;
+        transition: all 0.3s ease !important;
+        border-bottom: 2px solid transparent !important;
+        min-width: 120px !important;
+        flex: 1 !important;
+        max-width: none !important;
+        background: white !important;
+    }
+
+        .custom-tab:hover {
+            background: #f1f5f9 !important;
+            color: #1e3a5f !important;
+        }
+
+        .custom-tab.mud-tab-active {
+            background: white !important;
+            color: #1e3a5f !important;
+            border-bottom-color: #1e3a5f !important;
+        }
+
+    .section-header {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        color: white;
+        padding: 20px 32px;
+        margin: 0;
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-content {
+        padding: 0;
+        background: white;
+        min-height: 500px;
+        border-radius: 0 0 8px 8px;
+    }
+
+    /* Override component styles when in tabs */
+    .tab-content-wrapper .instructions-container,
+    .tab-content-wrapper .download-container,
+    .tab-content-wrapper .upload-container,
+    .tab-content-wrapper .progress-container,
+    .tab-content-wrapper .actions-container {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .tab-content-wrapper .content-section {
+        background: transparent !important;
+        border-radius: 0 !important;
+        margin-bottom: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .tab-content-wrapper .panel-header {
+        display: none !important; /* Hide individual component headers */
+    }
+
+    /* New styles for submission methods */
+    .submission-method {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+        .submission-method:hover {
+            border-color: #1e3a5f !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.15) !important;
+        }
+
+    .submission-section {
+        margin-bottom: 24px;
+        border-radius: 0;
+        overflow: visible;
+        box-shadow: none;
+        border: none;
+    }
+
+    /* White header for submission method section */
+    .submission-method-header {
+        background: white !important;
+        color: #1e3a5f !important;
+        padding: 16px 24px;
+        margin: 0;
+        border-bottom: none;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .text-editor-toolbar {
+        border: 1px solid #e2e8f0;
+        border-bottom: none;
+        background: #f8f9fa;
+        padding: 8px 12px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .word-count {
+        float: right;
+        margin-top: 8px;
+        color: #6b7280;
+    }
+
+    /* Styling for ActionButtonsSection to match screenshot design */
+    .action-buttons-styled {
+        text-align: center;
+        padding: 32px 0;
+    }
+
+        .action-buttons-styled .action-button {
+            text-transform: none !important;
+            font-weight: 500 !important;
+            border-radius: 6px !important;
+            padding: 10px 24px !important;
+            min-width: 160px !important;
+            font-size: 14px !important;
+            margin: 0 8px 12px 8px !important;
+            height: 40px !important;
+        }
+
+        /* Primary Submit Button - Blue filled */
+        .action-buttons-styled .submit-button {
+            background: #4f6fa8 !important;
+            color: white !important;
+            border: none !important;
+        }
+
+            .action-buttons-styled .submit-button:hover {
+                background: #3d5a8c !important;
+            }
+
+            .action-buttons-styled .submit-button:disabled {
+                background: #9ca3af !important;
+                color: white !important;
+                cursor: not-allowed !important;
+            }
+
+        /* Save Progress Button - Gray filled */
+        .action-buttons-styled .save-button {
+            background: #6b7280 !important;
+            color: white !important;
+            border: none !important;
+        }
+
+            .action-buttons-styled .save-button:hover {
+                background: #4b5563 !important;
+            }
+
+        /* Secondary buttons - White with border */
+        .action-buttons-styled .secondary-button {
+            border: 1px solid #d1d5db !important;
+            color: #374151 !important;
+            background: white !important;
+        }
+
+            .action-buttons-styled .secondary-button:hover {
+                background: #f9fafb !important;
+                border-color: #9ca3af !important;
+            }
+
+        /* Override any inline styles */
+        .action-buttons-styled .mud-button-root {
+            text-transform: none !important;
+            font-weight: 500 !important;
+            border-radius: 6px !important;
+            padding: 10px 24px !important;
+            min-width: 160px !important;
+            font-size: 14px !important;
+            height: 40px !important;
+        }
+</style>

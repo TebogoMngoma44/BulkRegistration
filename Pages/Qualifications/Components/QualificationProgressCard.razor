@@ -1,0 +1,472 @@
+﻿@* @attribute [Authorize] *@
+@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="QualificationProgressCard">
+        <Authorized>
+*@
+<MudCard Class="progress-card">
+    <MudCardContent Class="progress-card-content">
+        <MudStack Class="progress-header">
+            <MudText Typo="Typo.h4" Class="qualification-title">
+                @Qualification.QualificationName
+            </MudText>
+            <MudText Typo="Typo.body1" Class="qualification-subtitle">
+                NQF Level @Qualification.NQFLevel • @Qualification.Status
+            </MudText>
+        </MudStack>
+        <MudProgressLinear Value="@Qualification.OverallProgress" Color="Color.Success" Size="Size.Large" Class="progress-bar" />
+
+        <!-- Desktop/Tablet Grid (4 columns) -->
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudGrid Spacing="4" Justify="Justify.Center">
+                <MudItem xs="6" sm="3">
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h3" Class="stat-number">
+                            @GetProgressText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label">
+                            Overall Progress
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6" sm="3">
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h3" Class="stat-number">
+                            @GetUnitsText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label">
+                            Units Completed
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6" sm="3">
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h3" Class="stat-number">
+                            @GetMonthsText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label">
+                            Months Remaining
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6" sm="3">
+                    <MudStack AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h3" Class="stat-number">
+                            @GetCompletionText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label">
+                            Expected Completion
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudHidden>
+
+        <!-- Mobile Grid (2x2) -->
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudGrid Spacing="3" Justify="Justify.Center" Class="mobile-stats-grid">
+                <MudItem xs="6">
+                    <MudStack AlignItems="AlignItems.Center" Class="mobile-stat-item">
+                        <MudText Typo="Typo.h4" Class="stat-number-mobile">
+                            @GetProgressText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label-mobile">
+                            Overall Progress
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudStack AlignItems="AlignItems.Center" Class="mobile-stat-item">
+                        <MudText Typo="Typo.h4" Class="stat-number-mobile">
+                            @GetUnitsText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label-mobile">
+                            Units Completed
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudStack AlignItems="AlignItems.Center" Class="mobile-stat-item">
+                        <MudText Typo="Typo.h4" Class="stat-number-mobile">
+                            @GetMonthsText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label-mobile">
+                            Months Remaining
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudStack AlignItems="AlignItems.Center" Class="mobile-stat-item">
+                        <MudText Typo="Typo.h4" Class="stat-number-mobile">
+                            @GetCompletionText()
+                        </MudText>
+                        <MudText Typo="Typo.body2" Class="stat-label-mobile">
+                            Expected Completion
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudHidden>
+    </MudCardContent>
+</MudCard>
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+
+
+@code {
+    [Parameter] public SetaQualificationModel Qualification { get; set; } = new();
+
+    private string GetProgressText() => $"{Qualification.OverallProgress}%";
+    private string GetUnitsText() => $"{Qualification.UnitsCompleted}/{Qualification.TotalUnits}";
+    private string GetMonthsText() => $"{Qualification.MonthsRemaining}";
+    private string GetCompletionText() => Qualification.ExpectedEndDate.ToString("MMM yyyy");
+}
+
+<style>
+    .progress-card {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        border-radius: 20px;
+        margin-bottom: 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(30, 58, 95, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .progress-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(30, 58, 95, 0.4);
+        }
+
+    .progress-card-content {
+        padding: clamp(20px, 4vw, 32px);
+    }
+
+    .progress-header {
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .qualification-title {
+        color: white;
+        font-weight: 600;
+        font-size: clamp(20px, 4vw, 28px);
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+
+    .qualification-subtitle {
+        color: rgba(255,255,255,0.9);
+        font-size: clamp(14px, 2.5vw, 16px);
+    }
+
+    .progress-bar {
+        margin-bottom: 24px;
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    /* Desktop Stats */
+    .stat-number {
+        color: white;
+        font-size: clamp(24px, 5vw, 32px);
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .stat-label {
+        color: rgba(255,255,255,0.9);
+        text-align: center;
+        font-size: clamp(12px, 2vw, 14px);
+        line-height: 1.3;
+        margin-top: 4px;
+    }
+
+    /* Mobile Stats */
+    .mobile-stats-grid {
+        margin-top: 8px;
+    }
+
+    .mobile-stat-item {
+        padding: 16px 8px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        min-height: 80px;
+        justify-content: center;
+    }
+
+    .stat-number-mobile {
+        color: white;
+        font-size: clamp(18px, 6vw, 24px);
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .stat-label-mobile {
+        color: rgba(255,255,255,0.9);
+        text-align: center;
+        font-size: clamp(11px, 2.5vw, 13px);
+        line-height: 1.2;
+        margin-top: 4px;
+    }
+
+    /* Unauthorized Progress Card Styles */
+    .unauthorized-progress-card {
+        background: linear-gradient(135deg, #757575, #9e9e9e);
+        border-radius: 20px;
+        margin-bottom: 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(117, 117, 117, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .unauthorized-progress-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(117, 117, 117, 0.4);
+        }
+
+    .unauthorized-progress {
+        padding: clamp(16px, 3vw, 20px);
+        text-align: center;
+    }
+
+    .progress-icon {
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 8px;
+        font-size: clamp(48px, 8vw, 64px) !important;
+    }
+
+    .unauthorized-title {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: clamp(20px, 4vw, 28px);
+        line-height: 1.3;
+    }
+
+    .unauthorized-subtitle {
+        color: rgba(255,255,255,0.8);
+        max-width: 400px;
+        margin: 0 auto;
+        font-size: clamp(14px, 2.5vw, 16px);
+        line-height: 1.5;
+        padding: 0 10px;
+    }
+
+    .demo-progress-section {
+        width: 100%;
+        max-width: clamp(250px, 50vw, 300px);
+        margin: 20px auto;
+    }
+
+    .demo-label {
+        color: rgba(255,255,255,0.7);
+        font-size: clamp(10px, 2vw, 12px);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .demo-progress-bar {
+        opacity: 0.6;
+        margin-bottom: 16px;
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    /* Desktop Demo Stats */
+    .demo-stats {
+        opacity: 0.8;
+        margin: 24px 0;
+    }
+
+    .demo-stat-number {
+        color: rgba(255,255,255,0.6);
+        font-size: clamp(24px, 5vw, 32px);
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .demo-stat-label {
+        color: rgba(255,255,255,0.6);
+        text-align: center;
+        font-size: clamp(12px, 2vw, 14px);
+        line-height: 1.3;
+        margin-top: 4px;
+    }
+
+    /* Mobile Demo Stats */
+    .demo-stats-mobile {
+        opacity: 0.8;
+        margin: 24px 0;
+    }
+
+    .mobile-demo-stat-item {
+        padding: 16px 8px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        min-height: 80px;
+        justify-content: center;
+    }
+
+    .demo-stat-number-mobile {
+        color: rgba(255,255,255,0.6);
+        font-size: clamp(18px, 6vw, 24px);
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .demo-stat-label-mobile {
+        color: rgba(255,255,255,0.6);
+        text-align: center;
+        font-size: clamp(11px, 2.5vw, 13px);
+        line-height: 1.2;
+        margin-top: 4px;
+    }
+
+    .progress-access-button {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-transform: none;
+        border: none;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        margin-top: 16px;
+        font-size: clamp(14px, 2.5vw, 16px);
+        min-height: 48px;
+        transition: all 0.3s ease;
+    }
+
+        .progress-access-button:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+
+    /* Responsive Design */
+    @@media (max-width: 960px) {
+        .progress-card, .unauthorized-progress-card {
+            margin-bottom: 30px;
+            border-radius: 16px;
+        }
+
+        .progress-header {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar,
+        .demo-progress-bar {
+            margin-bottom: 20px;
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .progress-card, .unauthorized-progress-card {
+            margin-bottom: 24px;
+            border-radius: 12px;
+        }
+
+        .progress-card-content {
+            padding: 20px 16px;
+        }
+
+        .unauthorized-progress {
+            padding: 16px 12px;
+        }
+
+        .progress-header {
+            margin-bottom: 16px;
+        }
+
+        .progress-bar,
+        .demo-progress-bar {
+            margin-bottom: 16px;
+            height: 6px;
+        }
+
+        .mobile-stat-item,
+        .mobile-demo-stat-item {
+            padding: 12px 6px;
+            min-height: 70px;
+            border-radius: 8px;
+        }
+
+        .demo-progress-section {
+            margin: 16px auto;
+        }
+
+        .progress-access-button {
+            width: 100%;
+            max-width: 280px;
+            padding: 14px 20px;
+            font-size: 14px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .mobile-stat-item, .mobile-demo-stat-item {
+            padding: 10px 4px;
+            min-height: 65px;
+        }
+
+        .unauthorized-subtitle {
+            padding: 0 5px;
+        }
+
+        .progress-access-button {
+            max-width: 260px;
+        }
+    }
+
+    /* Animation for better UX */
+    .progress-card,
+    .unauthorized-progress-card {
+        animation: slideInUp 0.6s ease-out;
+    }
+
+    @@keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Progress bar animation */
+    .progress-bar .mud-progress-linear-bar,
+    .demo-progress-bar .mud-progress-linear-bar {
+        transition: width 1s ease-in-out;
+    }
+
+    /* Ensure content doesn't break awkwardly */
+    .qualification-title,
+    .unauthorized-title {
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .stat-label,
+    .stat-label-mobile,
+    .demo-stat-label,
+    .demo-stat-label-mobile {
+        word-wrap: break-word;
+    }
+</style>

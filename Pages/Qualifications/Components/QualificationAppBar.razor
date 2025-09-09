@@ -1,0 +1,141 @@
+﻿@* CSS Reference Section *@
+@@section Styles {
+<link rel="stylesheet" href="~/css/navigation-bar.css" />
+}
+
+@* @attribute [Authorize] *@
+@using MudBlazor
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="QualificationAppBar">
+        <Authorized>
+*@
+<!-- Navigation Bar -->
+<MudAppBar Elevation="1" Style="background-color: white; color: #333; height: 70px; border-bottom: 1px solid #e0e0e0;">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding: 0 16px;">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%; height: 70px;">
+            <!-- Logo -->
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <MudImage Src="images/SpecCon-Logo.png"
+                          Alt="SpecCon Holdings Logo"
+                          Style="height: clamp(35px, 6vw, 50px); width: auto;" />
+            </MudStack>
+
+            <!-- Navigation Links - Hidden on mobile -->
+            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                    <MudButton Variant="Variant.Text"
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Dashboard
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Style="color: white; text-transform: none; padding: 8px 20px; border-radius: 25px; background: #1e3a5f; font-weight: 500; box-shadow: none;">
+                        My Qualifications
+                    </MudButton>
+                    <MudButton Variant="Variant.Text"
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Achievements
+                    </MudButton>
+                    <MudButton Variant="Variant.Text"
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Messages
+                    </MudButton>
+                    <MudButton Variant="Variant.Text"
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        Quick Tips
+                    </MudButton>
+                </MudStack>
+            </MudHidden>
+
+            <!-- User Profile and Notifications -->
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                <!-- Mobile Menu Button -->
+                <MudHidden Breakpoint="Breakpoint.LgAndUp">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                                   Style="color: #1e3a5f; width: 40px; height: 40px;"
+                                   OnClick="@ToggleMobileMenu" />
+                </MudHidden>
+
+                <MudBadge Content="1" Color="Color.Warning" Overlap="true">
+                    <MudIconButton Icon="@Icons.Material.Filled.Notifications"
+                                   Style="color: #C9980B; background: transparent; width: 40px; height: 40px;" />
+                </MudBadge>
+                <MudAvatar Style="background: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: clamp(14px, 2.5vw, 16px);">
+                    JS
+                </MudAvatar>
+            </MudStack>
+        </MudStack>
+    </MudContainer>
+</MudAppBar>
+
+<!-- Mobile Navigation Drawer -->
+<MudDrawer @bind-Open="@isMobileMenuOpen"
+           Anchor="@Anchor.Right"
+           Elevation="2"
+           Variant="@DrawerVariant.Temporary"
+           Style="z-index: 1400;">
+    <MudDrawerHeader Style="background: #1e3a5f; color: white; padding: 20px;">
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h6" Style="color: white; font-weight: 600;">
+                Navigation
+            </MudText>
+            <MudIconButton Icon="@Icons.Material.Filled.Close"
+                           Style="color: white;"
+                           OnClick="@ToggleMobileMenu" />
+        </MudStack>
+    </MudDrawerHeader>
+    <MudDrawerContainer Style="padding: 0;">
+        <MudNavMenu>
+            <MudNavLink Href="/dashboard"
+                        Icon="@Icons.Material.Filled.Dashboard"
+                        Style="padding: 16px 24px; color: #333; font-weight: 500;">
+                My Dashboard
+            </MudNavLink>
+            <MudNavLink Href="/qualifications"
+                        Icon="@Icons.Material.Filled.School"
+                        Style="padding: 16px 24px; color: #1e3a5f; font-weight: 600; background: rgba(30, 58, 95, 0.1);">
+                My Qualifications
+            </MudNavLink>
+            <MudNavLink Href="/achievements"
+                        Icon="@Icons.Material.Filled.EmojiEvents"
+                        Style="padding: 16px 24px; color: #333; font-weight: 500;">
+                My Achievements
+            </MudNavLink>
+            <MudNavLink Href="/messages"
+                        Icon="@Icons.Material.Filled.Message"
+                        Style="padding: 16px 24px; color: #333; font-weight: 500;">
+                My Messages
+            </MudNavLink>
+            <MudNavLink Href="/tips"
+                        Icon="@Icons.Material.Filled.Lightbulb"
+                        Style="padding: 16px 24px; color: #333; font-weight: 500;">
+                Quick Tips
+            </MudNavLink>
+        </MudNavMenu>
+    </MudDrawerContainer>
+</MudDrawer>
+
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    private bool isMobileMenuOpen = false;
+    private bool isUnauthorizedMobileMenuOpen = false;
+
+    private void ToggleMobileMenu()
+    {
+        isMobileMenuOpen = !isMobileMenuOpen;
+    }
+
+    private void ToggleUnauthorizedMobileMenu()
+    {
+        isUnauthorizedMobileMenuOpen = !isUnauthorizedMobileMenuOpen;
+    }
+}

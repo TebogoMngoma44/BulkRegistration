@@ -1,0 +1,30 @@
+﻿@using System.Security.Claims
+@using MudBlazor
+
+@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_currentTheme" />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+
+<MudLayout>
+    @Body
+</MudLayout>
+@code {
+    private readonly MudTheme _currentTheme = new()
+        {
+            PaletteLight = new PaletteLight
+            {
+                Primary = "#2E3168",
+                Secondary = "#212121",
+                Info = "#fff",
+                Success = "#2ECC40",
+                Warning = "#FFC107",
+                Error = "#FF0000",
+                AppbarBackground = "#212121",
+                TextPrimary = "#2E3168",
+                TextSecondary = "#212121",
+            }
+        };
+}

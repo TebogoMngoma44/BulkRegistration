@@ -1,0 +1,359 @@
+﻿/* Main Container */
+.deals-container {
+    font-family: 'Roboto', sans-serif;
+    padding: 3rem;
+    margin: 2rem;
+}
+
+/* Metrics Cards Section */
+.metrics-grid {
+    margin: 2rem;
+}
+
+.metric-card {
+    padding: 1.5rem;
+    height: 100%;
+    width: 50%;
+    transition: box-shadow 0.3s ease;
+}
+
+    .metric-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+.metric-number {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #12265e;
+    font-size: 2.5rem;
+}
+
+.metric-label {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.metric-sublabel {
+    font-size: 0.875rem;
+}
+
+/* Button Section */
+.button-section {
+    margin-bottom: 1.5rem;
+  
+}
+
+.create-deal-button {
+    text-align: center;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    text-transform: none;
+}
+
+/* Filters Section */
+.filters-section {
+    margin-bottom: 2rem;
+}
+
+.filter-select {
+    margin-bottom: 1rem;
+}
+
+/* Table Section */
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+}
+
+.deals-table {
+    width: 100%;
+    min-width: 800px;
+}
+
+/* Updated Table Header with New Gradient */
+.table-header {
+    background: linear-gradient(180deg, #1E3A5F 0%, #2C5282 100%) !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 0.75rem;
+    border: none;
+}
+
+/*action button pop up menu*/
+.pop-up-item {
+    width:auto;
+}
+
+/* Table Body Styling */
+.deals-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+    .deals-table tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+
+.deals-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Status Chip Colors - Success/Competent (Green) */
+.deals-table .mud-chip.mud-chip-color-success {
+    background-color: #DCFCE7 !important;
+    color: #155724 !important;
+    padding: 0px 0.5rem;
+    font-weight: bold;
+    width:100%;
+}
+
+
+/* Custom Status Chip Colors - Error/At Risk (Red) */
+.deals-table .mud-chip.mud-chip-color-error {
+    background-color: #F8D7DA !important;
+    color: #721C24 !important;
+    padding: 0px 0.5rem;
+    font-weight: bold;
+    width:100%;
+}
+
+/* Custom Status Chip Colors - Warning/Pending (Yellow) */
+.deals-table .mud-chip.mud-chip-color-warning {
+    background-color: #FEF3C7 !important;
+    color: #F89522 !important;
+    padding: 0px 0.5rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Custom Status Chip Colors - Info/In Progress (Blue) */
+.deals-table .mud-chip.mud-chip-color-info {
+    background-color: #E1F5FE !important;
+    color: #1E3A5F !important;
+    padding: 0px 0.5rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Custom Status Chip Colors - Secondary/SETA Moderation */
+.deals-table .mud-chip.mud-chip-color-secondary {
+    background-color: #F3E5F5 !important;
+    color: #4A148C !important;
+    padding: 0px 0.5rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Custom Status Chip Colors - Primary/Induction */
+.deals-table .mud-chip.mud-chip-color-primary {
+    background-color: #E3F2FD !important;
+    color: #2C5282 !important;
+    padding: 0px 0.5rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* Verified Button/Profile Documents */
+.verified-button,
+.profile-documents-button {
+    background-color: #28A745 !important;
+    color: white !important;
+    border: none;
+}
+
+    .verified-button:hover,
+    .profile-documents-button:hover {
+        background-color: #218838 !important;
+    }
+
+/* Responsive Design for Tablets */
+@media (max-width: 1024px) {
+    .deals-container {
+        padding: 2rem;
+    }
+
+    .metric-number {
+        font-size: 2rem;
+    }
+
+    .table-header {
+        font-size: 0.75rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .deals-table td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .create-deal-button {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .deals-container {
+        padding: 1rem;
+    }
+
+    .metrics-grid {
+        margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .metric-number {
+        font-size: 1.75rem;
+    }
+
+    .metric-label {
+        font-size: 1rem;
+    }
+
+    .metric-sublabel {
+        font-size: 0.75rem;
+    }
+
+    .filters-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-select {
+        margin-bottom: 1rem;
+    }
+
+    .table-container {
+        border-radius: 0;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .deals-table {
+        min-width: 900px;
+        font-size: 0.8rem;
+    }
+
+    .table-header {
+        font-size: 0.7rem;
+        padding: 0.75rem 0.5rem;
+        white-space: nowrap;
+        min-width: 80px;
+    }
+
+    .deals-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        min-width: 80px;
+    }
+
+    /* Ensure chips display properly on mobile */
+    .deals-table .mud-chip {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+        white-space: nowrap;
+    }
+}
+
+/* Extra Small Mobile Devices */
+@media (max-width: 480px) {
+    .deals-container {
+        padding: 0.5rem;
+    }
+
+    .metric-card {
+        padding: 0.75rem;
+    }
+
+    .metric-number {
+        font-size: 1.5rem;
+    }
+
+    .create-deal-button {
+        font-size: 0.875rem;
+        padding: 0.625rem 1.5rem;
+    }
+
+    .deals-table {
+        min-width: 950px;
+        font-size: 0.75rem;
+    }
+
+    .table-header {
+        font-size: 0.65rem;
+        padding: 0.6rem 0.3rem;
+        min-width: 70px;
+    }
+
+    .deals-table td {
+        padding: 0.6rem 0.3rem;
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+
+    .deals-table .mud-chip {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.3rem;
+    }
+}
+
+/* Custom Styling for Status Chips */
+.deals-table .mud-chip {
+    font-size: 0.7rem;
+    height: auto;
+    min-height: 24px;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* Improve spacing between sections */
+.metrics-grid + .button-section {
+    margin-top: 1rem;
+}
+
+.button-section + .filters-section {
+    margin-top: 1rem;
+}
+
+.filters-section + .table-container {
+    margin-top: 1rem;
+}
+
+/* Ensure proper scrolling behavior */
+.table-container {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Focus and hover states for better UX */
+.create-deal-button:focus,
+.create-deal-button:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+}
+
+/* Accessibility improvements */
+.table-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .metric-card,
+    .create-deal-button {
+        transition: none;
+    }
+}

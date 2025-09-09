@@ -1,0 +1,402 @@
+﻿/* Global Styles for Qualification Management System */
+
+/* Main Container */
+.main-container {
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+/* Common Card Styles */
+.info-card, .modules-card, .certificate-card, .timeline-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+    .info-card .mud-card-content,
+    .modules-card .mud-card-content,
+    .certificate-card .mud-card-content,
+    .timeline-card .mud-card-content {
+        padding: 30px;
+    }
+
+/* Section Titles */
+.section-title {
+    font-weight: 600;
+    color: #1e3a5f;
+}
+
+/* Progress Indicators */
+.progress-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    min-width: 60px;
+}
+
+.progress-chip-completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.progress-chip-current {
+    background-color: #1e3a5f;
+    color: white;
+}
+
+.progress-chip-pending {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Unit Progress Text */
+.unit-progress-completed {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.unit-progress-in-progress {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.unit-progress-not-started {
+    color: #6c757d;
+    font-weight: 600;
+}
+
+/* Status Text Classes */
+.status-completed {
+    color: #10b981;
+    font-weight: 500;
+}
+
+.status-current {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.status-pending {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Buttons */
+.feedback-button {
+    border-radius: 20px;
+    position: relative;
+}
+
+.new-chip {
+    background-color: #ffc107;
+    color: #212529;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.units-button {
+    background-color: #1e3a5f;
+    color: white;
+    text-transform: none;
+    border-radius: 20px;
+    white-space: nowrap;
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+.download-button {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(40, 167, 69, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 11px;
+}
+
+    .download-button:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        transform: translateY(-1px);
+    }
+
+/* Text Styles */
+.feedback-text, .locked-text {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.module-number {
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.module-name {
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+/* Avatar Styles */
+.module-avatar {
+    background-color: #1e3a5f;
+    color: white;
+    font-weight: 600;
+    width: 50px;
+    height: 50px;
+}
+
+.avatar-progress, .avatar-number {
+    color: white;
+    font-weight: bold;
+}
+
+/* Timeline Specific */
+.timeline-avatar {
+    margin-bottom: 12px;
+}
+
+.timeline-avatar-completed {
+    background-color: #10b981;
+}
+
+.timeline-avatar-current {
+    background-color: #2563eb;
+}
+
+.timeline-avatar-pending {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.step-title {
+    font-weight: 600;
+    text-align: center;
+    color: #374151;
+    margin-bottom: 4px;
+}
+
+/* Sections and Layout */
+.module-section {
+    padding: 20px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border-left: 4px solid #e9ecef;
+}
+
+.units-section {
+    background-color: #f8f9fa;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.units-header {
+    font-weight: 600;
+    color: #1e3a5f;
+    margin: 0 0 16px 0;
+}
+
+.unit-row {
+    padding: 8px 0;
+}
+
+.certificate-row {
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+}
+
+/* Certificate Specific */
+.certificate-module-name {
+    font-weight: 600;
+    color: #1e3a5f;
+    line-height: 1.3;
+}
+
+.certificate-qualification-name {
+    color: #6c757d;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+.completion-date {
+    font-weight: 600;
+    color: #1e3a5f;
+}
+
+.completion-time {
+    color: #6c757d;
+}
+
+.grade-number {
+    font-weight: 700;
+    color: #1e3a5f;
+    font-size: 24px;
+}
+
+.grade-chip {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+.available-chip {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.no-certificates {
+    padding: 40px;
+}
+
+.no-cert-title {
+    font-weight: 500;
+}
+
+.no-cert-subtitle {
+    color: #adb5bd;
+}
+
+/* Status Chips */
+.status-chip {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    color: #1565c0;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #90caf9;
+    text-transform: uppercase;
+}
+
+.chip-icon {
+    color: #1565c0;
+    margin-left: 4px;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem 0;
+        margin-top: 3rem;
+    }
+
+    .info-card .mud-card-content,
+    .modules-card .mud-card-content,
+    .certificate-card .mud-card-content,
+    .timeline-card .mud-card-content {
+        padding: 20px;
+    }
+
+    .module-section {
+        padding: 16px;
+    }
+
+    .units-section {
+        padding: 12px;
+    }
+}
+
+/* Animation and Transitions */
+.mud-collapse-container {
+    transition: all 0.3s ease-in-out;
+}
+
+.module-section:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+.certificate-row:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+/* Focus States */
+.timeline-step:focus,
+.timeline-step:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    border-radius: 8px;
+}
+
+/* Loading States */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Error States */
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+/* Print Styles */
+@media print {
+    .main-container {
+        margin-top: 0;
+    }
+
+    .mud-appbar,
+    .download-button,
+    .units-button,
+    .feedback-button {
+        display: none;
+    }
+
+    .info-card,
+    .modules-card,
+    .certificate-card,
+    .timeline-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+    }
+}

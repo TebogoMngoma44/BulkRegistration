@@ -1,0 +1,1930 @@
+﻿@page "/Dashboard/sales"
+
+
+
+<PageTitle>Sales Dashboard</PageTitle>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<style>
+    .top-nav {
+        background-color: #1e3a5f;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 64px;
+    }
+
+    .logo {
+        background-color: white;
+        color: #1e3a5f;
+        padding: 10px 14px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-right: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+    }
+
+    .nav-items {
+        display: flex;
+        gap: 8px;
+    }
+
+    .nav-item {
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        min-width: auto;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        text-transform: none;
+    }
+
+        .nav-item:hover {
+            background-color: #34495e;
+            transform: scale(1.03);
+        }
+
+        .nav-item.active {
+            background-color: #5a6c7d;
+        }
+
+    .profile-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: white;
+    }
+
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #7b8a9a;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .dashboard-title {
+        font-size: 18px;
+        font-weight: 500;
+        color: #1e3a5f;
+    }
+
+    .financial-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .financial-card {
+        padding: 12px;
+        text-align: center;
+        border-radius: 6px;
+        min-height: 65px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .financial-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .financial-header {
+        background-color: #1e3a5f;
+        color: white;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+        .financial-header:hover {
+            background-color: #34495e;
+        }
+
+    .financial-data {
+        background-color: #f8f9fa;
+        color: #1e3a5f;
+    }
+
+        .financial-data:hover {
+            background-color: #e9ecef;
+        }
+
+    .financial-product {
+        background-color: #f8f9fa;
+        color: #1e3a5f;
+        font-weight: 500;
+        text-align: left;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 18px;
+    }
+
+        .financial-product:hover {
+            background-color: #e9ecef;
+        }
+
+    .financial-total {
+        background-color: #4caf50;
+        color: white;
+        font-weight: 600;
+    }
+
+        .financial-total:hover {
+            background-color: #45a049;
+        }
+
+    .amount {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    .details {
+        font-size: 12px;
+        opacity: 0.8;
+    }
+
+    .financial-total .amount {
+        color: white;
+    }
+
+    .financial-total .details {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .pipeline-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    .pipeline-column {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 0;
+        min-height: 400px;
+    }
+
+    .pipeline-header {
+        color: #1e3a5f;
+        padding: 16px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 14px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .pipeline-cards {
+        padding: 16px;
+    }
+
+    .pipeline-card {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .pipeline-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .pipeline-card-title {
+        font-weight: 400;
+        color: #1e3a5f;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+
+    .pipeline-card-subtitle {
+        color: #666;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .messages-feedback-container {
+        display: flex;
+        gap: 24px;
+        margin-top: 24px;
+    }
+
+    .messages-section {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .feedback-section {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .messages-stats {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    .stat-card {
+        text-align: center;
+        flex: 1;
+        padding: 24px 16px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-color: #e9ecef;
+        }
+
+        .stat-card:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .stat-number {
+        font-size: 48px !important;
+        font-weight: 300;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        line-height: 1;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-label {
+        color: #666;
+        font-size: 12px;
+        text-transform: uppercase;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .feedback-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 8px;
+    }
+
+        .feedback-table th {
+            background-color: #1e3a5f !important;
+            color: white !important;
+            padding: 10px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .feedback-table td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            background-color: white;
+            font-size: 12px;
+        }
+
+        .feedback-table tr:last-child td {
+            border-bottom: none;
+        }
+
+    .drawer-nav-item {
+        color: white !important;
+        background-color: transparent !important;
+        padding: 12px 16px;
+        margin: 4px 0;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        display: block;
+        text-decoration: none;
+    }
+
+        .drawer-nav-item:hover {
+            background-color: #34495e !important;
+        }
+
+        .drawer-nav-item.active {
+            background-color: #5a6c7d !important;
+            color: white !important;
+        }
+
+    .mobile-profile-section {
+        padding: 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background-color: #1e3a5f;
+    }
+
+    .mobile-profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #7b8a9a;
+    }
+
+    .hamburger-icon {
+        color: white !important;
+    }
+
+        .hamburger-icon svg {
+            color: white !important;
+            fill: white !important;
+        }
+
+    .edit-field-group {
+        margin-bottom: 24px;
+        padding: 16px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #fafafa;
+    }
+
+    .edit-field-title {
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-bottom: 16px;
+        font-size: 16px;
+    }
+</style>
+
+<MudLayout>
+    <MudAppBar Elevation="1" Style="background-color: #1e3a5f;">
+        <!-- Mobile: Hamburger Menu Button with Animation -->
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                           Color="Color.Inherit"
+                           OnClick="DrawerToggle"
+                           Class="@($"hamburger-icon {(drawerOpen ? "open" : "")}")"
+                           Style="color: white !important; margin-right: 8px;" />
+        </MudHidden>
+
+        <!-- Logo and Company Name -->
+        <div style="display: flex; align-items: center;">
+            <div class="logo">SC</div>
+            <!-- Company name only visible on desktop -->
+            <MudText Typo="Typo.h6" Style="color: white; font-weight: 500; margin-left: 16px;" Class="d-none d-md-block">SpecCon Holdings</MudText>
+        </div>
+
+        <!-- Desktop: Centered Navigation Items -->
+        <div class="d-none d-md-flex" style="position: absolute; left: 50%; transform: translateX(-50%);">
+            <div class="nav-items">
+                <MudButton Class="nav-item active" Variant="Variant.Text">Dashboard</MudButton>
+                <MudButton Class="nav-item" Variant="Variant.Text">Clients</MudButton>
+                <MudButton Class="nav-item" Variant="Variant.Text">Forecast</MudButton>
+            </div>
+        </div>
+
+        <MudSpacer />
+
+        <!-- Mobile: Profile Icon Only (Clickable) -->
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudMenu>
+                <ActivatorContent>
+                    <MudIconButton Icon="Icons.Material.Filled.Person" Color="Color.Inherit" Style="background-color: #7b8a9a; border-radius: 50%; width: 32px; height: 32px;" />
+                </ActivatorContent>
+                <ChildContent>
+                    <MudPaper Style="background-color: #1e3a5f; color: white; min-width: 200px;">
+                        <MudMenuItem Style="padding: 16px; background-color: #1e3a5f; color: white;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="mobile-profile-avatar"></div>
+                                <MudText Typo="Typo.subtitle1" Style="color: white;">Sales Person</MudText>
+                            </div>
+                        </MudMenuItem>
+                        <MudDivider Style="background-color: rgba(255,255,255,0.2);" />
+                        <MudMenuItem Style="background-color: #1e3a5f; color: white;" OnClick="@(() => { })">
+                            <MudText Typo="Typo.body2" Style="color: white;">View Profile</MudText>
+                        </MudMenuItem>
+                    </MudPaper>
+                </ChildContent>
+            </MudMenu>
+        </MudHidden>
+
+        <!-- Desktop: Profile Section on Right -->
+        <div class="d-none d-md-flex">
+            <MudMenu>
+                <ActivatorContent>
+                    <div class="profile-section" style="cursor: pointer;">
+                        <span>Sales Person</span>
+                        <div class="profile-avatar"></div>
+                    </div>
+                </ActivatorContent>
+                <ChildContent>
+                    <MudPaper Style="background-color: #1e3a5f; color: white; min-width: 200px;">
+                        <MudMenuItem Style="padding: 16px; background-color: #1e3a5f; color: white;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="profile-avatar"></div>
+                                <MudText Typo="Typo.subtitle1" Style="color: white;">Sales Person</MudText>
+                            </div>
+                        </MudMenuItem>
+                        <MudDivider Style="background-color: rgba(255,255,255,0.2);" />
+                        <MudMenuItem Style="background-color: #1e3a5f; color: white;" OnClick="@(() => { })">
+                            <MudText Typo="Typo.body2" Style="color: white;">View Profile</MudText>
+                        </MudMenuItem>
+                        <MudMenuItem Style="background-color: #1e3a5f; color: white;" OnClick="@(() => { })">
+                            <MudText Typo="Typo.body2" Style="color: white;">Settings</MudText>
+                        </MudMenuItem>
+                        <MudMenuItem Style="background-color: #1e3a5f; color: white;" OnClick="@(() => { })">
+                            <MudText Typo="Typo.body2" Style="color: white;">Logout</MudText>
+                        </MudMenuItem>
+                    </MudPaper>
+                </ChildContent>
+            </MudMenu>
+        </div>
+    </MudAppBar>
+
+    <MudDrawer Open="drawerOpen"
+               OpenChanged="DrawerOpenChanged"
+               ClipMode="DrawerClipMode.Never"
+               Elevation="4"
+               Variant="DrawerVariant.Temporary"
+               Width="280px"
+               Style="background-color: #1e3a5f;">
+        <div style="display: flex; flex-direction: column; height: 100%;">
+            <!-- Mobile Drawer: Company Name Header (Different SC for drawer) -->
+            <div class="mobile-profile-section">
+                <div class="logo">SC</div>
+                <MudText Typo="Typo.h6" Style="color: white; font-weight: 500; margin-left: 12px;">SpecCon Holdings</MudText>
+            </div>
+
+            <!-- Mobile Drawer: Navigation Items -->
+            <MudNavMenu Style="background-color: #1e3a5f; flex-grow: 1;">
+                <MudNavLink Href="#" Class="drawer-nav-item active">Dashboard</MudNavLink>
+                <MudNavLink Href="#" Class="drawer-nav-item">Clients</MudNavLink>
+                <MudNavLink Href="#" Class="drawer-nav-item">Forecast</MudNavLink>
+                <MudNavLink Href="#" Class="drawer-nav-item">My Profile</MudNavLink>
+            </MudNavMenu>
+
+            <!-- Mobile Drawer: Settings and Logout Side by Side at Bottom -->
+            <div style="padding: 16px; border-top: 1px solid rgba(255,255,255,0.2); background-color: #1e3a5f; margin-top: auto;">
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudButton Variant="Variant.Text" FullWidth="true" Style="color: white; text-transform: none;" OnClick="@(() => { })">
+                            <MudIcon Icon="Icons.Material.Filled.Settings" Style="margin-right: 8px;" />
+                            Settings
+                        </MudButton>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudButton Variant="Variant.Text" FullWidth="true" Style="color: white; text-transform: none;" OnClick="@(() => { })">
+                            <MudIcon Icon="Icons.Material.Filled.Logout" Style="margin-right: 8px;" />
+                            Logout
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </div>
+        </div>
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.False" Style="padding: 24px;">
+            <!-- Financial Dashboard -->
+            <MudCard Style="margin-bottom: 24px; padding: 24px;">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">Financial Dashboard</h2>
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               OnClick="@(() => showEditDialog = true)"
+                               Style="text-transform: none; min-width: 50px;">
+                        Edit
+                    </MudButton>
+                </div>
+
+                <!-- Mobile Financial Grid -->
+                <div class="d-block d-md-none">
+                    <MudGrid>
+                        <MudItem xs="12">
+                            <MudCard Elevation="1" Style="padding: 16px; margin-bottom: 16px;">
+                                <MudText Typo="Typo.h6" Style="color: #1e3a5f; margin-bottom: 16px;">Learnerships</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Previous Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @learnershipsPrevYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@learnershipsPrevDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">YTD</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @learnershipsYTD.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@learnershipsYTDDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Forecast</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @learnershipsForecast.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@learnershipsForecastDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Full Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @learnershipsFullYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@learnershipsFullYearDetails</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCard>
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudCard Elevation="1" Style="padding: 16px; margin-bottom: 16px;">
+                                <MudText Typo="Typo.h6" Style="color: #1e3a5f; margin-bottom: 16px;">TAP Business</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Previous Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @tapBusinessPrevYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@tapBusinessPrevDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">YTD</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @tapBusinessYTD.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@tapBusinessYTDDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Forecast</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @tapBusinessForecast.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@tapBusinessForecastDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Full Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @tapBusinessFullYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@tapBusinessFullYearDetails</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCard>
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudCard Elevation="1" Style="padding: 16px; margin-bottom: 16px;">
+                                <MudText Typo="Typo.h6" Style="color: #1e3a5f; margin-bottom: 16px;">Compliance</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Previous Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @compliancePrevYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@compliancePrevDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">YTD</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @complianceYTD.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@complianceYTDDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Forecast</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @complianceForecast.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@complianceForecastDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Full Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @complianceFullYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@complianceFullYearDetails</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCard>
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudCard Elevation="1" Style="padding: 16px; margin-bottom: 16px;">
+                                <MudText Typo="Typo.h6" Style="color: #1e3a5f; margin-bottom: 16px;">Other Courses</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Previous Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @otherCoursesPrevYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@otherCoursesPrevDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">YTD</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @otherCoursesYTD.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@otherCoursesYTDDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Forecast</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @otherCoursesForecast.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@otherCoursesForecastDetails</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2">Full Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600;">R @otherCoursesFullYear.ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption">@otherCoursesFullYearDetails</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCard>
+                        </MudItem>
+
+                        <MudItem xs="12">
+                            <MudCard Elevation="2" Style="padding: 16px; background-color: #4caf50; color: white;">
+                                <MudText Typo="Typo.h6" Style="color: white; margin-bottom: 16px;">TOTAL</MudText>
+                                <MudGrid>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2" Style="color: white;">Previous Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600; color: white;">R @CalculateTotal("prevYear").ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: rgba(255,255,255,0.9);">All products</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2" Style="color: white;">YTD</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600; color: white;">R @CalculateTotal("ytd").ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: rgba(255,255,255,0.9);">YTD total</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2" Style="color: white;">Forecast</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600; color: white;">R @CalculateTotal("forecast").ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: rgba(255,255,255,0.9);">Forecast total</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6">
+                                        <MudText Typo="Typo.subtitle2" Style="color: white;">Full Year</MudText>
+                                        <MudText Typo="Typo.body1" Style="font-weight: 600; color: white;">R @CalculateTotal("fullYear").ToString("N0")</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: rgba(255,255,255,0.9);">Full year total</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </div>
+
+                <!-- Desktop Financial Grid -->
+                <div class="d-none d-md-block">
+                    <div class="financial-grid">
+                        <!-- Header Row -->
+                        <div class="financial-card financial-header">Product</div>
+                        <div class="financial-card financial-header">Previous Year<br>(2024)</div>
+                        <div class="financial-card financial-header">YTD<br>(Jan-Jun 2025)</div>
+                        <div class="financial-card financial-header">Forecast<br>(Jul-Feb 2026)</div>
+                        <div class="financial-card financial-header">Full Year<br>Forecast</div>
+
+                        <!-- Learnerships Row -->
+                        <div class="financial-card financial-product">Learnerships</div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @learnershipsPrevYear.ToString("N0")</div>
+                            <div class="details">@learnershipsPrevDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @learnershipsYTD.ToString("N0")</div>
+                            <div class="details">@learnershipsYTDDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @learnershipsForecast.ToString("N0")</div>
+                            <div class="details">@learnershipsForecastDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @learnershipsFullYear.ToString("N0")</div>
+                            <div class="details">@learnershipsFullYearDetails</div>
+                        </div>
+
+                        <!-- TAP Business Row -->
+                        <div class="financial-card financial-product">TAP Business</div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @tapBusinessPrevYear.ToString("N0")</div>
+                            <div class="details">@tapBusinessPrevDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @tapBusinessYTD.ToString("N0")</div>
+                            <div class="details">@tapBusinessYTDDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @tapBusinessForecast.ToString("N0")</div>
+                            <div class="details">@tapBusinessForecastDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @tapBusinessFullYear.ToString("N0")</div>
+                            <div class="details">@tapBusinessFullYearDetails</div>
+                        </div>
+
+                        <!-- Compliance Row -->
+                        <div class="financial-card financial-product">Compliance</div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @compliancePrevYear.ToString("N0")</div>
+                            <div class="details">@compliancePrevDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @complianceYTD.ToString("N0")</div>
+                            <div class="details">@complianceYTDDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @complianceForecast.ToString("N0")</div>
+                            <div class="details">@complianceForecastDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @complianceFullYear.ToString("N0")</div>
+                            <div class="details">@complianceFullYearDetails</div>
+                        </div>
+
+                        <!-- Other Courses Row -->
+                        <div class="financial-card financial-product">Other Courses</div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @otherCoursesPrevYear.ToString("N0")</div>
+                            <div class="details">@otherCoursesPrevDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @otherCoursesYTD.ToString("N0")</div>
+                            <div class="details">@otherCoursesYTDDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @otherCoursesForecast.ToString("N0")</div>
+                            <div class="details">@otherCoursesForecastDetails</div>
+                        </div>
+                        <div class="financial-card financial-data">
+                            <div class="amount">R @otherCoursesFullYear.ToString("N0")</div>
+                            <div class="details">@otherCoursesFullYearDetails</div>
+                        </div>
+
+                        <!-- Total Row -->
+                        <div class="financial-card financial-total">TOTAL</div>
+                        <div class="financial-card financial-total">
+                            <div class="amount">R @CalculateTotal("prevYear").ToString("N0")</div>
+                            <div class="details">All products</div>
+                        </div>
+                        <div class="financial-card financial-total">
+                            <div class="amount">R @CalculateTotal("ytd").ToString("N0")</div>
+                            <div class="details">YTD total</div>
+                        </div>
+                        <div class="financial-card financial-total">
+                            <div class="amount">R @CalculateTotal("forecast").ToString("N0")</div>
+                            <div class="details">Forecast total</div>
+                        </div>
+                        <div class="financial-card financial-total">
+                            <div class="amount">R @CalculateTotal("fullYear").ToString("N0")</div>
+                            <div class="details">Full year total</div>
+                        </div>
+                    </div>
+                </div>
+            </MudCard>
+
+            <!-- Sales Pipeline -->
+            <MudCard Style="margin-bottom: 24px; padding: 24px;">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">Sales Pipeline</h2>
+                </div>
+
+                <!-- Mobile Pipeline -->
+                <div class="d-block d-lg-none">
+                    <MudGrid>
+                        <MudItem xs="12" md="6">
+                            <MudCard Elevation="1" Style="margin-bottom: 16px;">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6" Style="color: #1e3a5f;">Lead Generation</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Prospect Corp</MudText>
+                                            <MudText Typo="Typo.body2">Initial inquiry - Training needs</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Tech Solutions Ltd</MudText>
+                                            <MudText Typo="Typo.body2">Compliance training interest</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Manufacturing Co</MudText>
+                                            <MudText Typo="Typo.body2">Website inquiry form</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudCard Elevation="1" Style="margin-bottom: 16px;">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6" Style="color: #1e3a5f;">Initial Contact</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Enterprise Inc</MudText>
+                                            <MudText Typo="Typo.body2">First call completed</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Global Training Co</MudText>
+                                            <MudText Typo="Typo.body2">Meeting scheduled</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudCard Elevation="1" Style="margin-bottom: 16px;">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6" Style="color: #1e3a5f;">Needs Assessment</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Smart Industries</MudText>
+                                            <MudText Typo="Typo.body2">Requirements gathering</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Future Corp</MudText>
+                                            <MudText Typo="Typo.body2">Site visit completed</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudCard Elevation="1" Style="margin-bottom: 16px;">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6" Style="color: #1e3a5f;">Proposal Sent</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Alpha Solutions</MudText>
+                                            <MudText Typo="Typo.body2">Learnerships proposal</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Beta Systems</MudText>
+                                            <MudText Typo="Typo.body2">TAP Business quote</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Gamma Corp</MudText>
+                                            <MudText Typo="Typo.body2">Compliance package</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudCard Elevation="1" Style="margin-bottom: 16px;">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6" Style="color: #1e3a5f;">Negotiation</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Delta Enterprises</MudText>
+                                            <MudText Typo="Typo.body2">Price negotiation</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Omega Ltd</MudText>
+                                            <MudText Typo="Typo.body2">Contract terms review</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="12" md="6">
+                            <MudCard Elevation="1" Style="margin-bottom: 16px;">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6" Style="color: #1e3a5f;">Deal Closed</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Success Company</MudText>
+                                            <MudText Typo="Typo.body2">Learnerships - R 125,000</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Innovation Hub</MudText>
+                                            <MudText Typo="Typo.body2">TAP Business - R 150,000</MudText>
+                                        </div>
+                                        <div style="padding: 8px; border: 1px solid #e0e0e0; border-radius: 4px;">
+                                            <MudText Typo="Typo.subtitle2">Progress Corp</MudText>
+                                            <MudText Typo="Typo.body2">Compliance - R 45,000</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </div>
+
+                <!-- Desktop Pipeline (Original) -->
+                <div class="d-none d-lg-block">
+                    <div class="pipeline-container">
+                        <div class="pipeline-column">
+                            <div class="pipeline-header">Lead Generation</div>
+                            <div class="pipeline-cards">
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Prospect Corp</div>
+                                    <div class="pipeline-card-subtitle">Initial inquiry - Training needs</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Tech Solutions Ltd</div>
+                                    <div class="pipeline-card-subtitle">Compliance training interest</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Manufacturing Co</div>
+                                    <div class="pipeline-card-subtitle">Website inquiry form</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pipeline-column">
+                            <div class="pipeline-header">Initial Contact</div>
+                            <div class="pipeline-cards">
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Enterprise Inc</div>
+                                    <div class="pipeline-card-subtitle">First call completed</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Global Training Co</div>
+                                    <div class="pipeline-card-subtitle">Meeting scheduled</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pipeline-column">
+                            <div class="pipeline-header">Needs Assessment</div>
+                            <div class="pipeline-cards">
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Smart Industries</div>
+                                    <div class="pipeline-card-subtitle">Requirements gathering</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Future Corp</div>
+                                    <div class="pipeline-card-subtitle">Site visit completed</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pipeline-column">
+                            <div class="pipeline-header">Proposal Sent</div>
+                            <div class="pipeline-cards">
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Alpha Solutions</div>
+                                    <div class="pipeline-card-subtitle">Learnerships proposal</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Beta Systems</div>
+                                    <div class="pipeline-card-subtitle">TAP Business quote</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Gamma Corp</div>
+                                    <div class="pipeline-card-subtitle">Compliance package</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pipeline-column">
+                            <div class="pipeline-header">Negotiation</div>
+                            <div class="pipeline-cards">
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Delta Enterprises</div>
+                                    <div class="pipeline-card-subtitle">Price negotiation</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Omega Ltd</div>
+                                    <div class="pipeline-card-subtitle">Contract terms review</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pipeline-column">
+                            <div class="pipeline-header">Deal Closed</div>
+                            <div class="pipeline-cards">
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Success Company</div>
+                                    <div class="pipeline-card-subtitle">Learnerships - R 125,000</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Innovation Hub</div>
+                                    <div class="pipeline-card-subtitle">TAP Business - R 150,000</div>
+                                </div>
+                                <div class="pipeline-card">
+                                    <div class="pipeline-card-title">Progress Corp</div>
+                                    <div class="pipeline-card-subtitle">Compliance - R 45,000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </MudCard>
+
+            <!-- Messages and Feedback - Mobile Responsive -->
+            <div class="d-block d-md-none">
+                <!-- Mobile Layout -->
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudCard Style="padding: 24px; margin-bottom: 16px;">
+                            <div class="dashboard-header">
+                                <h2 class="dashboard-title">My Messages</h2>
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="(ViewMessageDetails)"
+                                           Style="text-transform: none;">View Detail</MudButton>
+                            </div>
+                            <MudGrid Style="margin-top: 16px;">
+                                <MudItem xs="12">
+                                    <div class="stat-card">
+                                        <div class="stat-number">12</div>
+                                        <div class="stat-label">UNRESOLVED</div>
+                                    </div>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <div class="stat-card">
+                                        <div class="stat-number">5</div>
+                                        <div class="stat-label">STILL TO ANSWER</div>
+                                    </div>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <div class="stat-card">
+                                        <div class="stat-number">8</div>
+                                        <div class="stat-label">WITH OTHERS TO ANSWER</div>
+                                    </div>
+                                </MudItem>
+                            </MudGrid>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudCard Style="padding: 24px;">
+                            <div class="dashboard-header">
+                                <h2 class="dashboard-title">Feedback</h2>
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="(ViewFeedbackDetails)"
+                                           Style="text-transform: none;">View Detail</MudButton>
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table class="feedback-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Client</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>June 20</td>
+                                            <td>Client A</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June 19</td>
+                                            <td>Client B</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June 18</td>
+                                            <td>Client C</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June 17</td>
+                                            <td>Client D</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            </div>
+
+            <!-- Desktop Layout -->
+            <div class="d-none d-md-block">
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudCard Style="padding: 24px; min-height: 350px;">
+                            <div class="dashboard-header">
+                                <h2 class="dashboard-title">My Messages</h2>
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="ViewMessageDetails"
+                                           Style="text-transform: none;">View Detail</MudButton>
+                            </div>
+                            <MudGrid Style="margin-top: 24px;">
+                                <MudItem xs="12" sm="4">
+                                    <div class="stat-card">
+                                        <div class="stat-number">12</div>
+                                        <div class="stat-label">UNRESOLVED</div>
+                                    </div>
+                                </MudItem>
+                                <MudItem xs="12" sm="4">
+                                    <div class="stat-card">
+                                        <div class="stat-number">5</div>
+                                        <div class="stat-label">STILL TO ANSWER</div>
+                                    </div>
+                                </MudItem>
+                                <MudItem xs="12" sm="4">
+                                    <div class="stat-card">
+                                        <div class="stat-number">8</div>
+                                        <div class="stat-label">WITH OTHERS TO ANSWER</div>
+                                    </div>
+                                </MudItem>
+                            </MudGrid>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudCard Style="padding: 24px; min-height: 350px;">
+                            <div class="dashboard-header">
+                                <h2 class="dashboard-title">Feedback</h2>
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="ViewFeedbackDetails"
+                                           Style="text-transform: none;">View Detail</MudButton>
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table class="feedback-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Client</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>June 20</td>
+                                            <td>Client A</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June 19</td>
+                                            <td>Client B</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June 18</td>
+                                            <td>Client C</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June 17</td>
+                                            <td>Client D</td>
+                                            <td>Follow-Up</td>
+                                            <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            </div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+<!-- Messages Detail Dialog -->
+<MudDialog @bind-Visible="showMessageDetails"
+           MaxWidth="MaxWidth.ExtraLarge"
+           FullWidth="true"
+           Style="max-width: 90vw; max-height: 85vh;">
+    <DialogContent>
+        <div style="position: relative; margin-bottom: 24px;">
+            <MudIconButton Icon="@Icons.Material.Filled.Close"
+                           OnClick="(CloseMessageDetails)"
+                           Class="close-button"
+                           Color="Color.Default"
+                           Size="Size.Small" />
+
+            <MudText Typo="Typo.h5" Style="color: #1e3a5f; margin-bottom: 8px;">My Messages</MudText>
+            <MudText Typo="Typo.body2" Style="color: #666;">Click on any category below to view details</MudText>
+        </div>
+
+        <MudDivider Style="margin-bottom: 24px;" />
+
+        <MudGrid>
+            <MudItem xs="12" sm="4">
+                <div class="stat-card" @onclick="@(() => ShowUnresolvedDetails())">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">UNRESOLVED</div>
+                </div>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <div class="stat-card" @onclick="@(() => ShowStillToAnswerDetails())">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">STILL TO ANSWER</div>
+                </div>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <div class="stat-card" @onclick="@(() => ShowWithOthersDetails())">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">WITH OTHERS TO ANSWER</div>
+                </div>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Unresolved Messages Details -->
+        @if (showUnresolvedDetails)
+        {
+            <MudCard Class="message-detail-card" Style="margin-top: 24px; padding: 16px; background-color: #fff3cd; border-left: 4px solid #ffc107;">
+                <MudText Typo="Typo.h6" Style="color: #856404; margin-bottom: 16px;">Unresolved Messages (12)</MudText>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #dc3545;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #dc3545; font-weight: 600;">High Priority</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> john.smith@alphacorp.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Urgent: Learnership Program Pricing</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Received: 2 days ago</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #ffc107;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #856404; font-weight: 600;">Medium Priority</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> sarah.jones@betatech.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> TAP Business Implementation Timeline</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Received: 3 days ago</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #28a745;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #155724; font-weight: 600;">Low Priority</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> mike.wilson@gammaind.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Compliance Training Schedule</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Received: 1 week ago</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #17a2b8;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #0c5460; font-weight: 600;">Follow-up Required</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> lisa.brown@deltaent.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Project Status Update Request</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Received: 5 days ago</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudCard>
+        }
+
+        <!-- Still To Answer Details -->
+        @if (showStillToAnswerDetails)
+        {
+            <MudCard Class="message-detail-card" Style="margin-top: 24px; padding: 16px; background-color: #f8d7da; border-left: 4px solid #dc3545;">
+                <MudText Typo="Typo.h6" Style="color: #721c24; margin-bottom: 16px;">Still To Answer (5)</MudText>
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #dc3545;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #dc3545; font-weight: 600;">Overdue</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> david.clark@epsiloncorp.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Quote Request for 50 Learners</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Due: Yesterday</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #ffc107;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #856404; font-weight: 600;">Due Today</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> emma.davis@zetagroup.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Compliance Audit Requirements</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Due: Today 5:00 PM</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #17a2b8;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #0c5460; font-weight: 600;">Due Tomorrow</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> alex.taylor@thetasys.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Training Materials Request</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Due: Tomorrow 2:00 PM</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudCard>
+        }
+
+        <!-- With Others To Answer Details -->
+        @if (showWithOthersDetails)
+        {
+            <MudCard Class="message-detail-card" Style="margin-top: 24px; padding: 16px; background-color: #d4edda; border-left: 4px solid #28a745;">
+                <MudText Typo="Typo.h6" Style="color: #155724; margin-bottom: 16px;">With Others To Answer (8)</MudText>
+                <MudGrid>
+                    <MudItem xs="12" md="4">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #28a745;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #155724; font-weight: 600;">Finance Team</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> robert.johnson@kappaltd.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Payment Terms Clarification</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Forwarded to: Finance Dept.</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #6f42c1;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #493083; font-weight: 600;">Technical Team</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> sofia.martinez@lambdasoft.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> System Integration Requirements</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Forwarded to: IT Dept.</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudPaper Style="padding: 12px; margin-bottom: 8px; border-left: 3px solid #e83e8c;">
+                            <MudText Typo="Typo.subtitle2" Style="color: #a02456; font-weight: 600;">Legal Team</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>From:</strong> tom.anderson@muservices.com</MudText>
+                            <MudText Typo="Typo.body2" Style="margin-bottom: 4px;"><strong>Subject:</strong> Contract Review Needed</MudText>
+                            <MudText Typo="Typo.caption" Style="color: #666;">Forwarded to: Legal Dept.</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudCard>
+        }
+    </DialogContent>
+</MudDialog>
+
+<!-- Financial Edit Dialog - ONLY YOUR REQUESTED CHANGES -->
+<MudDialog @bind-Visible="showEditDialog"
+           MaxWidth="MaxWidth.False"
+           FullWidth="true"
+           Style="max-width: 95vw; max-height: 90vh;">
+    <DialogContent>
+        <div style="margin-bottom: 24px;">
+            <MudText Typo="Typo.h5" Style="color: #1e3a5f; margin-bottom: 8px;">Edit Financial Dashboard</MudText>
+            <MudText Typo="Typo.body2" Style="color: #666;">Update all financial data in one place</MudText>
+        </div>
+
+        <MudDivider Style="margin-bottom: 24px;" />
+
+        <MudGrid>
+            <!-- Learnerships Section -->
+            <MudItem xs="12">
+                <div class="edit-field-group">
+                    <div class="edit-field-title">Learnerships</div>
+                    <MudGrid>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Previous Year (2024)</MudText>
+                            <MudNumericField @bind-Value="learnershipsPrevYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="learnershipsPrevDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 8 deals closed" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">YTD (Jan-Jun 2025)</MudText>
+                            <MudNumericField @bind-Value="learnershipsYTD"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="learnershipsYTDDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 5 deals YTD" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Forecast (Jul-Feb 2026)</MudText>
+                            <MudNumericField @bind-Value="learnershipsForecast"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="learnershipsForecastDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 4 deals planned" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Full Year Forecast</MudText>
+                            <MudNumericField @bind-Value="learnershipsFullYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="learnershipsFullYearDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 9 total deals" />
+                        </MudItem>
+                    </MudGrid>
+                </div>
+            </MudItem>
+
+            <!-- TAP Business Section -->
+            <MudItem xs="12">
+                <div class="edit-field-group">
+                    <div class="edit-field-title">TAP Business</div>
+                    <MudGrid>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Previous Year (2024)</MudText>
+                            <MudNumericField @bind-Value="tapBusinessPrevYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="tapBusinessPrevDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 3 programs" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">YTD (Jan-Jun 2025)</MudText>
+                            <MudNumericField @bind-Value="tapBusinessYTD"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="tapBusinessYTDDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 2 programs YTD" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Forecast (Jul-Feb 2026)</MudText>
+                            <MudNumericField @bind-Value="tapBusinessForecast"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="tapBusinessForecastDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 3 programs planned" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Full Year Forecast</MudText>
+                            <MudNumericField @bind-Value="tapBusinessFullYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="tapBusinessFullYearDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 5 total programs" />
+                        </MudItem>
+                    </MudGrid>
+                </div>
+            </MudItem>
+
+            <!-- Compliance Section -->
+            <MudItem xs="12">
+                <div class="edit-field-group">
+                    <div class="edit-field-title">Compliance</div>
+                    <MudGrid>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Previous Year (2024)</MudText>
+                            <MudNumericField @bind-Value="compliancePrevYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="compliancePrevDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 12 courses" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">YTD (Jan-Jun 2025)</MudText>
+                            <MudNumericField @bind-Value="complianceYTD"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="complianceYTDDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 7 courses YTD" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Forecast (Jul-Feb 2026)</MudText>
+                            <MudNumericField @bind-Value="complianceForecast"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="complianceForecastDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 9 courses planned" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Full Year Forecast</MudText>
+                            <MudNumericField @bind-Value="complianceFullYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="complianceFullYearDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 16 total courses" />
+                        </MudItem>
+                    </MudGrid>
+                </div>
+            </MudItem>
+
+            <!-- Other Courses Section -->
+            <MudItem xs="12">
+                <div class="edit-field-group">
+                    <div class="edit-field-title">Other Courses</div>
+                    <MudGrid>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Previous Year (2024)</MudText>
+                            <MudNumericField @bind-Value="otherCoursesPrevYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="otherCoursesPrevDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 15 courses" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">YTD (Jan-Jun 2025)</MudText>
+                            <MudNumericField @bind-Value="otherCoursesYTD"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="otherCoursesYTDDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 8 courses YTD" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Forecast (Jul-Feb 2026)</MudText>
+                            <MudNumericField @bind-Value="otherCoursesForecast"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="otherCoursesForecastDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 12 courses planned" />
+                        </MudItem>
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Style="margin-bottom: 8px;">Full Year Forecast</MudText>
+                            <MudNumericField @bind-Value="otherCoursesFullYear"
+                                             Label="Amount"
+                                             Format="N0"
+                                             Variant="Variant.Outlined"
+                                             Style="margin-bottom: 8px;" />
+                            <MudTextField @bind-Value="otherCoursesFullYearDetails"
+                                          Label="Details"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="e.g., 20 total courses" />
+                        </MudItem>
+                    </MudGrid>
+                </div>
+            </MudItem>
+        </MudGrid>
+
+        <MudDivider Style="margin: 24px 0;" />
+
+        <!-- Action Buttons - ONLY CANCEL AND SAVE -->
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+            <MudButton Variant="Variant.Text"
+                       Color="Color.Default"
+                       OnClick="(CloseEditDialog)">
+                Cancel
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Success"
+                       StartIcon="@Icons.Material.Filled.Save"
+                       OnClick="SaveAllChanges">
+                Save
+            </MudButton>
+        </div>
+    </DialogContent>
+</MudDialog>
+
+<!-- Feedback Detail Dialog -->
+<MudDialog @bind-Visible="showFeedbackDetails"
+           MaxWidth="MaxWidth.ExtraLarge"
+           FullWidth="true"
+           Style="max-width: 90vw; max-height: 85vh;">
+    <DialogContent>
+        <div style="position: relative; margin-bottom: 24px;">
+            <MudIconButton Icon="@Icons.Material.Filled.Close"
+                           OnClick="(CloseFeedbackDetails)"
+                           Class="close-button"
+                           Color="Color.Default"
+                           Size="Size.Small" />
+
+            <MudText Typo="Typo.h5" Style="color: #1e3a5f; margin-bottom: 8px;">Feedback Details</MudText>
+            <MudText Typo="Typo.body2" Style="color: #666;">Detailed client feedback and follow-up actions</MudText>
+        </div>
+
+        <MudDivider Style="margin-bottom: 24px;" />
+
+        <!-- Enhanced Feedback Table -->
+        <div style="overflow-x: auto;">
+            <table class="feedback-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Client</th>
+                        <th>Contact Person</th>
+                        <th>Feedback Type</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>June 20</td>
+                        <td>Client A</td>
+                        <td>Sarah Johnson</td>
+                        <td>Course Quality</td>
+                        <td>Follow-Up</td>
+                        <td><span style="color: #dc3545; font-weight: 600;">High</span></td>
+                        <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                    </tr>
+                    <tr>
+                        <td>June 19</td>
+                        <td>Client B</td>
+                        <td>Michael Brown</td>
+                        <td>Training Schedule</td>
+                        <td>Follow-Up</td>
+                        <td><span style="color: #ffc107; font-weight: 600;">Medium</span></td>
+                        <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                    </tr>
+                    <tr>
+                        <td>June 18</td>
+                        <td>Client C</td>
+                        <td>Linda Davis</td>
+                        <td>Payment Process</td>
+                        <td>Follow-Up</td>
+                        <td><span style="color: #28a745; font-weight: 600;">Low</span></td>
+                        <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                    </tr>
+                    <tr>
+                        <td>June 17</td>
+                        <td>Client D</td>
+                        <td>Robert Wilson</td>
+                        <td>Course Content</td>
+                        <td>Follow-Up</td>
+                        <td><span style="color: #ffc107; font-weight: 600;">Medium</span></td>
+                        <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                    </tr>
+                    <tr>
+                        <td>June 16</td>
+                        <td>Alpha Solutions</td>
+                        <td>Jennifer Lee</td>
+                        <td>Delivery Timeline</td>
+                        <td>Resolved</td>
+                        <td><span style="color: #28a745; font-weight: 600;">Low</span></td>
+                        <td><MudButton Variant="Variant.Text" Color="Color.Success" Size="Size.Small" Style="text-transform: none;">View</MudButton></td>
+                    </tr>
+                    <tr>
+                        <td>June 15</td>
+                        <td>Beta Systems</td>
+                        <td>David Martinez</td>
+                        <td>Technical Support</td>
+                        <td>In Progress</td>
+                        <td><span style="color: #dc3545; font-weight: 600;">High</span></td>
+                        <td><MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Style="text-transform: none;">Edit</MudButton></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <MudDivider Style="margin: 24px 0;" />
+
+        <!-- Feedback Summary Cards -->
+        <MudText Typo="Typo.h6" Style="color: #1e3a5f; margin-bottom: 16px;">Feedback Summary</MudText>
+        <MudGrid>
+            <MudItem xs="12" sm="3">
+                <MudCard Style="padding: 16px; background-color: #f8d7da; border-left: 4px solid #dc3545;">
+                    <MudText Typo="Typo.h4" Style="color: #721c24; font-weight: 600; text-align: center;">2</MudText>
+                    <MudText Typo="Typo.subtitle2" Style="color: #721c24; text-align: center;">High Priority</MudText>
+                    <MudText Typo="Typo.caption" Style="color: #666; text-align: center;">Requires immediate attention</MudText>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudCard Style="padding: 16px; background-color: #fff3cd; border-left: 4px solid #ffc107;">
+                    <MudText Typo="Typo.h4" Style="color: #856404; font-weight: 600; text-align: center;">2</MudText>
+                    <MudText Typo="Typo.subtitle2" Style="color: #856404; text-align: center;">Medium Priority</MudText>
+                    <MudText Typo="Typo.caption" Style="color: #666; text-align: center;">Follow-up within 2 days</MudText>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudCard Style="padding: 16px; background-color: #d4edda; border-left: 4px solid #28a745;">
+                    <MudText Typo="Typo.h4" Style="color: #155724; font-weight: 600; text-align: center;">2</MudText>
+                    <MudText Typo="Typo.subtitle2" Style="color: #155724; text-align: center;">Low Priority</MudText>
+                    <MudText Typo="Typo.caption" Style="color: #666; text-align: center;">Follow-up within 1 week</MudText>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudCard Style="padding: 16px; background-color: #d1ecf1; border-left: 4px solid #17a2b8;">
+                    <MudText Typo="Typo.h4" Style="color: #0c5460; font-weight: 600; text-align: center;">4</MudText>
+                    <MudText Typo="Typo.subtitle2" Style="color: #0c5460; text-align: center;">Total Active</MudText>
+                    <MudText Typo="Typo.caption" Style="color: #666; text-align: center;">Pending feedback items</MudText>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    private bool drawerOpen = false;
+    private bool showMessageDetails = false;
+    private bool showFeedbackDetails = false;
+    private bool showEditDialog = false;
+
+    // ADDED: Message detail visibility states
+    private bool showUnresolvedDetails = false;
+    private bool showStillToAnswerDetails = false;
+    private bool showWithOthersDetails = false;
+
+    // Financial Data Variables - All products
+    // Learnerships
+    private decimal learnershipsPrevYear = 1850000;
+    private string learnershipsPrevDetails = "8 deals closed";
+    private decimal learnershipsYTD = 1125000;
+    private string learnershipsYTDDetails = "5 deals YTD";
+    private decimal learnershipsForecast = 925000;
+    private string learnershipsForecastDetails = "4 deals planned";
+    private decimal learnershipsFullYear = 2050000;
+    private string learnershipsFullYearDetails = "9 total deals";
+
+    // TAP Business
+    private decimal tapBusinessPrevYear = 1250000;
+    private string tapBusinessPrevDetails = "3 programs";
+    private decimal tapBusinessYTD = 680000;
+    private string tapBusinessYTDDetails = "2 programs YTD";
+    private decimal tapBusinessForecast = 1120000;
+    private string tapBusinessForecastDetails = "3 programs planned";
+    private decimal tapBusinessFullYear = 1800000;
+    private string tapBusinessFullYearDetails = "5 total programs";
+
+    // Compliance
+    private decimal compliancePrevYear = 485000;
+    private string compliancePrevDetails = "12 courses";
+    private decimal complianceYTD = 295000;
+    private string complianceYTDDetails = "7 courses YTD";
+    private decimal complianceForecast = 385000;
+    private string complianceForecastDetails = "9 courses planned";
+    private decimal complianceFullYear = 680000;
+    private string complianceFullYearDetails = "16 total courses";
+
+    // Other Courses
+    private decimal otherCoursesPrevYear = 175000;
+    private string otherCoursesPrevDetails = "15 courses";
+    private decimal otherCoursesYTD = 125000;
+    private string otherCoursesYTDDetails = "8 courses YTD";
+    private decimal otherCoursesForecast = 185000;
+    private string otherCoursesForecastDetails = "12 courses planned";
+    private decimal otherCoursesFullYear = 310000;
+    private string otherCoursesFullYearDetails = "20 total courses";
+
+    private async Task DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void DrawerOpenChanged(bool value)
+    {
+        drawerOpen = value;
+    }
+
+    // Calculate totals for display
+    private decimal CalculateTotal(string period)
+    {
+        return period switch
+        {
+            "prevYear" => learnershipsPrevYear + tapBusinessPrevYear + compliancePrevYear + otherCoursesPrevYear,
+            "ytd" => learnershipsYTD + tapBusinessYTD + complianceYTD + otherCoursesYTD,
+            "forecast" => learnershipsForecast + tapBusinessForecast + complianceForecast + otherCoursesForecast,
+            "fullYear" => learnershipsFullYear + tapBusinessFullYear + complianceFullYear + otherCoursesFullYear,
+            _ => 0
+        };
+    }
+
+    // CORRECTED: Dialog visibility handling with race condition fix
+    private async Task OnEditDialogVisibilityChanged(bool visible)
+    {
+        if (!visible && showEditDialog) // Only update if we're not manually closing
+        {
+            showEditDialog = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void CloseEditDialog()
+    {
+        showEditDialog = false;
+        StateHasChanged();
+    }
+
+    private async Task SaveAllChanges()
+    {
+        try
+        {
+            // Simulate save operation
+            await Task.Delay(300);
+
+            // Show success message
+            Snackbar.Add("Data Updated Successfully!", Severity.Success);
+
+            // Close dialog by setting visibility to false
+            showEditDialog = false;
+            await Task.Delay(50); // ADDED: Small delay to avoid race condition
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add("Failed to Update Data. Please try again.", Severity.Error);
+        }
+    }
+
+    // Messages functionality
+    private void ViewMessageDetails()
+    {
+        showMessageDetails = true;
+    }
+
+    private void CloseMessageDetails()
+    {
+        showMessageDetails = false;
+        // Reset all detail sections when closing main dialog
+        showUnresolvedDetails = false;
+        showStillToAnswerDetails = false;
+        showWithOthersDetails = false;
+    }
+
+    // FIXED: Remove conflict with manual close
+    private async Task OnMessageDialogVisibilityChanged(bool visible)
+    {
+        if (!visible && showMessageDetails) // Only update if we're not manually closing
+        {
+            showMessageDetails = false;
+            showUnresolvedDetails = false;
+            showStillToAnswerDetails = false;
+            showWithOthersDetails = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    // UPDATED: Smooth switching between message detail sections (no hiding required)
+    private void ShowUnresolvedDetails()
+    {
+        showUnresolvedDetails = true;
+        showStillToAnswerDetails = false;
+        showWithOthersDetails = false;
+    }
+
+    private void ShowStillToAnswerDetails()
+    {
+        showStillToAnswerDetails = true;
+        showUnresolvedDetails = false;
+        showWithOthersDetails = false;
+    }
+
+    private void ShowWithOthersDetails()
+    {
+        showWithOthersDetails = true;
+        showUnresolvedDetails = false;
+        showStillToAnswerDetails = false;
+    }
+
+    // Feedback functionality
+    private void ViewFeedbackDetails()
+    {
+        showFeedbackDetails = true;
+    }
+
+    private void CloseFeedbackDetails()
+    {
+        showFeedbackDetails = false;
+    }
+}

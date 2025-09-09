@@ -1,0 +1,293 @@
+@layout BlankLayout
+@page "/ContactInfo/ContactInfo"
+@using MudBlazor
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pa-0">
+
+    <!-- Top Navigation -->
+    <MudPaper Class="mb-4" Elevation="0" Style="background-color: white; margin-top: 0;">
+        <MudTabs Elevation="0" Rounded="false" PanelClass="pa-6" Centered="true"
+                 Color="Color.Default"
+                 SliderColor="Color.Transparent"
+                 Class="custom-tabs"
+                 ActivePanelIndex="3"
+                 Style="background-color: white;">
+            <MudTabPanel Text="My Dashboard">
+                <MudText Typo="Typo.h5" Class="mb-4">Dashboard Content</MudText>
+                <MudAlert Severity="Severity.Info">
+                    Dashboard content would go here...
+                </MudAlert>
+            </MudTabPanel>
+
+            <MudTabPanel Text="My Qualifications">
+                <MudText Typo="Typo.h5" Class="mb-4">Your Qualifications</MudText>
+                <MudAlert Severity="Severity.Info">
+                    Qualifications content would go here...
+                </MudAlert>
+            </MudTabPanel>
+
+            <MudTabPanel Text="My Achievements">
+                <MudText Typo="Typo.h5" Class="mb-4">Your Achievements</MudText>
+                <MudAlert Severity="Severity.Success">
+                    Achievements content would go here...
+                </MudAlert>
+            </MudTabPanel>
+
+            <MudTabPanel Text="My Messages">
+                <!-- Dashboard Content -->
+                <MudGrid>
+                    <!-- Contact Information Header -->
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-2">Contact Information</MudText>
+                        <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Secondary" Class="mb-4">
+                            Get in touch with your learning support team
+                        </MudText>
+                    </MudItem>
+
+                    <!-- Office Locations Header -->
+                    <MudItem xs="12">
+                        <MudCard Elevation="0" Class="mb-3">
+                            <MudCardContent Class="text-center">
+                                <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="Size.Large" Color="Color.Primary" Class="mb-2" />
+                                <MudText Typo="Typo.h6">Office Locations</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Visit us in person</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+
+                    <!-- Support Team Cards Row -->
+                    <MudItem xs="12">
+                        <MudGrid>
+                            <MudItem xs="12" md="4">
+                                <MudCard Class="h-100">
+                                    <MudCardContent Class="text-center">
+                                        <MudAvatar Size="Size.Large" Class="mb-3 mx-auto" Style="background-color: #e3f2fd;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Person" />
+                                        </MudAvatar>
+
+                                        <MudText Typo="Typo.h6" Class="mb-1">Sarah Mitchell</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-3">Your Facilitator</MudText>
+
+                                        <MudStack Spacing="1" Class="mb-3">
+                                            <MudText Typo="Typo.body2">sarah.mitchell@learningcenter.edu</MudText>
+                                            <MudText Typo="Typo.body2">+1 (555) 123-4567</MudText>
+                                            <MudText Typo="Typo.body2">Mon-Fri: 8:00 AM - 5:00 PM</MudText>
+                                            <MudText Typo="Typo.body2">Office 301B, Learning Center</MudText>
+                                        </MudStack>
+
+                                        <MudChip T="string" Text="Currently Online" Color="Color.Success" Size="Size.Small" Class="mb-3" />
+
+                                        <MudButton Variant="Variant.Filled" Style="background-color: #12265e !important; color: white !important;" FullWidth="true">
+                                            Send Message
+                                        </MudButton>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+
+                            <MudItem xs="12" md="4">
+                                <MudCard Class="h-100">
+                                    <MudCardContent Class="text-center">
+                                        <MudAvatar Size="Size.Large" Class="mb-3 mx-auto" Style="background-color: #e8f5e8;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Person" />
+                                        </MudAvatar>
+
+                                        <MudText Typo="Typo.h6" Class="mb-1">Dr. Michael Chen</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-3">Your Assessor</MudText>
+
+                                        <MudStack Spacing="1" Class="mb-3">
+                                            <MudText Typo="Typo.body2">michael.chen@learningcenter.edu</MudText>
+                                            <MudText Typo="Typo.body2">+1 (555) 987-6543</MudText>
+                                            <MudText Typo="Typo.body2">Tue-Thu: 9:00 AM - 6:00 PM</MudText>
+                                            <MudText Typo="Typo.body2">Office 305A, Assessment Center</MudText>
+                                        </MudStack>
+
+                                        <MudChip T="string" Text="Available Today" Color="Color.Success" Size="Size.Small" Class="mb-3" />
+
+                                        <MudButton Variant="Variant.Filled" Style="background-color: #12265e !important; color: white !important;" FullWidth="true">
+                                            Send Message
+                                        </MudButton>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+
+                            <MudItem xs="12" md="4">
+                                <MudCard Class="h-100">
+                                    <MudCardContent Class="text-center">
+                                        <MudAvatar Size="Size.Large" Class="mb-3 mx-auto" Style="background-color: #fff3e0;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Person" />
+                                        </MudAvatar>
+
+                                        <MudText Typo="Typo.h6" Class="mb-1">Jennifer Rodriguez</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-3">Chief Learning Officer</MudText>
+
+                                        <MudStack Spacing="1" Class="mb-3">
+                                            <MudText Typo="Typo.body2">jennifer.rodriguez@learningcenter.edu</MudText>
+                                            <MudText Typo="Typo.body2">+1 (555) 456-7890</MudText>
+                                            <MudText Typo="Typo.body2">Mon-Fri: 7:00 AM - 7:00 PM</MudText>
+                                            <MudText Typo="Typo.body2">Office 401, Executive Wing</MudText>
+                                        </MudStack>
+
+                                        <MudChip T="string" Text="In Meeting" Color="Color.Warning" Size="Size.Small" Class="mb-3" />
+
+                                        <MudButton Variant="Variant.Filled" Style="background-color: #12265e !important; color: white !important;" FullWidth="true">
+                                            Send Message
+                                        </MudButton>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+
+                    <!-- Office Hours & Locations -->
+                    <MudItem xs="12">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudText Typo="Typo.h6" Class="mb-4">
+                                    <MudIcon Icon="@Icons.Material.Filled.LocationOn" Class="mr-2" />
+                                    Office Hours & Locations
+                                </MudText>
+
+                                <MudGrid>
+                                    <MudItem xs="12" md="4">
+                                        <MudText Typo="Typo.subtitle1" Class="mb-2">Main Learning Center</MudText>
+                                        <MudStack Spacing="1">
+                                            <MudText Typo="Typo.body2">123 Education Blvd</MudText>
+                                            <MudText Typo="Typo.body2">Learning District, LD 12345</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Hours:</strong> Mon-Fri 8:00 AM - 8:00 PM</MudText>
+                                            <MudText Typo="Typo.body2">Sat 9:00 AM - 1:00 PM</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Phone:</strong> +1 (555) 123-0000</MudText>
+                                        </MudStack>
+                                    </MudItem>
+
+                                    <MudItem xs="12" md="4">
+                                        <MudText Typo="Typo.subtitle1" Class="mb-2">Student Support Services</MudText>
+                                        <MudStack Spacing="1">
+                                            <MudText Typo="Typo.body2">Building C, 2nd Floor</MudText>
+                                            <MudText Typo="Typo.body2">Room 230-235</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Drop-in Hours:</strong> Mon-Fri 9:00 AM - 4:00 PM</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Appointments:</strong> Available upon request</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Phone:</strong> +1 (555) 234-0001</MudText>
+                                        </MudStack>
+                                    </MudItem>
+
+                                    <MudItem xs="12" md="4">
+                                        <MudText Typo="Typo.subtitle1" Class="mb-2">Assessment Center</MudText>
+                                        <MudStack Spacing="1">
+                                            <MudText Typo="Typo.body2">Building A, 3rd Floor</MudText>
+                                            <MudText Typo="Typo.body2">Room 301-315</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Hours:</strong> Tue-Thu 8:00 AM - 6:00 PM</MudText>
+                                            <MudText Typo="Typo.body2">Fri 8:00 AM - 12:00 PM</MudText>
+                                            <MudText Typo="Typo.body2"><strong>Phone:</strong> +1 (555) 345-0002</MudText>
+                                        </MudStack>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+
+                    <!-- Call Guidelines -->
+                    <MudItem xs="12" md="6">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudText Typo="Typo.h6" Class="mb-3">
+                                    <MudIcon Icon="@Icons.Material.Filled.Phone" Class="mr-2" />
+                                    Call Guidelines
+                                </MudText>
+
+                                <MudList T="string" Dense="true">
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.Badge">
+                                        <MudText Typo="Typo.body2">Have your student ID ready</MudText>
+                                    </MudListItem>
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.QuestionMark">
+                                        <MudText Typo="Typo.body2">Prepare specific questions or issues</MudText>
+                                    </MudListItem>
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.Schedule">
+                                        <MudText Typo="Typo.body2">Call during posted office hours for quickest response</MudText>
+                                    </MudListItem>
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.Voicemail">
+                                        <MudText Typo="Typo.body2">Leave detailed voicemails if unavailable</MudText>
+                                    </MudListItem>
+                                </MudList>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+
+                    <!-- Email Tips -->
+                    <MudItem xs="12" md="6">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudText Typo="Typo.h6" Class="mb-3">
+                                    <MudIcon Icon="@Icons.Material.Filled.Email" Class="mr-2" />
+                                    Email Tips
+                                </MudText>
+
+                                <MudList T="string" Dense="true">
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.Subject">
+                                        <MudText Typo="Typo.body2">Use clear, descriptive subject lines</MudText>
+                                    </MudListItem>
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.Person">
+                                        <MudText Typo="Typo.body2">Include your full name and student ID</MudText>
+                                    </MudListItem>
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.Info">
+                                        <MudText Typo="Typo.body2">Be specific about your question or issue</MudText>
+                                    </MudListItem>
+                                    <MudListItem T="string" Icon="@Icons.Material.Filled.AccessTime">
+                                        <MudText Typo="Typo.body2">Allow 24-48 hours for response</MudText>
+                                    </MudListItem>
+                                </MudList>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+
+            <MudTabPanel Text="Quick Tips">
+                <MudText Typo="Typo.h5" Class="mb-4">Quick Tips</MudText>
+                <MudAlert Severity="Severity.Warning">
+                    Quick tips content would go here...
+                </MudAlert>
+            </MudTabPanel>
+        </MudTabs>
+    </MudPaper>
+</MudContainer>
+
+@code
+{
+
+
+    // Component logic would go here
+
+
+    private
+
+    bool
+     _drawerOpen
+    =
+
+    false
+    ;
+
+
+
+    private
+
+    void
+
+    DrawerToggle
+    (
+    )
+
+
+    {
+
+        _drawerOpen
+=
+
+!
+_drawerOpen
+;
+
+
+    }
+
+}

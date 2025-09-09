@@ -1,0 +1,67 @@
+﻿@page "/auth/verification"
+@layout BlankLayout
+
+<PageTitle>Verification</PageTitle>
+<MudGrid style="height: 100vh; margin: 0; padding: 0;">
+
+</MudGrid>
+
+
+
+@code {
+    private string[] _otp = new string[4];
+    private bool _processing = false;
+    private bool isInitialized = false;
+    protected override void OnInitialized()
+    {
+        try
+        {
+            if (isInitialized) return;
+            isInitialized = true;
+        }
+        catch (Exception)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            InvokeAsync(LoadDataAsync); // Call the async method
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            await Task.Delay(100);
+        }
+        catch (Exception ex)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+        finally
+        {
+            StateHasChanged(); // Refresh the UI
+        }
+    }
+
+    private async Task SubmitOtp()
+    {
+        var otp = string.Join("", _otp);
+        // Handle OTP submission logic here
+        Console.WriteLine("OTP Entered: " + otp);
+    }
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+}

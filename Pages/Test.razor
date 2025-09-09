@@ -1,0 +1,36 @@
+﻿@page "/pages/Test"
+@layout BlankLayout
+@using MudBlazor
+
+<PageTitle>Icons with text</PageTitle>
+
+ <MudGrid Justify="Justify.Center">
+    <MudItem xs="4">
+        <MudMenu Label="Open menu">
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="4" Style="width:500px">
+                    <MudMenuItem Label="Item 1" />
+                    <MudMenuItem Label="Item 2" />
+                    <MudMenuItem Label="Item 3" />
+                </MudItem>
+             </MudGrid>
+            
+         
+        </MudMenu>
+    </MudItem>
+</MudGrid>
+
+
+
+<MudTextField @bind-Value="textValue"
+              Label="Outlined"
+              Variant="Variant.Outlined"
+              Margin="Margin.Normal" />
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary">
+    Primary
+</MudButton>
+
+@code {
+    string textValue = "";
+}

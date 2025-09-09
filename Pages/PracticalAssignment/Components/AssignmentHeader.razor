@@ -1,0 +1,336 @@
+﻿@* Components/PracticalAssignment/AssignmentHeader.razor *@
+@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models.PracticalAssignment
+@attribute [Authorize]
+
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudContainer MaxWidth="MaxWidth.False" Class="pa-0 assignment-header">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+        @if (Assignment != null)
+        {
+            <MudGrid AlignItems="AlignItems.Start" Spacing="4">
+                <!-- Main Content -->
+                <MudItem xs="12" lg="8" Class="main-content">
+                    <MudStack Spacing="1">
+                        <!-- Title and Badge -->
+                        <div class="title-row">
+                            <MudText Class="assignment-title">
+                                Excel Data Analysis
+                            </MudText>
+                            <MudChip T="string" Text="PRACTICAL" Class="assignment-badge" />
+                        </div>
+
+                        <!-- Subtitle -->
+                        <MudText Class="assignment-subtitle">
+                            Module 6: Data Management
+                        </MudText>
+
+                        <!-- Info Grid -->
+                        <MudGrid Spacing="2" Class="info-grid">
+                            <!-- Row 1 -->
+                            <MudItem xs="12" md="6" lg="4">
+                                <MudStack Row AlignItems="AlignItems.Center" Class="info-row">
+                                    <MudIcon Icon="@Icons.Material.Filled.Assignment" Class="info-icon icon-green" />
+                                    <MudText Class="info-label">Type:</MudText>
+                                    <MudText Class="info-value">Hands-on Practical</MudText>
+                                </MudStack>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6" lg="4">
+                                <MudStack Row AlignItems="AlignItems.Center" Class="info-row">
+                                    <MudIcon Icon="@Icons.Material.Filled.AccessTime" Class="info-icon icon-orange" />
+                                    <MudText Class="info-label">Duration:</MudText>
+                                    <MudText Class="info-value">2 weeks</MudText>
+                                </MudStack>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6" lg="4">
+                                <MudStack Row AlignItems="AlignItems.Center" Class="info-row">
+                                    <MudIcon Icon="@Icons.Material.Filled.Build" Class="info-icon icon-blue" />
+                                    <MudText Class="info-label">Tool:</MudText>
+                                    <MudText Class="info-value">Microsoft Excel</MudText>
+                                </MudStack>
+                            </MudItem>
+
+                            <!-- Row 2 -->
+                            <MudItem xs="12" md="6" lg="4">
+                                <MudStack Row AlignItems="AlignItems.Center" Class="info-row">
+                                    <MudIcon Icon="@Icons.Material.Filled.Scale" Class="info-icon icon-red" />
+                                    <MudText Class="info-label">Weight:</MudText>
+                                    <MudText Class="info-value">40% of Module</MudText>
+                                </MudStack>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6" lg="4">
+                                <MudStack Row AlignItems="AlignItems.Center" Class="info-row">
+                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="info-icon icon-teal" />
+                                    <MudText Class="info-label">Pass Mark:</MudText>
+                                    <MudText Class="info-value">65%</MudText>
+                                </MudStack>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6" lg="4">
+                                <MudStack Row AlignItems="AlignItems.Center" Class="info-row">
+                                    <MudIcon Icon="@Icons.Material.Filled.Folder" Class="info-icon icon-purple" />
+                                    <MudText Class="info-label">Files:</MudText>
+                                    <MudText Class="info-value">Excel Workbooks</MudText>
+                                </MudStack>
+                            </MudItem>
+                        </MudGrid>
+                    </MudStack>
+                </MudItem>
+
+                <!-- Status Card -->
+                <MudItem xs="12" lg="4" Class="status-column">
+                    <MudPaper Class="status-card">
+                        <MudStack AlignItems="AlignItems.Center" Spacing="0" Style="width: 100%;">
+                            <MudAvatar Class="status-avatar">
+                                <MudIcon Icon="@Icons.Material.Filled.TrendingUp"
+                                         Style="color: white; font-size: 1.5rem;" />
+                            </MudAvatar>
+
+                            <MudText Class="status-text">
+                                In Progress
+                            </MudText>
+
+                            <MudProgressLinear Color="Color.Primary"
+                                               Value="45"
+                                               Class="progress-line"
+                                               Style="width: 100%;" />
+
+                            <MudStack AlignItems="AlignItems.Center" Spacing="0">
+                                <MudText Class="due-date-large">
+                                    July 26
+                                </MudText>
+                                <MudText Class="due-date-small">
+                                    Due Date
+                                </MudText>
+                            </MudStack>
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        }
+    </MudContainer>
+</MudContainer>@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public PracticalAssignmentModel? Assignment { get; set; }
+}
+
+<style>
+    .assignment-header {
+        background: linear-gradient(135deg, #2c5282 0%, #1e3a5f 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 0;
+        min-height: 280px;
+    }
+
+    .assignment-title {
+        font-size: 2.2rem !important;
+        font-weight: 600 !important;
+        color: white !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+    }
+
+    .assignment-badge {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        padding: 6px 16px !important;
+        border-radius: 20px !important;
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        height: auto !important;
+        letter-spacing: 0.5px !important;
+        margin-left: 16px !important;
+        flex-shrink: 0;
+    }
+
+    .assignment-subtitle {
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        margin: 8px 0 0 0 !important;
+    }
+
+    .info-grid {
+        margin-top: 1.5rem !important;
+    }
+
+    .info-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        min-height: 24px;
+    }
+
+    .info-icon {
+        width: 18px !important;
+        height: 18px !important;
+        opacity: 0.9;
+        flex-shrink: 0;
+    }
+
+    .info-label {
+        font-weight: 600 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        min-width: 90px;
+        flex-shrink: 0;
+    }
+
+    .info-value {
+        color: white !important;
+        font-weight: 500 !important;
+        flex-grow: 1;
+    }
+
+    .status-card {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px);
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        width: 100%;
+        max-width: 280px;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        margin-top: 30px !important;
+    }
+
+    .status-avatar {
+        background: rgba(255, 255, 255, 0.2) !important;
+        width: 60px !important;
+        height: 60px !important;
+        margin: 0 auto 1rem auto !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .status-text {
+        font-weight: 600 !important;
+        color: white !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .progress-line {
+        height: 4px !important;
+        border-radius: 2px !important;
+        background-color: rgba(255,255,255,0.2) !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .due-date-large {
+        font-weight: 700 !important;
+        color: white !important;
+        font-size: 1.75rem !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+    }
+
+    .due-date-small {
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-size: 0.85rem !important;
+        font-weight: 400 !important;
+        margin-top: 4px !important;
+    }
+
+    .title-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        padding-top: 30px;
+    }
+
+    .main-content {
+        padding-right: 2rem;
+    }
+
+    .status-column {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 1rem;
+    }
+
+    /* Icon colors */
+    .icon-green {
+        color: #10b981 !important;
+    }
+
+    .icon-orange {
+        color: #f59e0b !important;
+    }
+
+    .icon-blue {
+        color: #3b82f6 !important;
+    }
+
+    .icon-red {
+        color: #ef4444 !important;
+    }
+
+    .icon-purple {
+        color: #8b5cf6 !important;
+    }
+
+    .icon-teal {
+        color: #14b8a6 !important;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 1199px) {
+        .main-content {
+            padding-right: 0;
+        }
+
+        .status-column {
+            padding-left: 0;
+            padding-top: 0;
+            margin-top: 2rem;
+        }
+
+        .status-card {
+            max-width: none;
+            margin-top: 0;
+        }
+    }
+
+    @@media (max-width: 599px) {
+        .title-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .assignment-badge {
+            margin-left: 0 !important;
+        }
+
+        .info-label {
+            min-width: 80px;
+        }
+    }
+</style>

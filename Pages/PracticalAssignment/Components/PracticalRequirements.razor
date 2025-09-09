@@ -1,0 +1,76 @@
+﻿@* Components/PracticalAssignment/PracticalRequirements.razor *@
+@using MudBlazor
+@attribute [Authorize]
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudPaper Class="requirements-list" Elevation="1">
+    <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Class="section-title">
+        <MudIcon Icon="@Icons.Material.Filled.FlashOn" Style="color: #f59e0b; font-size: 22px;" />
+        <MudText Typo="Typo.h6" Style="font-weight: 700; color: #1f2937; font-size: 18px;">Practical Requirements</MudText>
+    </MudStack>
+
+    <MudStack Spacing="2">
+        @foreach (var requirement in requirements)
+        {
+            <MudStack Row AlignItems="AlignItems.Start" Spacing="3" Class="requirement-item">
+                <MudIcon Icon="@Icons.Material.Filled.Check" Style="color: #10b981; margin-top: 2px; font-size: 18px;" />
+                <MudText Style="color: #1e3a5f; font-size: 15px; font-weight: 500;">@requirement</MudText>
+            </MudStack>
+        }
+    </MudStack>
+</MudPaper>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    private readonly string[] requirements = {
+        "Download and work with provided business datasets",
+        "Create complex formulas using VLOOKUP, INDEX/MATCH, and array functions",
+        "Build dynamic pivot tables with multiple data sources",
+        "Generate professional charts and visualizations",
+        "Apply conditional formatting and data validation",
+        "Create executive dashboard with key performance indicators",
+        "Document all formulas and methodology used",
+        "Submit completed Excel workbooks with all worksheets"
+    };
+}
+
+<style>
+    .requirements-list {
+        background: #e8f0ff;
+        border-left: 4px solid #1e3a5f;
+        padding: 24px;
+        border-radius: 16px;
+        margin-bottom: 32px;
+    }
+
+    .requirement-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+
+        .requirement-item:last-child {
+            margin-bottom: 0;
+        }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>

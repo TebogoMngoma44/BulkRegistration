@@ -1,0 +1,54 @@
+﻿@page "/auth/logout"
+@code {
+    private bool isInitialized = false;
+    protected override void OnInitialized()
+    {
+        try
+        {
+            if (isInitialized) return;
+            isInitialized = true;
+        }
+        catch (Exception)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            InvokeAsync(LoadDataAsync); // Call the async method
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            await HandleLogout();
+        }
+        catch (Exception)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+        finally
+        {
+            StateHasChanged(); // Refresh the UI
+        }
+    }
+
+    private async Task HandleLogout()
+    {
+        await _authService.Logout();
+    }
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+}

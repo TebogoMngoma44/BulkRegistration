@@ -1,0 +1,76 @@
+﻿@using System.Security.Claims
+
+@inherits LayoutComponentBase
+
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            <div style="display: flex; align-items: center; gap: 20px;">
+               
+                <AuthorizeView Context="LearnerNav">
+
+                    <MudNavLink Href="/dashboard/studentDashboard" Match="NavLinkMatch.Prefix" Style="display: flex; gap: 6px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Dashboard</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/Qualifications/qcto" Match="NavLinkMatch.Prefix" Style="display: flex; gap: 4px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Qualifications</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/Achievements/myachievements" Match="NavLinkMatch.Prefix" Style="display: flex; gap: 5px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Achievements</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/messages" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 6px; color: #2E3168; text-decoration: none;">
+                        <MudText>My Messages</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/users/list" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 6px; color: #2E3168; text-decoration: none;">
+                        <MudText>Quick Tips</MudText>
+                    </MudNavLink>
+
+                </AuthorizeView>
+             
+               @*  <MudNavLink Href="/users/list" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #2E3168; text-decoration: none;">
+                    <MudIcon Icon="@Icons.Material.Filled.People" Style="font-size: 20px;" />
+                    <MudText>Users</MudText>
+                </MudNavLink> *@
+
+                    <AuthorizeView Roles="SuperAdmin" Context="AdminNav">
+                      <Authorized>
+
+                    <MudNavLink Href="/dashboard/studentDashboard" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Dashboard</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/Qualifications/qcto" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Users</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/Achievements/myachievements" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Logs</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/Achievements/myachievements" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #1E3A5F; text-decoration: none;">
+                        <MudText>My Controls</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/messages" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #2E3168; text-decoration: none;">
+                        <MudText>My Messages</MudText>
+                    </MudNavLink>
+                    <MudNavLink Href="/users/list" Match="NavLinkMatch.Prefix" Style="display: flex; align-items: center; gap: 8px; color: #2E3168; text-decoration: none;">
+                        <MudText>Quick Tips</MudText>
+                    </MudNavLink>
+                    </Authorized>
+
+                </AuthorizeView>
+
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+
+@code {
+    private bool isInitialized = false;
+    private readonly ObjectPosition ImagePosition = ObjectPosition.Center;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+        await Task.CompletedTask;
+    }
+}

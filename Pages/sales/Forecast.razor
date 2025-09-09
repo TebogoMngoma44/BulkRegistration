@@ -1,0 +1,576 @@
+﻿@page "/sales/forecast"
+
+
+ @attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView >
+        <Authorized Context="authContext"> 
+            <div style="background-color: #f5f5f5; min-height: 100vh; padding: 0;">
+                <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="pa-4" Style="background-color: #f5f5f5;">
+                    <!-- Header -->
+                    <MudAppBar Elevation="1" Class="mb-4" Style="background-color: #3f5f7f;">
+                        <MudButton Variant="Variant.Text" Class="text-white mr-4" Style="background-color:white;border-radius:15px; padding:5px;">
+                            <MudText Typo="Typo.h6" Color="Color.Primary">SC</MudText>
+                        </MudButton>
+                        <MudText Typo="Typo.h6" Class="text-white mr-8">SpecCon Holdings</MudText>
+
+                        <MudSpacer />
+
+                        <MudButton Variant="Variant.Text" Class="text-white mx-2">Dashboard</MudButton>
+                        <MudButton Variant="Variant.Text" Class="text-white mx-2">Clients</MudButton>
+                        <MudButton Variant="Variant.Filled" Class="mx-2 text-white" Style="background-color: #5a7a9a;">Forecast</MudButton>
+                        <MudButton Variant="Variant.Text" Class="text-white mx-2">My Profile</MudButton>
+
+                        <MudSpacer />
+
+                        <MudButton Variant="Variant.Text" Class="text-white">Sales Person</MudButton>
+                        <MudAvatar Size="Size.Small" Class="ml-2">
+                            <MudIcon Icon="@Icons.Material.Filled.Person" />
+                        </MudAvatar>
+                    </MudAppBar>
+
+                    <MudText Typo="Typo.h5" Class="mb-6 mt-20" Style="color: #2c3e50;">Sales Forecast Dashboard</MudText>
+
+                    <!-- Main Content Card -->
+                    <MudCard Elevation="2" Class="pa-6" Style="background-color: white; border-radius: 12px;">
+                        <!-- Top Controls -->
+
+          
+                        <div class="d-flex justify-space-between align-center mb-6" style="flex-wrap: wrap; gap: 16px;">
+                            <!-- Left Group: Forecast Period and Refresh Button -->
+                            <div class="d-flex align-center" style="gap: 8px;">
+                                <MudText Typo="Typo.body1">Forecast Period:</MudText>
+                                <MudSelect T="string" @bind-Value="selectedPeriod" Variant="Variant.Outlined"
+                                           Class="tight-field"
+                                           Style="width: 140px; border-color:#2c3e50; "
+                                           Margin="Margin.Dense">
+                                    <MudSelectItem Value="@("FY 2024/2025")">FY 2024/2025</MudSelectItem>
+                                    <MudSelectItem Value="@("FY 2025/2026")">FY 2025/2026</MudSelectItem>
+                                    <MudSelectItem Value="@("FY 2026/2027")">FY 2026/2027</MudSelectItem>
+                                </MudSelect>
+                                <MudButton Class="tight-field pt-2 pb-2" Variant="Variant.Outlined"
+                                            Style="border-color:#2196F3; --hover-bg: #2196F3; --hover-color: white; color:#2196f3; text-decoration: none; text-transform: none;" 
+                                            Color="Color.Primary"
+                                            Size="Size.Small">
+   
+                                    Refresh
+                                </MudButton>
+                            </div>
+
+                            <!-- Right Group: Action Buttons -->
+                            <div class="d-flex align-center" style="gap: 8px;">
+                                <MudButton Class="tight-field pt-2 pb-2" Variant="Variant.Filled" Style="background-color:#2196F3;color:white;text-decoration: none; text-transform: none;" Size="Size.Small">
+                                     Export to Excel 
+                                </MudButton>
+                                <MudButton Class="tight-field pt-2 pb-2" 
+                                           Variant="Variant.Outlined" 
+                                           Style="border-color:#2196F3; --hover-bg: #2196F3; --hover-color: white; color:#2196f3;text-decoration: none; text-transform: none;" 
+                                           Size="Size.Small">
+                                    Copy Last Year
+                                </MudButton>
+                                <MudButton Class="tight-field pt-2 pb-2" 
+                                           Variant="Variant.Filled" 
+                                           Color="Color.Success" 
+                                           Size="Size.Small"
+                                           Style="text-decoration: none; text-transform: none;">
+                                    Save All Changes
+                                </MudButton>
+                            </div>
+                        </div> 
+
+                        <!-- KPI Cards Container -->
+                        <MudCard Elevation="0" Class="pa-4 mb-6" Style="background-color: #f8f9fa; border-radius: 8px;border: 1px solid #e9ecef;">
+                            <MudGrid>
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudCard Class="pa-4 text-center" Style="background-color: white; border-radius: 8px;border: 1px solid #e9ecef; " Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="color: #2c3e50;">R 8.2M</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">TOTAL FORECAST</MudText>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudCard Class="pa-4 text-center" Style="background-color: white; border-radius: 8px;border: 1px solid #e9ecef; " Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="color: #2c3e50;">R 4.8M</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">YTD ACTUAL</MudText>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudCard Class="pa-4 text-center" Style="background-color: white; border-radius: 8px;border: 1px solid #e9ecef; " Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="color: #2c3e50;">R 3.4M</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">REMAINING</MudText>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudCard Class="pa-4 text-center" Style="background-color: white; border-radius: 8px;border: 1px solid #e9ecef; " Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="color: #2c3e50;">24</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">ACTIVE CLIENTS</MudText>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudCard Class="pa-4 text-center" Style="background-color: white; border-radius: 8px;border: 1px solid #e9ecef;" Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="color: #2c3e50;">87%</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">CONFIDENCE LEVEL</MudText>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="2">
+                                    <MudCard Class="pa-4 text-center" Style="background-color: white; border-radius: 8px;border: 1px solid #e9ecef; " Elevation="0">
+                                        <MudText Typo="Typo.h4" Style="color: #2c3e50;">+15%</MudText>
+                                        <MudText Typo="Typo.caption" Style="color: #6c757d;">VS LAST YEAR</MudText>
+                                    </MudCard>
+                                </MudItem>
+                            </MudGrid>
+                        </MudCard>
+
+                        <!-- Data Table -->
+                        <MudCard Elevation="1" Style="border-radius: 8px; overflow: hidden;">
+                            <MudPaper Elevation="0" Style="background-color: white; border-radius: 8px; overflow: hidden; width: 100%;">
+                                <MudTable Elevation="0" Items="@forecastData" Dense="true" Hover="true" Striped="false" Class="mt-0" Style="width: 100%; table-layout: fixed;">
+                                    <HeaderContent>
+                                        <!-- First Header Row -->
+                                        <MudTr>
+                                            <MudTh RowSpan="2" Style="background-color: #3f5f7f; color: white; text-align: center; align-items: center; padding: 8px; width: 25%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudStack Row style="display: flex; align-items: center;justify-content:center; gap: 8px;">
+                                                    <MudCheckBox T="bool" Value="@selectAll" ValueChanged="@OnSelectAllChanged" Color="Color.Primary" />
+                                                    <span style="color: white; font-weight: bold; font-size: 12px;">Client / Product</span>
+                                                </MudStack>
+                                            </MudTh>
+                                            <MudTh RowSpan="2" Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px 0; width: 12%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="text-align: center;">Previous Year</MudItem>
+                                                <MudItem style="font-size: 0.8em; font-weight: normal; text-align: center; border-top: 1px solid white;">2024 Total</MudItem>
+                                            </MudTh>
+                                            <MudTh RowSpan="2" Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px 0; width: 12%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="text-align: center;">YTD 2025</MudItem>
+                                                <MudItem style="font-size: 0.8em; font-weight: normal; text-align: center; border-top: 1px solid white;">Jan-Jun</MudItem>
+                                            </MudTh>
+                                            <MudTh ColSpan="4" Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px; width: 36%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="font-weight: bold; text-align: center;">Forecast Remaining Quarters</MudItem>
+                                            </MudTh>
+                                            <MudTh RowSpan="2" Style="background-color: #28a745; color: white; text-align: center; padding: 8px 0; width: 12%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="text-align: center;">Full Year</MudItem>
+                                                <MudItem style="font-size: 0.8em; font-weight: normal; text-align: center; border-top: 1px solid white;">Total</MudItem>
+                                            </MudTh>
+                                            <MudTh RowSpan="2" Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px; width: 10%; border-bottom: 1px solid white; vertical-align: middle;padding-left:15px;padding-right:15px;">
+                                                <MudItem style="text-align: center;">Actions</MudItem>
+                                            </MudTh>
+                                        </MudTr>
+
+                                        <!-- Second Header Row -->
+                                        <MudTr>
+                                            <MudTh Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px; width: 9%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="font-size: 0.8em; font-weight: bold; text-align: center;">Q3 2025</MudItem>
+                                            </MudTh>
+                                            <MudTh Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px; width: 9%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="font-size: 0.8em; font-weight: bold; text-align: center;">Q4 2025</MudItem>
+                                            </MudTh>
+                                            <MudTh Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px; width: 9%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="font-size: 0.8em; font-weight: bold; text-align: center;">Q1 2026</MudItem>
+                                            </MudTh>
+                                            <MudTh Style="background-color: #3f5f7f; color: white; text-align: center; padding: 8px; width: 9%; border-right: 1px solid white; border-bottom: 1px solid white; vertical-align: middle;">
+                                                <MudItem style="font-size: 0.8em; font-weight: bold; text-align: center;">Q2 2026</MudItem>
+                                            </MudTh>
+                                        </MudTr>
+                                    </HeaderContent>
+
+                                    <RowTemplate>
+                                        @if (context.IsClientHeader)
+                                        {
+                                            <!-- Client Header Row -->
+                                            <MudTr>
+                                                
+                                                <MudTd Style="width: 25%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 12%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 75%; background-color: #E6F2FF ; font-weight: bold; padding: 12px; border-bottom: 1px solid #dee2e6;">
+                                                    <MudStack Row AlignItems="AlignItems.Center" style="display: flex; align-items: center; gap: 8px;">
+                                                        <MudCheckBox T="bool" Color="Color.Primary" Value="@context.IsSelected" ValueChanged="@((bool value) => OnClientCheckboxChanged(context, value))"  />
+                                                        <MudText Typo="Typo.body2" Style="font-weight: bold;">
+                                                            @context.ClientName
+                                                        </MudText>
+                                                    </MudStack>
+                                                </MudTd>
+                                                <MudTd Style="width: 9%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 9%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 9%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 9%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 12%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                                <MudTd Style="width: 10%; background-color: #E6F2FF ; padding: 12px; border-bottom: 1px solid #dee2e6;"></MudTd>
+                                            </MudTr>
+                                        }
+                                        else
+                                        {
+                                            <!-- Regular Product Row faf0e6-->
+                                            <MudTr>
+                                                <MudTd Style="@(GetRowStyle(context) + " padding: 8px; width: 25%; text-align: left; border: 1px solid #e9ecef;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "font-weight: bold; color: #3f5f7f;" : "padding-left: 20px; color: #2c3e50;")">
+                                                        @context.ProductName
+                                                    </MudText>
+                                                </MudTd>
+                                                <MudTd Style="@(GetRowStyle(context) + " background-color: " + (context.IsTotalRow ? "#f0f9f1" : "#F5F5F5") + " padding: 8px; text-align: center; width: 12%;border: 1px solid #e9ecef;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "color: #3f5f7f; font-weight: bold;" : "")">@context.PreviousYear</MudText>
+                                                </MudTd>
+                                                <MudTd Style="@(GetRowStyle(context) + "background-color: " + (context.IsTotalRow ? "#f0f9f1" : "#E8F5E8") + "; padding: 8px; text-align: center; width: 12%;border: 1px solid #e9ecef;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "color: #3f5f7f; font-weight: bold;" : "")">@context.YTD2025</MudText>
+                                                </MudTd>
+                                                <MudTd Class="@(context.IsTotalRow ? "" : "hoverable-cell")" Style="@(GetRowStyle(context) + "background-color: " + (context.IsTotalRow ? "#f0f9f1" : "#FFF3E0") + "; border: 1px solid #e9ecef;padding: 8px; text-align: center; width: 9%;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "color: #3f5f7f; font-weight: bold;" : "")">@context.Q3_2025</MudText>
+                                                </MudTd>
+                                                <MudTd Class="@(context.IsTotalRow ? "" : "hoverable-cell")" Style="@(GetRowStyle(context) + "background-color: " + (context.IsTotalRow ? "#f0f9f1" : "#FFF3E0") + ";border: 1px solid #e9ecef; padding: 8px; text-align: center; width: 9%;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "color: #3f5f7f; font-weight: bold;" : "")">@context.Q4_2025</MudText>
+                                                </MudTd>
+                                                <MudTd Class="@(context.IsTotalRow ? "" : "hoverable-cell")" Style="@(GetRowStyle(context) + "background-color: " + (context.IsTotalRow ? "#f0f9f1" : "#FFF3E0") + ";border: 1px solid #e9ecef; padding: 8px; text-align: center; width: 9%;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "color: #3f5f7f; font-weight: bold;" : "")">@context.Q1_2026</MudText>
+                                                </MudTd>
+                                                <MudTd Class="@(context.IsTotalRow ? "" : "hoverable-cell")" Style="@(GetRowStyle(context) + "background-color: " + (context.IsTotalRow ? "#f0f9f1" : "#FFF3E0") + ";border: 1px solid #e9ecef; padding: 8px; text-align: center; width: 9%;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "color: #3f5f7f; font-weight: bold;" : "")">@context.Q2_2026</MudText>
+                                                </MudTd>
+                                                <MudTd Style="@(GetRowStyle(context) + "background-color: " + (context.IsTotalRow ? "#28a745" : "#d4edda") + ";border: 1px solid #e9ecef; padding: 8px; text-align: center; width: 12%;")">
+                                                    <MudText Style="@(context.IsTotalRow ? "font-weight: bold; color: white;" : "font-weight: bold;")">@context.Total</MudText>
+                                                </MudTd>
+                                                <MudTd Style="@(GetRowStyle(context) + " padding: 8px; text-align: center; width: 10%;border: 1px solid #e9ecef;")">
+                                                    @if (!context.IsClientHeader && !context.IsTotalRow)
+                                                    {
+                                                        <MudStack Row AlignItems="AlignItems.Center" style="display: flex; justify-content: center;">
+                                                            <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" 
+                                                                       Style="font-size: 0.75rem; color: #2196F3; border-color: #2196F3; text-decoration: none; text-transform: none; transition: all 0.3s ease;"
+                                                                       Class="hover-button">
+                                                                Edit
+                                                            </MudButton>
+                                                        </MudStack>
+                                                    }
+                                                    @if (context.IsTotalRow)
+                                                    {
+                                                        <MudStack Row AlignItems="AlignItems.Center" style="display: flex; justify-content: center;">
+                                                            <MudButton Variant="Variant.Outlined" Size="Size.Small"
+                                                                       Style="color: #2196F3; border-color: #2196F3; font-size: 0.75rem; text-decoration: none; text-transform: none; transition: all 0.3s ease;"
+                                                                       Class="hover-button"
+                                                                       @onclick="OpenBulkEditModal">
+                                                                Bulk Edit
+                                                            </MudButton>
+                                                        </MudStack>
+                                                    }
+                                                </MudTd>
+                                            </MudTr>
+                                        }
+                                    </RowTemplate>
+                                </MudTable>   
+                            </MudPaper>
+                        </MudCard>
+                    </MudCard>
+                </MudContainer>
+
+                <!-- Bulk Edit Modal -->
+                @if (isBulkEditModalOpen)
+                {
+                    <!-- Modal Backdrop -->
+                    <MudItem style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.25); z-index: 1000;"
+                         @onclick="CloseBulkEditModal">
+                    </MudItem>
+
+                    <!-- Modal Content -->
+                    <MudStack style="padding:12px;position: fixed; bottom: 24px; right: 24px; width: 600px;border:solid; background-color: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); z-index: 1001; border: 2px solid #3f5f7f;">
+                        <!-- Modal Header -->
+                        <MudText Typo="Typo.h6" Color="Color.Primary" Style="font-weight: bold;">
+                            Bulk Update Selected Clients
+                        </MudText>
+
+                        <!-- Modal Body -->
+                        <MudStack Row style=" display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                            <MudText Typo="Typo.body1" Style="font-weight: 500; color: #2c3e50;">
+                                Apply %:
+                            </MudText>
+                            <MudNumericField @bind-Value="bulkEditPercentage"
+                                             Variant="Variant.Outlined"
+                                             Class="tight-field"
+                                             Style="width: 80px; height:fit-content;"
+                                             Min="0"
+                                             Max="100" />
+                            <MudButton Variant="Variant.Outlined"
+                                       Size="Size.Small"
+                                       Style="color: #2196F3; border-color: #2196F3; text-decoration: none; text-transform: none;"
+                                       @onclick="HandleIncrease"
+                                       Class="hover-button">
+                                Increase
+                            </MudButton>
+                            <MudButton Variant="Variant.Outlined"
+                                       Size="Size.Small"
+                                       Style="color: #2196F3; border-color: #2196F3; text-decoration: none; text-transform: none;"
+                                       @onclick="HandleDecrease"
+                                       Class="hover-button">
+                                Decrease
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       Size="Size.Small"
+                                       Style="background-color: #007bff; color: white;"
+                                       @onclick="HandleCopyQuarter"
+                                       Class="hover-button">
+                                Copy Quarter
+                            </MudButton>
+                            <MudButton Variant="Variant.Outlined"
+                                       Size="Size.Small"
+                                       Style="color: #2196F3; border-color: #2196F3; text-decoration: none; text-transform: none;"
+                                       @onclick="CloseBulkEditModal"
+                                       Class="hover-button">
+                                Close
+                            </MudButton>
+                        </MudStack>
+                    </MudStack>
+                }
+
+               
+
+                <style>
+                    .tight-field input {
+                        /* margin-top: 5px !important;
+                        margin-bottom: 5px !important; */
+                        padding-top: 5px !important;
+                        padding-bottom: 5px !important;
+                    }
+                    .hoverable-cell:hover {
+                        background-color: #d4d4d4 !important; 
+                        cursor:pointer;
+                    }
+
+                    .hoverable-cell:hover[style*="background-color: #faf0e6"] {
+                        background-color: #e6d7c3 !important; 
+                        cursor:pointer;
+                    }
+                    .mud-button-outlined:hover {
+                        background-color: var(--hover-bg, transparent) !important;
+                        color: var(--hover-color, inherit) !important;
+                    }
+                    .hover-button:hover {
+                        background-color: #2196F3 !important;
+                        color: white !important;
+                        border-color: #2196F3 !important;
+                    }
+                    
+                </style>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/login");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> 
+
+
+@code {
+    private string selectedPeriod = "FY 2025/2026";
+    private bool selectAll = false;
+    private bool isBulkEditModalOpen = false;
+    private int bulkEditPercentage = 10;
+
+    private void OnSelectAllChanged(bool value)
+    {
+        selectAll = value;
+        foreach (var item in forecastData.Where(x => x.IsClientHeader))
+        {
+            item.IsSelected = value;
+        }
+        StateHasChanged();
+    }
+
+    private void OnClientCheckboxChanged(ForecastItem client, bool value)
+    {
+        client.IsSelected = value;
+        
+        // Update the master checkbox state based on individual client selections
+        var clientHeaders = forecastData.Where(x => x.IsClientHeader).ToList();
+        if (clientHeaders.All(x => x.IsSelected))
+        {
+            selectAll = true;
+        }
+        else if (clientHeaders.All(x => !x.IsSelected))
+        {
+            selectAll = false;
+        }
+        else
+        {
+            // Mixed state - you might want to handle this differently
+            selectAll = false;
+        }
+        
+        StateHasChanged();
+    }
+
+    private void OpenBulkEditModal()
+    {
+        isBulkEditModalOpen = true;
+        StateHasChanged();
+    }
+
+    private void CloseBulkEditModal()
+    {
+        isBulkEditModalOpen = false;
+        StateHasChanged();
+    }
+
+    private void HandleIncrease()
+    {
+        // Implement increase logic here
+        Console.WriteLine($"Increasing by {bulkEditPercentage}%");
+    }
+
+    private void HandleDecrease()
+    {
+        // Implement decrease logic here
+        Console.WriteLine($"Decreasing by {bulkEditPercentage}%");
+    }
+
+    private void HandleCopyQuarter()
+    {
+        // Implement copy quarter logic here
+        Console.WriteLine("Copying quarter data");
+    }
+
+    private List<ForecastItem> forecastData = new List<ForecastItem>
+    {
+        // CLIENT A - Corporate
+        new ForecastItem
+        {
+            ClientName = "CLIENT A - Corporate",
+            IsClientHeader = true,
+            IsSelected = false
+        },
+        new ForecastItem
+        {
+            ProductName = "Learnership",
+            PreviousYear = "R 400,000",
+            YTD2025 = "R 240,000",
+            Q3_2025 = "R 180,000",
+            Q4_2025 = "R 150,000",
+            Q1_2026 = "R 0",
+            Q2_2026 = "R 0",
+            Total = "R 570,000",
+            IsClientHeader = false
+        },
+        new ForecastItem
+        {
+            ProductName = "SAP Business",
+            PreviousYear = "R 350,000",
+            YTD2025 = "R 185,000",
+            Q3_2025 = "R 200,000",
+            Q4_2025 = "R 200,000",
+            Q1_2026 = "R 200,000",
+            Q2_2026 = "R 200,000",
+            Total = "R 985,000",
+            IsClientHeader = false
+        },
+        new ForecastItem
+        {
+            ProductName = "Compliance",
+            PreviousYear = "R 135,000",
+            YTD2025 = "R 85,000",
+            Q3_2025 = "R 45,000",
+            Q4_2025 = "R 165,000",
+            Q1_2026 = "R 45,000",
+            Q2_2026 = "R 165,000",
+            Total = "R 175,000",
+            IsClientHeader = false
+        },
+
+        // CLIENT B - Manufacturing
+        new ForecastItem
+        {
+            ClientName = "CLIENT B - Manufacturing",
+            IsClientHeader = true,
+            IsSelected = false
+        },
+        new ForecastItem
+        {
+            ProductName = "Learnership",
+            PreviousYear = "R 280,000",
+            YTD2025 = "R 165,000",
+            Q3_2025 = "R 120,000",
+            Q4_2025 = "R 100,000",
+            Q1_2026 = "R 165,000",
+            Q2_2026 = "R 165,000",
+            Total = "R 385,000",
+            IsClientHeader = false
+        },
+        new ForecastItem
+        {
+            ProductName = "Compliance",
+            PreviousYear = "R 95,000",
+            YTD2025 = "R 58,000",
+            Q3_2025 = "R 35,000",
+            Q4_2025 = "R 35,000",
+            Q1_2026 = "R 35,000",
+            Q2_2026 = "R 35,000",
+            Total = "R 198,000",
+            IsClientHeader = false
+        },
+
+        // CLIENT C - Technology
+        new ForecastItem
+        {
+            ClientName = "CLIENT C - Technology",
+            IsClientHeader = true,
+            IsSelected = false
+        },
+        new ForecastItem
+        {
+            ProductName = "SAP Business",
+            PreviousYear = "R 420,000",
+            YTD2025 = "R 250,000",
+            Q3_2025 = "R 180,000",
+            Q4_2025 = "R 180,000",
+            Q1_2026 = "R 180,000",
+            Q2_2026 = "R 180,000",
+            Total = "R 970,000",
+            IsClientHeader = false
+        },
+        new ForecastItem
+        {
+            ProductName = "Other Courses",
+            PreviousYear = "R 85,000",
+            YTD2025 = "R 52,000",
+            Q3_2025 = "R 250,000",
+            Q4_2025 = "R 205,000",
+            Q1_2026 = "R 205,000",
+            Q2_2026 = "R 205,000",
+            Total = "R 152,000",
+            IsClientHeader = false
+        },
+
+        // TOTAL ROW
+        new ForecastItem
+        {
+            ProductName = "TOTAL ALL CLIENTS",
+            PreviousYear = "R 1,765,000",
+            YTD2025 = "R 1,035,000",
+            Q3_2025 = "R 785,000",
+            Q4_2025 = "R 690,000",
+            Q1_2026 = "R 485,000",
+            Q2_2026 = "R 440,000",
+            Total = "R 3,435,000",
+            IsClientHeader = false,
+            IsTotalRow = true
+        }
+    };
+
+    private string GetRowStyle(ForecastItem item)
+    {
+        if (item.IsClientHeader)
+            return "background-color: #e9ecef; border-bottom: 1px solid #dee2e6;";
+        if (item.IsTotalRow)
+            return "background-color: #f0f9f1; border-top: 2px solid #f0f9f1; border-bottom: 1px solid #f0f9f1;";
+        return "background-color: white; border-bottom: 1px solid #dee2e6;";
+    }
+
+    public class ForecastItem
+    {
+        public string ClientName { get; set; } = "";
+        public string ProductName { get; set; } = "";
+        public string PreviousYear { get; set; } = "";
+        public string YTD2025 { get; set; } = "";
+        public string Q3_2025 { get; set; } = "";
+        public string Q4_2025 { get; set; } = "";
+        public string Q1_2026 { get; set; } = "";
+        public string Q2_2026 { get; set; } = "";
+        public string Total { get; set; } = "";
+        public bool IsClientHeader { get; set; } = false;
+        public bool IsSelected { get; set; } = false;
+        public bool IsTotalRow { get; set; } = false;
+    }
+}

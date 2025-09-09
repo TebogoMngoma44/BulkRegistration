@@ -1,0 +1,164 @@
+﻿@page "/disability/update"
+
+<CascadingAuthenticationState>
+    <AuthorizeView Context="DisabilityUpdate">
+        <Authorized>
+            @if (_loader == false)
+            {
+                <MudDialog>
+                    <DialogContent>
+                        <div class="d-flex flex-column py-1">
+                            <MudContainer Class="mt-1 px-1"
+                                          MaxWidth="MaxWidth.False">
+                                <MudPaper Elevation="0"
+                                          Class="mt-3">
+                                    <MudGrid Style="padding-left: 2%;
+                                                    padding-right: 2%;
+                                                    padding-bottom: 2%">
+
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.DisabilityDescription"
+                                                          Label="Disability Description *"
+                                                          HelperText="Please enter the description for this disability."
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+
+                                        <MudItem xs="12">
+                                            <MudGrid Justify="Justify.FlexEnd">
+                                                <MudButton Disabled="@_processing"
+                                                           OnClick="@(e => Save())"
+                                                           Class="mt-5 rounded-pill"
+                                                           Variant="Variant.Filled"
+                                                           DisableElevation="false"
+                                                           Style="width: 150px;
+                                                                  height: 40px;
+                                                                  margin-bottom: 25px;
+                                                                  background-color: #2E3168;
+                                                                  color: #fff;
+                                                                  margin-right: 10px">
+                                                    @if (_processing)
+                                                    {
+                                                        <MudProgressCircular Class="ms-n1"
+                                                                             Size="MudBlazor.Size.Small"
+                                                                             Indeterminate="true" />
+                                                        <MudText Class="ms-2">Processing</MudText>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudText>Save</MudText>
+                                                    }
+                                                </MudButton>
+                                            </MudGrid>
+                                        </MudItem>
+
+                                    </MudGrid>
+                                </MudPaper>
+                            </MudContainer>
+                        </div>
+                    </DialogContent>
+                </MudDialog>
+            }
+            else
+            {
+                <MudGrid Class="d-flex justify-center" Style="height: 100vh">
+                    <MudItem>
+                        <MudPaper Elevation="0" Class="pa-4 text-center align-content-center" Style="height: 80%;">
+                            <MudImage Src="importloader.gif" Alt="loading" Elevation="0" Height="120" Class="rounded-lg align-items-center" />
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>You are not authorized to view this page.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public string key { get; set; } = string.Empty;
+
+    public DisabilityUpdateDto updateDto = new DisabilityUpdateDto();
+
+
+    private bool _processing = false;
+    bool _loader = true;
+
+    private bool isInitialized = false;
+    protected override void OnInitialized()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _loader = true;
+            InvokeAsync(LoadDataAsync);
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            key = await EncryptionHelper.Decode(key);
+            var curDisability = await _disabilityService.GetDisability(new Guid(key));
+
+            updateDto = new DisabilityUpdateDto
+                {
+                    DisabilityKey = curDisability.DisabilityKey,
+                    DisabilityId = curDisability.DisabilityId,
+                    DisabilityDescription = curDisability.DisabilityDescription,
+                    CreatedDate = curDisability.CreatedDate,
+                };
+
+
+        }
+        catch (Exception ex)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+        finally
+        {
+            _loader = false;
+            StateHasChanged();
+        }
+    }
+
+
+    async Task Save()
+    {
+        try
+        {
+            _processing = true;
+
+            DisabilityUpdateDto update = updateDto;
+            var addDisability = await _disabilityService.UpdateDisability(update);
+            updateDto = new DisabilityUpdateDto();
+            _processing = false;
+            NavigationManager.NavigateTo($"/disability/list", true);
+            return;
+        }
+        catch (Exception ex)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+    }
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+}
+

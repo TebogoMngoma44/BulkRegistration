@@ -1,0 +1,215 @@
+﻿<style >
+* {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.main-container {
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.form-wrapper {
+    width: min(900px, calc(100vw - 16px));
+    max-width: 900px;
+    min-height: min(1300px, calc(100vh - 16px));
+    border-radius: clamp(15px, 4vw, 35px);
+    padding: clamp(20px, 5vw, 60px);
+    gap: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    max-width: 780px;
+    min-height: 141px;
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 31px);
+    background: #FFFFFFF2;
+    box-shadow: 0px 20px 40px 0px #0000001A;
+    backdrop-filter: blur(15px);
+    text-align: center;
+}
+
+.header-title {
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: clamp(1.5rem, 4vw, 2.125rem);
+}
+
+.header-subtitle {
+    color: #6B7280;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.form-container {
+    width: 100%;
+    max-width: 780px;
+    border-radius: 20px;
+    background: #FFFFFFF2;
+    box-shadow: 0px 20px 40px 0px #0000001A;
+    backdrop-filter: blur(15px);
+    overflow-y: auto;
+}
+
+.form-title {
+    width: 100%;
+    background-color: rgb(210, 210, 210);
+    padding: clamp(15px, 3vw, 20px);
+}
+
+.form-title-text {
+    margin-left: 10px;
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: #000;
+    font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.form-title-sub {
+    margin-left: 10px;
+    color: #6B7280;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.form-body {
+    padding: clamp(15px, 3vw, 20px);
+}
+
+.section-label {
+    margin: 8px 0 8px 12px;
+}
+
+.section-avatar {
+    width: clamp(24px, 6vw, 32px);
+    height: clamp(24px, 6vw, 32px);
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+.avatar-box {
+    background-color: rgba(243, 244, 246, 0.4);
+    border: 2px solid #D1D5DB;
+    border-radius: 25px;
+    width: 100%;
+    height: clamp(140px, 20vw, 170px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-stack {
+    text-align: center;
+}
+
+.avatar-preview {
+    width: clamp(60px, 15vw, 100px);
+    height: clamp(60px, 15vw, 100px);
+    font-size: clamp(20px, 5vw, 36px);
+}
+
+.avatar-name {
+    color: #4B5563;
+    text-align: center;
+    font-weight: 500;
+    font-size: clamp(14px, 3vw, 18px);
+}
+
+.input-label {
+    font-weight: 700;
+    margin-bottom: 2px;
+    font-size: clamp(14px, 2.5vw, 16px);
+}
+
+.input-field {
+    min-height: 35px;
+    border-radius: 55px;
+}
+
+.input-hint {
+    font-size: clamp(10px, 2vw, 12px);
+    color: #9CA3AF;
+    margin-top: 4px;
+}
+
+.divider {
+    margin: 16px 0 12px 0;
+    border-color: #D1D5DB;
+    border-width: 1.5px;
+}
+
+.password-row {
+    margin-top: 8px;
+    font-family: Roboto;
+}
+
+.password-field {
+    min-height: 45px;
+    border-radius: 35px;
+    width: 100%;
+}
+
+.btn-generate {
+    height: 32px;
+    min-width: 100px;
+    border-radius: 25px;
+    margin-left: 4px;
+    color: #000;
+    background-color: #D1D5DB;
+    border-color: #9CA3AF;
+}
+
+.btn-copy {
+    height: 32px;
+    min-width: 80px;
+    border-radius: 25px;
+    margin-left: 4px;
+    color: #000;
+    background-color: #D1D5DB;
+    border-color: #9CA3AF;
+}
+
+.action-buttons {
+    margin-bottom: 8px;
+}
+
+.required {
+    color: red;
+}
+
+/* CSS for additional responsive styles */
+@@media (max-width: 599px) {
+    .d-sm-none {
+        display: none !important;
+    }
+}
+
+@@media (max-width: 768px) {
+    .mud-container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+
+/* Ensure form inputs are properly sized on mobile */
+@@media (max-width: 599px) {
+    .mud-input-root {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+
+    .mud-select {
+        font-size: 16px !important;
+    }
+}
+
+</style >

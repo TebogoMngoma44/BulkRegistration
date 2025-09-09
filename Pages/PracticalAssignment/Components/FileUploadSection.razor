@@ -1,0 +1,344 @@
+﻿@* Components/PracticalAssignment/FileUploadSection.razor *@
+@using MudBlazor
+@inject ISnackbar Snackbar
+@attribute [Authorize]
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudPaper Class="content-section" Elevation="2">
+    <MudPaper Class="panel-header" Elevation="0">
+        <MudIcon Icon="@Icons.Material.Filled.Upload" Style="font-size: 18px;" />
+        <MudText Style="font-size: 16px;">Submit Your Work</MudText>
+    </MudPaper>
+
+    <MudPaper Class="section-content" Elevation="0">
+        <!-- MudBlazor File Upload Component -->
+        <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                       FilesChanged="OnFileSelected"
+                       Accept=".xlsx,.xls"
+                       MaximumFileCount="10"
+                       MultipleSelection="true"
+                       AppendMultipleFiles="true"
+                       Style="width: 100%;">
+            <ActivatorContent>
+                <MudPaper Style="border: 2px dashed #1e3a5f; border-radius: 8px; background: #f8f9fa; transition: all 0.3s ease; cursor: pointer; padding: 40px 20px; text-align: center; min-height: 200px; display: flex; align-items: center; justify-content: center;"
+                          Elevation="0"
+                          Class="@(isHovering ? "upload-zone-hover" : "")"
+                          @onmouseenter="OnMouseEnter"
+                          @onmouseleave="OnMouseLeave">
+
+                    <MudStack AlignItems="AlignItems.Center" Spacing="3">
+                        <MudAvatar Style="background-color: #1e3a5f; width: 60px; height: 60px;"
+                                   Class="@(isHovering ? "" : "pulse-animation")">
+                            <MudIcon Icon="@Icons.Material.Filled.Folder" Style="font-size: 24px; color: #fbbf24;" />
+                        </MudAvatar>
+
+                        <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                            <MudText Typo="Typo.h6" Style="font-weight: 600; color: #1f2937; margin-bottom: 8px; font-size: 18px;">
+                                Upload Excel Files
+                            </MudText>
+                            <MudText Style="color: #1e3a5f; margin-bottom: 8px; font-size: 16px;">
+                                <strong>Drag & drop Excel files here</strong> or click to browse
+                            </MudText>
+                            <MudText Style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
+                                Accepted formats: <strong>.XLSX, .XLS</strong> (Max: 25MB each)
+                            </MudText>
+                        </MudStack>
+
+                        <MudButton Variant="Variant.Filled"
+                                   Size="Size.Large"
+                                   Style="background: #1e3a5f; color: white; padding: 12px 32px; font-size: 16px; border-radius: 25px; font-weight: 600;">
+                            <MudIcon Icon="@Icons.Material.Filled.FolderOpen" Style="margin-right: 8px;" />
+                            Choose Files
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            </ActivatorContent>
+        </MudFileUpload>
+
+        <!-- Display Selected Files -->
+        @if (selectedFiles != null && selectedFiles.Any())
+        {
+            <MudStack Spacing="2" Style="margin-top: 24px;">
+                <MudStack Row AlignItems="AlignItems.Center" JustifyContent="Justify.SpaceBetween">
+                    <MudText Typo="Typo.h6" Style="font-weight: 600; color: #1f2937; font-size: 16px;">
+                        Selected Files (@selectedFiles.Count/10):
+                    </MudText>
+                    <MudButton Variant="Variant.Text"
+                               Size="Size.Small"
+                               Style="color: #ef4444; font-size: 12px;"
+                               OnClick="ClearAllFiles">
+                        <MudIcon Icon="@Icons.Material.Filled.DeleteSweep" Style="margin-right: 4px; font-size: 16px;" />
+                        Clear All
+                    </MudButton>
+                </MudStack>
+
+                @foreach (var file in selectedFiles)
+                {
+                    <MudCard Elevation="2" Style="border-left: 4px solid #10b981;">
+                        <MudCardContent Style="padding: 16px;">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="3" JustifyContent="Justify.SpaceBetween">
+                                <MudStack Row AlignItems="AlignItems.Center" Spacing="3">
+                                    <MudAvatar Style="background-color: #10b981;">
+                                        <MudIcon Icon="@Icons.Material.Filled.TableChart" Style="color: white;" />
+                                    </MudAvatar>
+                                    <MudStack Spacing="0">
+                                        <MudText Typo="Typo.subtitle1" Style="font-weight: 600; color: #1f2937; font-size: 14px;">
+                                            @file.Name
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #6b7280; font-size: 12px;">
+                                            Size: @FormatFileSize(file.Size) • Added: @DateTime.Now.ToString("MMM dd, yyyy")
+                                        </MudText>
+                                    </MudStack>
+                                </MudStack>
+                                <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                               Size="Size.Small"
+                                               Color="Color.Error"
+                                               OnClick="() => RemoveFile(file)" />
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
+                }
+            </MudStack>
+        }
+
+        <!-- Upload Progress (if files are being processed) -->
+        @if (isProcessing)
+        {
+            <MudStack AlignItems="AlignItems.Center" Spacing="2" Style="margin-top: 16px;">
+                <MudProgressCircular Indeterminate="true" Size="Size.Medium" Color="Color.Primary" />
+                <MudText Typo="Typo.body2" Style="color: #6b7280;">Processing files...</MudText>
+            </MudStack>
+        }
+    </MudPaper>
+</MudPaper>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    [Parameter] public EventCallback<List<IBrowserFile>> OnFilesChanged { get; set; }
+    [Parameter] public List<IBrowserFile> SelectedFiles { get; set; } = new();
+
+    private List<IBrowserFile> selectedFiles = new();
+    private const long maxFileSize = 25 * 1024 * 1024; // 25MB
+    private bool isHovering = false;
+    private bool isProcessing = false;
+
+    protected override void OnParametersSet()
+    {
+        // Sync internal state with parameter
+        if (SelectedFiles != selectedFiles)
+        {
+            selectedFiles = SelectedFiles ?? new List<IBrowserFile>();
+            StateHasChanged();
+        }
+    }
+
+    // Mouse hover effects for visual feedback
+    private void OnMouseEnter()
+    {
+        isHovering = true;
+        StateHasChanged();
+    }
+
+    private void OnMouseLeave()
+    {
+        isHovering = false;
+        StateHasChanged();
+    }
+
+    // Handle file selection from MudFileUpload
+    private async Task OnFileSelected(IReadOnlyList<IBrowserFile> files)
+    {
+        if (files == null || !files.Any()) return;
+
+        isProcessing = true;
+        StateHasChanged();
+
+        await Task.Delay(100); // Small delay to show processing state
+
+        try
+        {
+            await ProcessFiles(files);
+        }
+        finally
+        {
+            isProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    // Process and validate uploaded files
+    private async Task ProcessFiles(IEnumerable<IBrowserFile> files)
+    {
+        var newFiles = new List<IBrowserFile>();
+        var validFiles = 0;
+        var invalidFiles = 0;
+        var oversizedFiles = 0;
+        var duplicateFiles = 0;
+
+        foreach (var file in files)
+        {
+            // Validate file extension
+            var extension = Path.GetExtension(file.Name).ToLowerInvariant();
+            if (extension != ".xlsx" && extension != ".xls")
+            {
+                invalidFiles++;
+                continue;
+            }
+
+            // Validate file size
+            if (file.Size > maxFileSize)
+            {
+                oversizedFiles++;
+                continue;
+            }
+
+            // Check for duplicates
+            if (selectedFiles.Any(f => f.Name.Equals(file.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                duplicateFiles++;
+                continue;
+            }
+
+            newFiles.Add(file);
+            validFiles++;
+        }
+
+        // Add new valid files
+        selectedFiles.AddRange(newFiles);
+
+        // Enforce 10 file limit
+        if (selectedFiles.Count > 10)
+        {
+            var removedCount = selectedFiles.Count - 10;
+            selectedFiles = selectedFiles.Take(10).ToList();
+            Snackbar.Add($"File limit reached - {removedCount} files removed to stay within 10 file maximum", Severity.Warning);
+        }
+
+        // Show user feedback
+        await ShowUploadFeedback(validFiles, invalidFiles, oversizedFiles, duplicateFiles);
+
+        // Notify parent component
+        await OnFilesChanged.InvokeAsync(selectedFiles);
+    }
+
+    // Show detailed feedback to user
+    private async Task ShowUploadFeedback(int validFiles, int invalidFiles, int oversizedFiles, int duplicateFiles)
+    {
+        if (validFiles > 0)
+        {
+            Snackbar.Add($"Successfully added {validFiles} Excel file(s)!", Severity.Success);
+        }
+
+        if (invalidFiles > 0)
+        {
+            Snackbar.Add($"{invalidFiles} file(s) rejected - Only Excel files (.xlsx, .xls) are accepted", Severity.Warning);
+        }
+
+        if (oversizedFiles > 0)
+        {
+            Snackbar.Add($"{oversizedFiles} file(s) rejected - Files must be under 25MB", Severity.Warning);
+        }
+
+        if (duplicateFiles > 0)
+        {
+            Snackbar.Add($"{duplicateFiles} duplicate file(s) skipped", Severity.Info);
+        }
+
+        if (validFiles == 0 && (invalidFiles > 0 || oversizedFiles > 0))
+        {
+            Snackbar.Add("No valid files were added. Please check file types and sizes.", Severity.Error);
+        }
+    }
+
+    // Remove individual file
+    private async Task RemoveFile(IBrowserFile file)
+    {
+        selectedFiles.Remove(file);
+        Snackbar.Add($"Removed {file.Name}", Severity.Info);
+        await OnFilesChanged.InvokeAsync(selectedFiles);
+        StateHasChanged();
+    }
+
+    // Clear all files
+    private async Task ClearAllFiles()
+    {
+        var count = selectedFiles.Count;
+        selectedFiles.Clear();
+        Snackbar.Add($"Cleared all {count} files", Severity.Info);
+        await OnFilesChanged.InvokeAsync(selectedFiles);
+        StateHasChanged();
+    }
+
+    // Format file size for display
+    private string FormatFileSize(long bytes)
+    {
+        string[] suffixes = { "B", "KB", "MB", "GB" };
+        double size = bytes;
+        int suffixIndex = 0;
+
+        while (size >= 1024 && suffixIndex < suffixes.Length - 1)
+        {
+            size /= 1024;
+            suffixIndex++;
+        }
+
+        return $"{size:0.##} {suffixes[suffixIndex]}";
+    }
+}
+<style>
+    .content-section {
+        background: white;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .panel-header {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        color: white;
+        padding: 6px 10px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .section-content {
+        padding: 16px;
+    }
+
+    .upload-zone-hover {
+        border-color: #10b981 !important;
+        background: #f0fdf4 !important;
+        transform: scale(1.02);
+    }
+
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>

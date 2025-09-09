@@ -1,0 +1,312 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.MudDebugAnalyzer = 
+build_property.MudAllowedAttributePattern = 
+build_property.MudAllowedAttributeList = 
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = Speccon.Learnership.FrontEnd
+build_property.RootNamespace = Speccon.Learnership.FrontEnd
+build_property.ProjectDir = C:\Users\TSHPL034\Downloads\Speccon_Learnership\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\TSHPL034\Downloads\Speccon_Learnership
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Layout/BlankLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XEJsYW5rTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Achievements/Myachievements.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNoaWV2ZW1lbnRzXE15YWNoaWV2ZW1lbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Assignment/Assignment.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzaWdubWVudFxBc3NpZ25tZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/Exam-access.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cRXhhbS1hY2Nlc3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/Exam.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cRXhhbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTG9nb3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/MyProfile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTXlQcm9maWxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/RedirectToLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cUmVkaXJlY3RUb0xvZ2luLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Authentication/Verification.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cVmVyaWZpY2F0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Component.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/ContactInfo/ContactInfo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGFjdEluZm9cQ29udGFjdEluZm8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Dashboard/Sales.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXFNhbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Dashboard/StudentDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXFN0dWRlbnREYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/DealsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVhbHNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Disability/DisabilityCreate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzYWJpbGl0eVxEaXNhYmlsaXR5Q3JlYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Disability/DisabilityUpdate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzYWJpbGl0eVxEaXNhYmlsaXR5VXBkYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Disability/List.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzYWJpbGl0eVxMaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/FAQ/FaqHelp.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRkFRXEZhcUhlbHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/NewFolder/PageFour.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3Rm9sZGVyXFBhZ2VGb3VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/NewFolder/PageOne.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3Rm9sZGVyXFBhZ2VPbmUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/NewFolder/PageThree.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3Rm9sZGVyXFBhZ2VUaHJlZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/NewFolder/PageTwo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3Rm9sZGVyXFBhZ2VUd28ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/ActionButtonsSection.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXEFjdGlvbkJ1dHRvbnNTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/AssessmentCriteria.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXEFzc2Vzc21lbnRDcml0ZXJpYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/AssignmentHeader.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXEFzc2lnbm1lbnRIZWFkZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/AssignmentLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXEFzc2lnbm1lbnRMYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/DownloadSection.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXERvd25sb2FkU2VjdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/ExcelSkills.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXEV4Y2VsU2tpbGxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/FileUploadSection.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXEZpbGVVcGxvYWRTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/PracticalOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXFByYWN0aWNhbE92ZXJ2aWV3LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/PracticalRequirements.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXFByYWN0aWNhbFJlcXVpcmVtZW50cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/ProgressSection.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXFByb2dyZXNzU2VjdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/SubmissionDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXFN1Ym1pc3Npb25EaWFsb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/ToolsAndResources.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXFRvb2xzQW5kUmVzb3VyY2VzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/Components/TopNavigation.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxDb21wb25lbnRzXFRvcE5hdmlnYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/PracticalAssignment/PracticalAssignment.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJhY3RpY2FsQXNzaWdubWVudFxQcmFjdGljYWxBc3NpZ25tZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/CertificateSection.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xDZXJ0aWZpY2F0ZVNlY3Rpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/DialogComponents.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xEaWFsb2dDb21wb25lbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/DialogSchedule.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xEaWFsb2dTY2hlZHVsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/DialogStep.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xEaWFsb2dTdGVwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/FeedbackHistory.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xGZWVkYmFja0hpc3RvcnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/ModuleFeedback.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xNb2R1bGVGZWVkYmFjay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/ModulesSection.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xNb2R1bGVzU2VjdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/QualificationAppBar.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xRdWFsaWZpY2F0aW9uQXBwQmFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/QualificationHeader.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xRdWFsaWZpY2F0aW9uSGVhZGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/QualificationInfo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xRdWFsaWZpY2F0aW9uSW5mby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/QualificationProgressCard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xRdWFsaWZpY2F0aW9uUHJvZ3Jlc3NDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/QualificationSelector.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xRdWFsaWZpY2F0aW9uU2VsZWN0b3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/QualificationTimeline.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xRdWFsaWZpY2F0aW9uVGltZWxpbmUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Components/TimelineDialogs.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcQ29tcG9uZW50c1xUaW1lbGluZURpYWxvZ3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Qcto.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcUWN0by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Qualifications/Seta.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVhbGlmaWNhdGlvbnNcU2V0YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Salesperson/Product.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cUHJvZHVjdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/sales/Forecast.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcc2FsZXNcRm9yZWNhc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Stipend/StipendClientDeals.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3RpcGVuZFxTdGlwZW5kQ2xpZW50RGVhbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Stipend/StipendDealsOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3RpcGVuZFxTdGlwZW5kRGVhbHNPdmVydmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Super Admin Popup/Component.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXIgQWRtaW4gUG9wdXBcQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Super Admin Popup/Create-User.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXIgQWRtaW4gUG9wdXBcQ3JlYXRlLVVzZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Test.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/TestQualification/TestQualification.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdFF1YWxpZmljYXRpb25cVGVzdFF1YWxpZmljYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/TestQualification/TestQualificationCreate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdFF1YWxpZmljYXRpb25cVGVzdFF1YWxpZmljYXRpb25DcmVhdGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/TestQualification/TestQualificationUpdate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdFF1YWxpZmljYXRpb25cVGVzdFF1YWxpZmljYXRpb25VcGRhdGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/TestQualification/ViewQualification.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdFF1YWxpZmljYXRpb25cVmlld1F1YWxpZmljYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Users/List.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Users/Messages.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWVzc2FnZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/Pages/Users/UserUpdate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcVXNlclVwZGF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/TSHPL034/Downloads/Speccon_Learnership/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,535 @@
+﻿@page "/auth/MyProfile"
+
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pa-4">
+    <!-- Page Header -->
+    <MudText Typo="Typo.h4" Class="mb-6">My Profile</MudText>
+
+    <!-- Profile Card -->
+    <MudCard Elevation="2" Class="mb-6">
+        <MudCardContent Class="pa-6">
+            <MudGrid AlignItems="Center">
+                <MudItem xs="12" sm="6" md="8">
+                    <MudGrid AlignItems="Center">
+                        <MudItem xs="12" sm="3" md="2">
+                            <MudAvatar Size="Size.Large" Color="Color.Primary" Class="mx-auto">
+                                <MudText Typo="Typo.h5">AS</MudText>
+                            </MudAvatar>
+                        </MudItem>
+                        <MudItem xs="12" sm="9" md="10">
+                            <MudText Typo="Typo.h5" Class="mb-1">@firstName @lastName</MudText>
+                            <MudText Typo="Typo.body1" Color="Color.Secondary">Sales Person</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@department Department</MudText>
+                        </MudItem>
+                    </MudGrid>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4" Class="text-right">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mr-2" OnClick="ChangePhotoAsync">
+                        Change Photo
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAllChangesAsync">
+                        Save All Changes
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Personal Information Section -->
+    <MudCard Elevation="2" Class="mb-6">
+        <MudCardContent Class="pa-6">
+            <MudGrid AlignItems="Center" Class="mb-4">
+                <MudItem xs="12" sm="6">
+                    <MudText Typo="Typo.h6">Personal Information</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6" Class="text-right">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ToggleEditMode">
+                        @(isEditMode ? "Cancel" : "Edit")
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid Spacing="4">
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="firstName" Label="First Name" Variant="Variant.Outlined" FullWidth="true" ReadOnly="@(!isEditMode)" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="lastName" Label="Last Name" Variant="Variant.Outlined" FullWidth="true" ReadOnly="@(!isEditMode)" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="emailAddress" Label="Email Address" Variant="Variant.Outlined" FullWidth="true" ReadOnly="@(!isEditMode)" />
+                    <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mt-1">
+                        This email is used for login and notifications
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="phoneNumber" Label="Phone Number" Variant="Variant.Outlined" FullWidth="true" ReadOnly="@(!isEditMode)" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="employeeId" Label="Employee ID" Variant="Variant.Outlined" FullWidth="true" ReadOnly="true" />
+                    <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mt-1">
+                        Employee ID cannot be changed
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect @bind-Value="department" Label="Department" Variant="Variant.Outlined" FullWidth="true" ReadOnly="@(!isEditMode)">
+                        <MudSelectItem Value="@("Sales")">Sales</MudSelectItem>
+                        <MudSelectItem Value="@("Marketing")">Marketing</MudSelectItem>
+                        <MudSelectItem Value="@("Engineering")">Engineering</MudSelectItem>
+                        <MudSelectItem Value="@("HR")">HR</MudSelectItem>
+                        <MudSelectItem Value="@("Finance")">Finance</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="address" Label="Address" Variant="Variant.Outlined" FullWidth="true" Lines="3" ReadOnly="@(!isEditMode)" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Work Preferences Section -->
+    <MudCard Elevation="2" Class="mb-6">
+        <MudCardContent Class="pa-6">
+            <MudText Typo="Typo.h6" Class="mb-4">Work Preferences</MudText>
+
+            <MudGrid Spacing="4">
+                <MudItem xs="12" sm="6">
+                    <MudSelect @bind-Value="workLocation" Label="Work Location" Variant="Variant.Outlined" FullWidth="true">
+                        <MudSelectItem Value="@("Office")">Office</MudSelectItem>
+                        <MudSelectItem Value="@("Remote")">Remote</MudSelectItem>
+                        <MudSelectItem Value="@("Hybrid")">Hybrid</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect @bind-Value="timeZone" Label="Time Zone" Variant="Variant.Outlined" FullWidth="true">
+                        <MudSelectItem Value="@("UTC+02:00 (South Africa Standard Time)")">UTC+02:00 (South Africa Standard Time)</MudSelectItem>
+                        <MudSelectItem Value="@("UTC+00:00 (Greenwich Mean Time)")">UTC+00:00 (Greenwich Mean Time)</MudSelectItem>
+                        <MudSelectItem Value="@("UTC-05:00 (Eastern Standard Time)")">UTC-05:00 (Eastern Standard Time)</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect @bind-Value="availability" Label="Availability" Variant="Variant.Outlined" FullWidth="true">
+                        <MudSelectItem Value="@("Full-time")">Full-time</MudSelectItem>
+                        <MudSelectItem Value="@("Part-time")">Part-time</MudSelectItem>
+                        <MudSelectItem Value="@("Contract")">Contract</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSelect @bind-Value="priority" Label="Priority" Variant="Variant.Outlined" FullWidth="true">
+                        <MudSelectItem Value="@("High")">High</MudSelectItem>
+                        <MudSelectItem Value="@("Medium")">Medium</MudSelectItem>
+                        <MudSelectItem Value="@("Low")">Low</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Notification Preferences Section -->
+    <MudCard Elevation="2" Class="mb-6">
+        <MudCardContent Class="pa-6">
+            <MudText Typo="Typo.h6" Class="mb-4">Notification Preferences</MudText>
+
+            <MudGrid Spacing="4">
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle1" Class="mb-3">Email Notifications</MudText>
+                    <MudStack Spacing="2">
+                        <MudSwitch T="bool" @bind-Checked="newClientInquiries" Label="New client inquiries" Color="Color.Success" />
+                        <MudSwitch T="bool" @bind-Checked="quoteApprovals" Label="Quote approvals" Color="Color.Success" />
+                        <MudSwitch T="bool" @bind-Checked="invoicePayments" Label="Invoice payments" Color="Color.Success" />
+                        <MudSwitch T="bool" @bind-Checked="contractRenewals" Label="Contract renewals" Color="Color.Success" />
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle1" Class="mb-3">System Alerts</MudText>
+                    <MudStack Spacing="2">
+                        <MudSwitch T="bool" @bind-Checked="followUpReminders" Label="Follow-up reminders" Color="Color.Success" />
+                        <MudSwitch T="bool" @bind-Checked="forecastUpdates" Label="Forecast updates" Color="Color.Success" Disabled="true" />
+                        <MudSwitch T="bool" @bind-Checked="systemMaintenance" Label="System maintenance" Color="Color.Success" />
+                        <MudSwitch T="bool" @bind-Checked="trainingUpdates" Label="Training updates" Color="Color.Success" Disabled="true" />
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle1" Class="mb-3">Mobile Notifications</MudText>
+                    <MudStack Spacing="2">
+                        <MudSwitch T="bool" @bind-Checked="pushNotifications" Label="Push notifications" Color="Color.Success" />
+                        <MudSwitch T="bool" @bind-Checked="smsAlerts" Label="SMS alerts" Color="Color.Success" Disabled="true" />
+                        <MudSwitch T="bool" @bind-Checked="urgentOnly" Label="Urgent only" Color="Color.Success" />
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Security & Access Section -->
+    <MudCard Elevation="2" Class="mb-6">
+        <MudCardContent Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Security & Access</MudText>
+
+            <!-- Password Security Item -->
+            <MudGrid AlignItems="Center" Class="py-3" Style="border-bottom: 1px solid #e0e0e0;">
+                <MudItem xs="12" sm="6" md="8">
+                    <MudText Typo="Typo.subtitle1" Class="mb-1">Password</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">Last changed @lastPasswordChange days ago</MudText>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="2" Class="text-center">
+                    <MudChip T="string" Color="@GetPasswordSecurityColor()" Size="Size.Small" Variant="Variant.Filled">@GetPasswordSecurityStatus()</MudChip>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="2" Class="text-right">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" OnClick="ChangePasswordAsync">
+                        Change Password
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Two-Factor Authentication Security Item -->
+            <MudGrid AlignItems="Center" Class="py-3" Style="border-bottom: 1px solid #e0e0e0;">
+                <MudItem xs="12" sm="6" md="8">
+                    <MudText Typo="Typo.subtitle1" Class="mb-1">Two-Factor Authentication</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">Add an extra layer of security to your account</MudText>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="2" Class="text-center">
+                    <MudChip T="string" Color="@(twoFactorAuth? Color.Success: Color.Warning)" Size="Size.Small" Variant="Variant.Filled">
+                        @(twoFactorAuth ? "Enabled" : "Not Enabled")
+                    </MudChip>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="2" Class="text-right">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" OnClick="ToggleTwoFactorAuthAsync">
+                        @(twoFactorAuth ? "Disable 2FA" : "Enable 2FA")
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Login Sessions Security Item -->
+            <MudGrid AlignItems="Center" Class="py-3">
+                <MudItem xs="12" sm="6" md="8">
+                    <MudText Typo="Typo.subtitle1" Class="mb-1">Login Sessions</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">Manage your active login sessions</MudText>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="2" Class="text-center">
+                    <MudChip T="string" Color="Color.Success" Size="Size.Small" Variant="Variant.Filled">@activeSessions Active</MudChip>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="2" Class="text-right">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" OnClick="ManageSessionsAsync">
+                        Manage Sessions
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Account Actions Section -->
+    <MudCard Elevation="2">
+        <MudCardContent Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-3">Account Actions</MudText>
+
+            <MudStack Direction="Row" Spacing="2" Wrap="Wrap.Wrap">
+                <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Small" OnClick="SaveAllChangesAsync">
+                    Save All Changes
+                </MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" Size="Size.Small" OnClick="ExportProfileDataAsync">
+                    Export Profile Data
+                </MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" OnClick="ResetToDefaultsAsync">
+                    Reset to Defaults
+                </MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Error" Size="Size.Small" OnClick="DeactivateAccountAsync">
+                    Deactivate Account
+                </MudButton>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    // Personal Information
+    private string firstName = "Alison";
+    private string lastName = "Smith";
+    private string emailAddress = "alison.smith@specconholdings.com";
+    private string phoneNumber = "+27 82 555 1234";
+    private string employeeId = "EMP-2024-001";
+    private string department = "Sales";
+    private string address = "123 Business District, Cape Town, South Africa";
+
+    // Work Preferences
+    private string workLocation = "Office";
+    private string timeZone = "UTC+02:00 (South Africa Standard Time)";
+    private string availability = "Full-time";
+    private string priority = "High";
+
+    // Email Notifications
+    private bool newClientInquiries = true;
+    private bool quoteApprovals = true;
+    private bool invoicePayments = true;
+    private bool contractRenewals = true;
+
+    // System Alerts
+    private bool followUpReminders = true;
+    private bool forecastUpdates = false;
+    private bool systemMaintenance = true;
+    private bool trainingUpdates = false;
+
+    // Mobile Notifications
+    private bool pushNotifications = true;
+    private bool smsAlerts = false;
+    private bool urgentOnly = true;
+
+    // Security & Access
+    private string password = "";
+    private string confirmPassword = "";
+    private bool twoFactorAuth = false;
+    private bool loginNotifications = true;
+    private int lastPasswordChange = 45;
+    private int activeSessions = 2;
+
+    // UI State
+    private bool isEditMode = false;
+    private bool hasUnsavedChanges = false;
+
+    // Original values for reset functionality
+    private string originalFirstName = "Alison";
+    private string originalLastName = "Smith";
+    private string originalEmailAddress = "alison.smith@specconholdings.com";
+    private string originalPhoneNumber = "+27 82 555 1234";
+    private string originalDepartment = "Sales";
+    private string originalAddress = "123 Business District, Cape Town, South Africa";
+
+    protected override void OnInitialized()
+    {
+        // Store original values
+        StoreOriginalValues();
+    }
+
+    private void StoreOriginalValues()
+    {
+        originalFirstName = firstName;
+        originalLastName = lastName;
+        originalEmailAddress = emailAddress;
+        originalPhoneNumber = phoneNumber;
+        originalDepartment = department;
+        originalAddress = address;
+    }
+
+    private void ToggleNavigation()
+    {
+        // Navigation toggle logic
+        Snackbar.Add("Navigation menu clicked", Severity.Info);
+    }
+
+    private async Task ToggleEditMode()
+    {
+        if (isEditMode && hasUnsavedChanges)
+        {
+            // Ask for confirmation before canceling
+            bool? result = await DialogService.ShowMessageBox(
+                "Unsaved Changes",
+                "You have unsaved changes. Are you sure you want to cancel?",
+                yesText: "Cancel Changes", cancelText: "Keep Editing");
+
+            if (result != true) return;
+        }
+
+        isEditMode = !isEditMode;
+
+        if (!isEditMode)
+        {
+            // Reset to original values if canceling
+            ResetPersonalInformation();
+        }
+    }
+
+    private void ResetPersonalInformation()
+    {
+        firstName = originalFirstName;
+        lastName = originalLastName;
+        emailAddress = originalEmailAddress;
+        phoneNumber = originalPhoneNumber;
+        department = originalDepartment;
+        address = originalAddress;
+        hasUnsavedChanges = false;
+    }
+
+    private async Task ChangePhotoAsync()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Change Profile Photo",
+            "This feature would allow you to upload a new profile photo. Would you like to proceed?",
+            yesText: "Upload Photo", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            Snackbar.Add("Profile photo upload feature would be implemented here", Severity.Info);
+        }
+    }
+
+    private async Task SaveAllChangesAsync()
+    {
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1000);
+
+            // Update original values
+            StoreOriginalValues();
+            hasUnsavedChanges = false;
+            isEditMode = false;
+
+            Snackbar.Add("All changes saved successfully!", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error saving changes: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Color GetPasswordSecurityColor()
+    {
+        return lastPasswordChange > 90 ? Color.Error :
+               lastPasswordChange > 60 ? Color.Warning : Color.Success;
+    }
+
+    private string GetPasswordSecurityStatus()
+    {
+        return lastPasswordChange > 90 ? "Weak" :
+               lastPasswordChange > 60 ? "Fair" : "Secure";
+    }
+
+    private async Task ChangePasswordAsync()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Change Password",
+            "This would open a secure password change form. In a real application, you would enter your current password and new password here.",
+            yesText: "Change Password", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            // Simulate password change process
+            await Task.Delay(1500);
+            lastPasswordChange = 0;
+            Snackbar.Add("Password changed successfully!", Severity.Success);
+        }
+    }
+
+    private async Task ToggleTwoFactorAuthAsync()
+    {
+        if (twoFactorAuth)
+        {
+            bool? result = await DialogService.ShowMessageBox(
+                "Disable Two-Factor Authentication",
+                "Are you sure you want to disable two-factor authentication? This will make your account less secure.",
+                yesText: "Disable 2FA", cancelText: "Keep Enabled");
+
+            if (result == true)
+            {
+                twoFactorAuth = false;
+                Snackbar.Add("Two-factor authentication disabled", Severity.Warning);
+            }
+        }
+        else
+        {
+            bool? result = await DialogService.ShowMessageBox(
+                "Enable Two-Factor Authentication",
+                "Two-factor authentication adds an extra layer of security to your account. Would you like to enable it?",
+                yesText: "Enable 2FA", cancelText: "Cancel");
+
+            if (result == true)
+            {
+                // Simulate 2FA setup process
+                await Task.Delay(1500);
+                twoFactorAuth = true;
+                Snackbar.Add("Two-factor authentication enabled successfully!", Severity.Success);
+            }
+        }
+    }
+
+    private async Task ManageSessionsAsync()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Manage Login Sessions",
+            $"You currently have {activeSessions} active login sessions. Would you like to terminate all other sessions except this one?",
+            yesText: "Terminate Others", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            // Simulate session termination
+            await Task.Delay(1000);
+            activeSessions = 1;
+            Snackbar.Add("All other login sessions have been terminated", Severity.Info);
+        }
+    }
+
+    private async Task ExportProfileDataAsync()
+    {
+        try
+        {
+            // Simulate data export
+            await Task.Delay(2000);
+
+            var profileData = new
+            {
+                PersonalInfo = new { firstName, lastName, emailAddress, phoneNumber, employeeId, department, address },
+                WorkPreferences = new { workLocation, timeZone, availability, priority },
+                NotificationSettings = new { newClientInquiries, quoteApprovals, invoicePayments, contractRenewals, followUpReminders, systemMaintenance, pushNotifications, urgentOnly }
+            };
+
+            // In a real application, you would generate and download a file
+            Snackbar.Add("Profile data exported successfully! Check your downloads folder.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error exporting data: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task ResetToDefaultsAsync()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Reset to Defaults",
+            "This will reset all your preferences to default values. This action cannot be undone. Are you sure?",
+            yesText: "Reset", cancelText: "Cancel");
+
+        if (result == true)
+        {
+            // Reset all preferences to defaults
+            workLocation = "Office";
+            timeZone = "UTC+02:00 (South Africa Standard Time)";
+            availability = "Full-time";
+            priority = "Medium";
+
+            // Reset notifications
+            newClientInquiries = true;
+            quoteApprovals = false;
+            invoicePayments = false;
+            contractRenewals = false;
+            followUpReminders = true;
+            systemMaintenance = true;
+            pushNotifications = false;
+            urgentOnly = false;
+
+            Snackbar.Add("Profile reset to default settings", Severity.Info);
+        }
+    }
+
+    private async Task DeactivateAccountAsync()
+    {
+        bool? firstConfirm = await DialogService.ShowMessageBox(
+            "Deactivate Account",
+            "WARNING: This will permanently deactivate your account. You will lose access to all data and services. Are you absolutely sure?",
+            yesText: "I Understand", cancelText: "Cancel");
+
+        if (firstConfirm == true)
+        {
+            bool? finalConfirm = await DialogService.ShowMessageBox(
+                "Final Confirmation",
+                "This is your final warning. Deactivating your account cannot be undone. All your data will be permanently deleted.",
+                yesText: "Deactivate Account", cancelText: "Keep Account");
+
+            if (finalConfirm == true)
+            {
+                // In a real application, this would deactivate the account
+                await Task.Delay(2000);
+                Snackbar.Add("Account deactivation process initiated. You will receive a confirmation email.", Severity.Warning);
+            }
+        }
+    }
+}

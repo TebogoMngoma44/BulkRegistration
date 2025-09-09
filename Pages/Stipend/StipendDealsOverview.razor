@@ -1,0 +1,373 @@
+﻿@layout BlankLayout
+@page "/pages/Stipend/StipendDealsOverview"
+@using MudBlazor
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="deals-containers" Style="font-family:'Roboto'">
+    <!-- Header -->
+    <MudPaper Class="pa-4 mb-4" Elevation="0" Style="background:none">
+        <div class="d-flex justify-space-between align-center" style="border:none !important;border-style:none">
+            <MudText Typo="Typo.h4" Style="font-weight:bold">Deal Overview Panel</MudText>
+            <MudButton Variant="Variant.Outlined"
+                       Style="border-radius:50px"
+                       StartIcon="@Icons.Material.Filled.KeyboardBackspace"
+                       OnClick="GoBack">
+                Back
+            </MudButton>
+        </div>
+    </MudPaper>
+
+    <!-- Client Card -->
+    <MudPaper Class="pa-4" id="ClientCard" Elevation="2">
+        <!-- Client Header -->
+        <div class="d-flex justify-space-between align-center mb-4 pa-4"
+             style="background-color: var(--mud-palette-background-grey);">
+            <MudText Typo="Typo.h4" style="font-weight:bold" Class="font-weight-medium">Deal# XXX XXX XXX <br> <h6 style="color:black">ABC Training</h6></MudText>
+            <MudButton style="background:#12265e;color:white;padding:0.5rem 2rem;border-radius:50px"
+                       OnClick="EditClient">
+                Edit
+            </MudButton>
+        </div>
+
+        <!-- Stipend Details -->
+        <div class="pa-4">
+            <MudGrid Spacing="3" Style="background-color:#f0f3f7;padding:1rem">
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Deal Number
+                    </MudText>
+                    <MudText Typo="Typo.body2">xxx xxx xxx</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Description
+                    </MudText>
+                    <MudText Typo="Typo.body2">100 Characters Max</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Qualification
+                    </MudText>
+                    <MudText Typo="Typo.body2">End User Computing, RDF 5</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Host Location
+                    </MudText>
+                    <MudText Typo="Typo.body2">SpecCon</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Status
+                    </MudText>
+                    <MudText Typo="Typo.body2">Induction</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Start Date
+                    </MudText>
+                    <MudText Typo="Typo.body2">15/01/2024</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        Induction Date
+                    </MudText>
+                    <MudText Typo="Typo.body2">15/02/2024</MudText>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+                    <MudText Typo="Typo.caption" Class="text-uppercase font-weight-medium mb-2">
+                        End Date
+                    </MudText>
+                    <MudText Typo="Typo.body2">15/01/2025</MudText>
+                </MudItem>
+            </MudGrid>
+
+            <MudDivider Class="my-4" />
+
+            <MudText Typo="Typo.subtitle1" Style="font-weight:bold">
+                Deal Status
+            </MudText>
+            <MudGrid Class="d-flex justify-center flex-grow-1 gap-4" Style="padding-bottom:2rem" Elevation="0">
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Class="metric-card">
+                        <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">24</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="metric-label">Total Learners</MudText>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard Class="metric-card">
+                        <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">R4500</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="metric-label">Stipend</MudText>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </div>
+    </MudPaper>
+    <!-- Top Metrics Cards -->
+    <MudGrid Class="d-flex justify-center flex-grow-1 gap-4" Style="padding-bottom:2rem" Elevation="0">
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">7</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">Unpaid Stipends</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">+1 today</MudText>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">1</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">At Risk Learners</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">6 days overdue</MudText>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudCard Class="metric-card">
+                <MudText Typo="Typo.h3" Class="metric-number" Style="font-weight:bold">01/10/2025</MudText>
+                <MudText Typo="Typo.subtitle1" Class="metric-label">Next Stipend Date</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Tertiary" Class="metric-sublabel">6 Days Overdue</MudText>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    
+
+    <!-- Data Table -->
+    <MudCard Class="table-container">
+        <MudTable Items="deals"
+                  Dense="true"
+                  Hover="true"
+                  Breakpoint="Breakpoint.None"
+                  Loading="false"
+                  LoadingProgressColor="Color.Info"
+                  Class="deals-table">
+            <HeaderContent>
+                <MudTh Class="table-header">LEARNER DETAILS</MudTh>
+                <MudTh Class="table-header">TO ASSESS</MudTh>
+                <MudTh Class="table-header">LAST LOGIN</MudTh>
+                <MudTh Class="table-header">STIPEND</MudTh>
+                <MudTh Class="table-header">STATUS</MudTh>
+                <MudTh Class="table-header">CLIENT</MudTh>
+                <MudTh Class="table-header">HOSTED BY</MudTh>
+                <MudTh Class="table-header">FEEDBACK</MudTh>
+                <MudTh Class="table-header">ACTIONS</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="LearnersDetails">@context.LearnersDetails</MudTd>
+                <MudTd DataLabel="Assess">@context.Assess</MudTd>
+                <MudTd DataLabel="LastLOgin">@context.LastLogin</MudTd>
+                <MudTd DataLabel="Deal Stipend">@context.DealStipend</MudTd>
+                <MudTd DataLabel="Status">
+                    <MudChip T="string" Color="@GetProgressStatusColor(context.ProgressStatus)" Size="Size.Small">
+                        @context.ProgressStatus
+                    </MudChip>
+                </MudTd>
+                <MudTd DataLabel="Clients">@context.Clients</MudTd>
+                <MudTd DataLabel="HostedBy">@context.HostedBy</MudTd>
+                <MudTd DataLabel="Feedback">@context.Feedback</MudTd>
+                <MudTd Style="padding:2rem;" DataLabel="Actions">
+                    <MudMenu AnchorOrigin="Origin.BottomLeft"
+                             TransformOrigin="Origin.TopLeft">
+                        <ActivatorContent>
+                            <MudIconButton Size="Size.Small">
+                                <img src="icons/more.png" alt="More actions" style="width: 20px; height: 20px;" />
+                            </MudIconButton>
+                        </ActivatorContent>
+                        <ChildContent>
+                                    <MudMenuItem OnClick="@(() => StipendDeal(context))">
+                                        <div class="shrink" style="display: flex; align-items: center;">
+                                            <img src="icons/view_icon.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1.2rem" />
+                                            Release Stipend
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => ViewDeal(context))">
+                                        <div class="shink" style="display: flex; align-items: center;">
+                                            <img src="icons/view_icon.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1.2rem" />
+                                            View
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => EditDeal(context))">
+                                        <div class="shrink" style="display: flex; align-items: center;">
+                                            <img src="icons/edit_icon.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1rem" />
+                                            Edit
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => DownloadReport(context))">
+                                        <div class="shrink" style="display: flex; align-items: center;">
+                                            <img src="icons/Frame 1261155191.png" alt="More actions" style="width: 20px; height: 20px; margin-right:1rem" />
+                                            Download Report
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => OpenSharePoint(context))">
+                                        <div class="shrink " style="display: flex; align-items: center;">
+                                            <img src="icons/Icons/appoint.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1rem" />
+                                            SharePoint
+                                        </div>
+                                    </MudMenuItem>
+                                    <MudMenuItem OnClick="@(() => SendMessage(context))">
+                                        <div class="shrink" sstyle="display: flex; align-items: center;">
+                                            <img src="icons/Icons/message.png" alt="More actions" style="width: 20px; height: 20px;margin-right:1rem" />
+                                            Message
+                                        </div>
+                                    </MudMenuItem>
+                           
+
+                        </ChildContent>
+                    </MudMenu>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudCard>
+
+    <!-- Snackbar for notifications -->
+    <MudSnackbarProvider />
+</MudContainer>
+
+@code {
+
+
+    private string selectedClient = "ABC Training";
+    private string selectedDeal = "";
+
+    [Inject] ISnackbar SnackbarService { get; set; }
+
+    private List<DealRecord> deals = new List<DealRecord>
+    {
+        new DealRecord
+        {
+            LearnersDetails = "Deal Name",
+            Assess = "xxx xxx xxx",
+            LastLogin = 7,
+            HostedBy = "7/7",
+            DealStipend = 0,
+            Clients = "IN PROGRESS",
+            Feedback = "Deal is on track",
+            ProgressStatus = "COMPETENT",
+
+        },
+        new DealRecord
+        {
+            LearnersDetails = "Deal Name",
+            Assess = "xxx xxx xxx",
+            LastLogin = 7,
+            HostedBy = "7/7",
+            DealStipend = 0,
+            Clients = "IN PROGRESS",
+            Feedback = "Deal is on track",
+            ProgressStatus = "COMPETENT",
+
+        },
+        new DealRecord
+        {
+            LearnersDetails = "Deal Name",
+            Assess = "xxx xxx xxx",
+            LastLogin = 7,
+            HostedBy = "7/7",
+            DealStipend = 0,
+            Clients = "IN PROGRESS",
+            Feedback = "Deal is on track",
+            ProgressStatus = "COMPETENT",
+
+        },
+        new DealRecord
+        {
+            LearnersDetails = "Deal Name",
+            Assess = "xxx xxx xxx",
+            LastLogin = 7,
+            HostedBy = "7/7",
+            DealStipend = 0,
+            Clients = "IN PROGRESS",
+            Feedback = "Deal is on track",
+            ProgressStatus = "AT RISK",
+
+        }
+    };
+
+    private Color GetStatusColor(string status)
+    {
+        return status switch
+        {
+            "COMPETENT" => Color.Success,
+            "AT RISK" => Color.Error,
+            "INCOMPLETE" => Color.Warning,
+            _ => Color.Default
+        };
+    }
+
+    private Color GetProgressStatusColor(string status)
+    {
+        return status switch
+        {
+            "COMPETENT" => Color.Success,
+            "AT RISK" => Color.Error,
+            "INCOMPLETE" => Color.Warning,
+            _ => Color.Default
+        };
+    }
+
+    // Action methods for menu items
+    private void StipendDeal(DealRecord deal)
+    {
+        SnackbarService.Add($"Stipend deal: {deal.LearnersDetails}", Severity.Info);
+        // Add your view logic here
+    }
+
+    private void ViewDeal(DealRecord deal)
+    {
+        SnackbarService.Add($"Viewing deal: {deal.LearnersDetails}", Severity.Info);
+        // Add your view logic here
+    }
+
+    private void EditDeal(DealRecord deal)
+    {
+        SnackbarService.Add($"Editing deal: {deal.LearnersDetails}", Severity.Info);
+        // Add your edit logic here
+    }
+
+    private void DownloadReport(DealRecord deal)
+    {
+        SnackbarService.Add($"Downloading report for: {deal.LearnersDetails}", Severity.Success);
+        // Add your download logic here
+    }
+
+    private void OpenSharePoint(DealRecord deal)
+    {
+        SnackbarService.Add($"Opening SharePoint for: {deal.LearnersDetails}", Severity.Info);
+        // Add your SharePoint logic here
+    }
+
+    private void SendMessage(DealRecord deal)
+    {
+        SnackbarService.Add($"Sending message for: {deal.LearnersDetails}", Severity.Info);
+        // Add your messaging logic here
+    }
+
+    private void GoBack()
+    {
+        // Navigate back to previous page
+        // NavigationManager.NavigateTo("/previous-page");
+    }
+
+    private void EditClient()
+    {
+        // Navigate to edit page or open dialog
+        // NavigationManager.NavigateTo("/client-deals/edit/abc-training");
+    }
+
+    public class DealRecord
+    {
+        public string LearnersDetails { get; set; } = "";
+        public string Assess { get; set; } = "";
+        public int LastLogin { get; set; }
+        public string Clients { get; set; } = "";
+        public string HostedBy { get; set; } = "";
+        public string Status { get; set; } = "";
+        public int DealStipend { get; set; }
+        public string ProgressStatus { get; set; } = "";
+        public string Feedback { get; set; } = "";
+    }
+}

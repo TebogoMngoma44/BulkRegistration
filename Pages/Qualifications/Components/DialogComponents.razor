@@ -1,0 +1,166 @@
+﻿@using MudBlazor
+
+@* Dialog Step Component *@
+<div class="dialog-step">
+    <MudStack Row="true" AlignItems="AlignItems.Start" Spacing="3">
+        <MudPaper Class="step-icon-wrapper">
+            <MudIcon Icon="@Icon" Size="Size.Medium" />
+        </MudPaper>
+        <MudStack Class="step-content">
+            <MudText Typo="Typo.h6" Class="step-title">@Title</MudText>
+            <MudText Typo="Typo.body2" Class="step-description">
+                @Description
+            </MudText>
+        </MudStack>
+        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Medium" />
+    </MudStack>
+</div>
+
+@code {
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string Description { get; set; } = "";
+}
+
+@* Dialog Schedule Component *@
+<MudPaper Class="@GetScheduleClass()">
+    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+        <MudStack>
+            <MudText Typo="Typo.h6" Class="@GetScheduleTitleClass()">
+                @GetSchedulePrefix(): @CompletedDate
+            </MudText>
+            <MudText Typo="Typo.body2" Class="@GetScheduleDurationClass()">
+                @Duration
+            </MudText>
+        </MudStack>
+        <MudIcon Icon="@Icons.Material.Filled.Schedule" Size="Size.Large" Class="@GetScheduleIconClass()" />
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter] public string CompletedDate { get; set; } = "";
+    [Parameter] public string Duration { get; set; } = "";
+    [Parameter] public bool IsInProgress { get; set; } = false;
+    [Parameter] public bool IsPending { get; set; } = false;
+
+    private string GetScheduleClass()
+    {
+        if (IsInProgress)
+            return "dialog-schedule-progress";
+        if (IsPending)
+            return "dialog-schedule-pending";
+        return "dialog-schedule";
+    }
+
+    private string GetScheduleTitleClass()
+    {
+        if (IsInProgress || IsPending)
+            return "schedule-title-warning";
+        return "schedule-title";
+    }
+
+    private string GetScheduleDurationClass()
+    {
+        if (IsInProgress || IsPending)
+            return "schedule-duration-warning";
+        return "schedule-duration";
+    }
+
+    private string GetScheduleIconClass()
+    {
+        if (IsInProgress || IsPending)
+            return "schedule-icon-warning";
+        return "schedule-icon";
+    }
+
+    private string GetSchedulePrefix()
+    {
+        if (IsInProgress)
+            return "Started";
+        if (IsPending)
+            return "Scheduled";
+        return "Completed";
+    }
+}
+
+<style>
+    .dialog-step {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        border-left: 4px solid #10b981;
+    }
+
+    .step-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #fef3c7, #fbbf24);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .step-content {
+        flex: 1;
+    }
+
+    .step-title {
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-bottom: 4px;
+    }
+
+    .step-description {
+        color: #6c757d;
+        line-height: 1.5;
+    }
+
+    .dialog-schedule {
+        background: linear-gradient(135deg, #e0f2fe, #b3e5fc);
+        border-radius: 12px;
+        padding: 24px;
+        margin-top: 32px;
+    }
+
+    .dialog-schedule-progress {
+        background: linear-gradient(135deg, #e0f2fe, #b3e5fc);
+        border-radius: 12px;
+        padding: 24px;
+        margin-top: 32px;
+    }
+
+    .dialog-schedule-pending {
+        background: linear-gradient(135deg, #fef3c7, #f59e0b);
+        border-radius: 12px;
+        padding: 24px;
+        margin-top: 32px;
+    }
+
+    .schedule-title {
+        font-weight: 600;
+        color: #0277bd;
+    }
+
+    .schedule-title-warning {
+        font-weight: 600;
+        color: #92400e;
+    }
+
+    .schedule-duration {
+        color: #0288d1;
+    }
+
+    .schedule-duration-warning {
+        color: #b45309;
+    }
+
+    .schedule-icon {
+        color: #0288d1;
+    }
+
+    .schedule-icon-warning {
+        color: #b45309;
+    }
+</style>

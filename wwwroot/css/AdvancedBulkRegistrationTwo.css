@@ -1,0 +1,648 @@
+﻿* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.bulk-registration-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+}
+
+.back-button {
+    background-color: #12265e;
+    color: white;
+    text-transform: none;
+    border-radius: 24px;
+    padding: 8px 24px;
+    margin-bottom: 32px;
+}
+
+    .back-button:hover {
+        background-color: #16304f;
+    }
+
+.page-title {
+    text-align: center;
+    color: #12265e;
+    font-weight: bold;
+    margin-bottom: 28px;
+    padding-bottom: 4rem;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.step-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 140px;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #e0e0e0;
+    color: #666;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.step-item.active .step-circle {
+    background-color: #12265e;
+    color: white;
+    border: 2px solid #12265e;
+}
+
+.step-item.completed .step-circle {
+    background-color: #12265e;
+    color: white;
+}
+
+    .step-item.completed .step-circle ::deep .mud-icon-root {
+        font-size: 20px;
+    }
+
+.step-label {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.step-item.active .step-label,
+.step-item.completed .step-label {
+    color: #12265e;
+    font-weight: 500;
+}
+
+.step-connector {
+    width: 100px;
+    height: 2px;
+    background-color: #e0e0e0;
+    margin: 0 -20px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+    .step-connector.completed {
+        background-color: #12265e;
+    }
+
+.template-card,
+.guide-card {
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.card-title,
+.guide-title {
+    text-align: center;
+    color: #12265e;
+    font-weight: bold;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.guide-title {
+    text-align: left;
+}
+
+.download-section {
+    padding: 20px;
+}
+
+.download-label {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.file-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .file-container:hover {
+        background-color: #f5f5f5;
+        border-radius: 8px;
+    }
+
+.excel-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+    .excel-icon ::deep .mud-icon-root {
+        color: white !important;
+        font-size: 36px !important;
+    }
+
+.file-name {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+}
+
+.guide-content {
+    padding: 0 20px;
+}
+
+.guide-intro {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 15px;
+    padding: 2rem;
+}
+
+.guide-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .guide-list li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 16px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+        .guide-list li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #12265e;
+            font-weight: bold;
+        }
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px;
+    margin-top: 32px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.next-button {
+    background-color: #12265e;
+}
+
+    .next-button:hover {
+        background-color: #16304f;
+    }
+
+.upload-section {
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.results-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Tablet - iPad (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .bulk-registration-container {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+        padding-bottom: 3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .steps-container {
+        padding: 0 20px;
+    }
+
+    .step-item {
+        min-width: 120px;
+    }
+
+    .step-connector {
+        width: 80px;
+    }
+
+    .guide-card {
+        max-width: 90%;
+    }
+
+    .guide-intro {
+        padding: 1.5rem;
+    }
+
+    .guide-list li {
+        font-size: 13px;
+        margin-bottom: 14px;
+    }
+}
+
+/* Small Tablet and Large Phone (481px - 768px) */
+@media screen and (max-width: 768px) {
+    .bulk-registration-container {
+        padding: 16px;
+        padding-bottom: 80px;
+    }
+
+    .back-button {
+        padding: 6px 20px;
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        padding: 2rem 0px;
+        margin-bottom: 1rem;
+    }
+
+    .steps-container {
+        padding: 0 10px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        margin-bottom: 36px;
+    }
+
+    .step-wrapper {
+        flex-shrink: 0;
+    }
+
+    .step-item {
+        min-width: 100px;
+    }
+
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .step-label {
+        font-size: 12px;
+    }
+
+    .step-connector {
+        width: 60px;
+        margin: 0 -15px;
+    }
+
+    .guide-card {
+        max-width: 100%;
+        border-radius: 6px;
+    }
+
+    .guide-title {
+        font-size: 1.2rem;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+    }
+
+    .guide-content {
+        padding: 0 16px;
+    }
+
+    .guide-intro {
+        font-size: 14px;
+        padding: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .guide-list li {
+        font-size: 13px;
+        padding-left: 20px;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+
+        .guide-list li:before {
+            left: 6px;
+        }
+
+    .card-actions {
+        padding: 16px;
+        margin-top: 24px;
+        justify-content: space-between;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}
+
+/* Mobile - iPhone SE and smaller (320px - 480px) */
+@media screen and (max-width: 480px) {
+    .bulk-registration-container {
+        padding: 12px;
+        padding-bottom: 60px;
+        min-height: auto;
+    }
+
+    .back-button {
+        padding: 6px 16px;
+        font-size: 13px;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 120px;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+        padding: 2rem 0px;
+        margin-bottom: 0.5rem;
+    }
+
+    .steps-container {
+        display: none;
+    }
+
+        .steps-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .steps-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .steps-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+
+    .step-wrapper {
+        padding-right: 10px;
+    }
+
+    .step-item {
+        min-width: 85px;
+    }
+
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .step-item.completed .step-circle ::deep .mud-icon-root {
+        font-size: 16px;
+    }
+
+    .step-label {
+        font-size: 11px;
+        max-width: 80px;
+    }
+
+    .step-connector {
+        width: 40px;
+        margin: 0 -10px;
+        margin-bottom: 25px;
+    }
+
+    .guide-card {
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+        .guide-card ::deep .mud-card-content {
+            padding: 16px !important;
+        }
+
+    .guide-title {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .guide-content {
+        padding: 0 8px;
+    }
+
+    .guide-intro {
+        font-size: 13px;
+        padding: 0.75rem;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+
+    .guide-list {
+        padding: 0 4px;
+    }
+
+        .guide-list li {
+            font-size: 12px;
+            padding-left: 18px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+            .guide-list li:before {
+                left: 4px;
+                font-size: 14px;
+            }
+
+    .card-actions {
+        flex-direction: column-reverse;
+        padding: 12px;
+        margin-top: 20px;
+        gap: 8px;
+    }
+
+        .card-actions ::deep .mud-button {
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+    .next-button {
+        order: 1;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 8px;
+        right: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 4px;
+    }
+
+    .copyright {
+        font-size: 11px;
+    }
+}
+
+/* Very small phones (below 375px) */
+@media screen and (max-width: 374px) {
+    .bulk-registration-container {
+        padding: 8px;
+        padding-bottom: 50px;
+    }
+
+    .back-button {
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+
+    .page-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .step-item {
+        min-width: 75px;
+    }
+
+    .step-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .step-label {
+        font-size: 10px;
+        max-width: 70px;
+    }
+
+    .guide-card ::deep .mud-card-content {
+        padding: 12px !important;
+    }
+
+    .guide-title {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .guide-content {
+        padding: 0 4px;
+    }
+
+    .guide-intro {
+        font-size: 12px;
+        padding: 0.5rem;
+        margin-bottom: 10px;
+    }
+
+    .guide-list li {
+        font-size: 11px;
+        padding-left: 16px;
+        margin-bottom: 8px;
+    }
+
+        .guide-list li:before {
+            left: 2px;
+            font-size: 12px;
+        }
+
+    .card-actions {
+        padding: 10px;
+    }
+
+        .card-actions ::deep .mud-button {
+            font-size: 13px;
+            padding: 8px 16px;
+        }
+
+    .copyright {
+        font-size: 10px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .bulk-registration-container {
+        padding-top: 8px;
+        padding-bottom: 40px;
+    }
+
+    .page-title {
+        font-size: 1.2rem;
+        padding-bottom: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .steps-container {
+        display: none;
+    }
+
+    .guide-card {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+
+    .guide-title {
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+    }
+
+    .guide-intro {
+        padding: 0.5rem;
+        margin-bottom: 8px;
+    }
+
+    .guide-list li {
+        margin-bottom: 8px;
+    }
+
+    .card-actions {
+        margin-top: 16px;
+    }
+
+    .footer {
+        bottom: 5px;
+    }
+}

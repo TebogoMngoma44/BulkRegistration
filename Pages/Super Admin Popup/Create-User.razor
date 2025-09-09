@@ -1,0 +1,236 @@
+﻿@page "/create-user"
+@using MudBlazor
+@layout BlankLayout
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<HeadContent>
+    <link href="css/create-user.css" rel="stylesheet" />
+</HeadContent>
+
+<MudMainContent class="main-container">
+    <MudPaper class="form-wrapper" Elevation="0">
+
+        <!-- HEADER -->
+        <MudPaper class="header" Elevation="0">
+            <MudText Typo="Typo.h4" class="header-title">Create New User</MudText>
+            <MudText Typo="Typo.body2" class="header-subtitle">
+                Add a new user to the system with complete profile and permissions
+            </MudText>
+        </MudPaper>
+
+        <!-- FORM CONTAINER -->
+        <MudPaper class="form-container" Elevation="0">
+
+            <!-- SECTION: Title -->
+            <MudPaper class="form-title" Elevation="0">
+                <MudText Typo="Typo.h6" class="form-title-text">User Registration Form</MudText>
+                <MudText Typo="Typo.body2" class="form-title-sub">Fill in all required information to create a new user account</MudText>
+            </MudPaper>
+
+            <!-- FORM BODY -->
+            <MudContainer class="form-body">
+                <MudGrid>
+
+                    <!-- Personal Info Label -->
+                    <MudItem xs="12" class="section-label">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                            <MudAvatar Color="Color.Primary" Size="Size.Small" class="section-avatar">👤</MudAvatar>
+                            <MudText Typo="Typo.h6" class="section-title">Personal Information</MudText>
+                        </MudStack>
+                    </MudItem>
+
+                    <!-- Avatar + First/Last Name -->
+                    <MudItem xs="12">
+                        <MudGrid>
+                            <MudItem xs="12" md="6">
+                                <MudPaper Elevation="0" class="avatar-box">
+                                    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="3" class="avatar-stack">
+                                        <MudAvatar Color="Color.Primary" Size="Size.Large" class="avatar-preview">
+                                            @if (!string.IsNullOrEmpty(firstName) || !string.IsNullOrEmpty(lastName))
+                                            {
+                                                @($"{firstName.FirstOrDefault()}{lastName.FirstOrDefault()}")
+                                            }
+                                            else
+                                            {
+                                                @("--")
+                                            }
+                                        </MudAvatar>
+                                        <MudText Typo="Typo.body1" class="avatar-name">
+                                            @if (!string.IsNullOrEmpty(firstName) || !string.IsNullOrEmpty(lastName))
+                                            {
+                                                @($"{firstName} {lastName}")
+                                            }
+                                            else
+                                            {
+                                                @("Enter name to preview")
+                                            }
+                                        </MudText>
+                                    </MudStack>
+                                </MudPaper>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6">
+                                <MudStack Spacing="1">
+                                    <!-- First Name -->
+                                    <MudStack Spacing="1">
+                                        <MudText Typo="Typo.body1" class="input-label">First Name <span class="required">*</span></MudText>
+                                        <MudTextField @bind-Value="firstName" Variant="Variant.Outlined" Required="true" FullWidth="true" class="input-field" />
+                                    </MudStack>
+
+                                    <!-- Last Name -->
+                                    <MudStack Spacing="1">
+                                        <MudText Typo="Typo.body1" class="input-label">Last Name <span class="required">*</span></MudText>
+                                        <MudTextField @bind-Value="lastName" Variant="Variant.Outlined" Required="true" FullWidth="true" class="input-field" />
+                                    </MudStack>
+                                </MudStack>
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+
+                    <!-- Phone + ID Row -->
+                    <MudItem xs="12">
+                        <MudGrid>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body1" class="input-label">Phone Number <span class="required">*</span></MudText>
+                                <MudTextField @bind-Value="phoneNumber" Variant="Variant.Outlined" Placeholder="+1 (555) 123-4567" Required="true" FullWidth="true" class="input-field" />
+                            </MudItem>
+
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body1" class="input-label">ID Number <span class="required">*</span></MudText>
+                                <MudTextField @bind-Value="idNumber" Variant="Variant.Outlined" Required="true" FullWidth="true" class="input-field" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+
+                    <!-- Email -->
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body1" class="input-label">Email Address <span class="required">*</span></MudText>
+                        <MudTextField @bind-Value="email" Variant="Variant.Outlined" Placeholder="user@gmail.com" Required="true" FullWidth="true" class="input-field" />
+                        <MudText Typo="Typo.caption" class="input-hint">This will be the user's login email</MudText>
+                    </MudItem>
+
+                    <!-- Manager + Role Row -->
+                    <MudItem xs="12">
+                        <MudGrid>
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body1" class="input-label">Reporting Manager <span class="required">*</span></MudText>
+                                <MudSelect T="string" @bind-Value="reportingManager" Placeholder="Select" Variant="Variant.Outlined" Required="true" FullWidth="true" class="input-field">
+                                    <MudSelectItem T="string" Value="@((string)null)">Select</MudSelectItem>
+                                    <MudSelectItem Value="@("manager1")">Reporting Manager 1</MudSelectItem>
+                                    <MudSelectItem Value="@("manager2")">Reporting Manager 2</MudSelectItem>
+                                    <MudSelectItem Value="@("manager3")">Reporting Manager 3</MudSelectItem>
+                                </MudSelect>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body1" class="input-label">Assign A Role <span class="required">*</span></MudText>
+                                <MudSelect T="string" @bind-Value="assignedRole" Placeholder="Select" Variant="Variant.Outlined" Required="true" FullWidth="true" class="input-field">
+                                    <MudSelectItem T="string" Value="@((string)null)">Select</MudSelectItem>
+                                    <MudSelectItem Value="@("learner")">Learner</MudSelectItem>
+                                    <MudSelectItem Value="@("learnership-admin")">Learnership Admin</MudSelectItem>
+                                    <MudSelectItem Value="@("super-admin")">Super Admin</MudSelectItem>
+                                    <MudSelectItem Value="@("Recruitment")">Recruitment</MudSelectItem>
+                                    <MudSelectItem Value="@("Sales")">Sales</MudSelectItem>
+                                    <MudSelectItem Value="@("Skills Partner")">Skills Partner</MudSelectItem>
+                                    <MudSelectItem Value="@("Client")">Client</MudSelectItem>
+                                    <MudSelectItem Value="@("assessor")">Assessor</MudSelectItem>
+                                    <MudSelectItem Value="@("moderator")">Moderator</MudSelectItem>
+                                    <MudSelectItem Value="@("facilitator")">Facilitator</MudSelectItem>
+                                    <MudSelectItem Value="@("client-liaison")">Client Liaison Officer</MudSelectItem>
+                                </MudSelect>
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+
+                    <!-- Curriculum -->
+                    <MudItem xs="12" sm="6">
+                        <MudText Typo="Typo.body1" class="input-label">Curriculum <span class="required">*</span></MudText>
+                        <MudSelect T="string" @bind-Value="curriculum" Placeholder="Select" Variant="Variant.Outlined" Required="true" FullWidth="true" class="input-field">
+                            <MudSelectItem Value="@((string)null)">Select</MudSelectItem>
+                            <MudSelectItem Value="@("curriculum1")">Curriculum 1</MudSelectItem>
+                            <MudSelectItem Value="@("curriculum2")">Curriculum 2</MudSelectItem>
+                            <MudSelectItem Value="@("curriculum3")">Curriculum 3</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+
+                    <!-- Password -->
+                    <MudItem xs="12">
+                        <MudDivider class="divider" />
+                        <MudText Typo="Typo.body1" class="input-label">Initial Password <span class="required">*</span></MudText>
+
+                        <!-- First Password Field -->
+                        <MudTextField @bind-Value="initialPassword" Variant="Variant.Outlined" ReadOnly="true" FullWidth="true" class="password-field" />
+
+                        <!-- Password Row -->
+                        <MudStack Row Spacing="1" AlignItems="AlignItems.Center" class="password-row">
+                            <MudTextField @bind-Value="initialPassword" Variant="Variant.Outlined" ReadOnly="true" class="password-field" />
+                            <MudButton Variant="Variant.Filled" Size="Size.Small" OnClick="GeneratePassword" class="btn-generate">🔄Generate</MudButton>
+                            <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="CopyPassword" class="btn-copy">📋Copy</MudButton>
+                        </MudStack>
+                    </MudItem>
+
+                    <!-- Action Buttons -->
+                    <MudItem xs="12">
+                        <MudDivider class="divider" />
+                        <MudStack Row Justify="Justify.FlexEnd" Spacing="2" class="action-buttons">
+                            <MudButton Variant="Variant.Outlined" Color="Color.Default" Size="Size.Large" OnClick="@Cancel">Cancel</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="@Submit">Next</MudButton>
+                        </MudStack>
+                    </MudItem>
+
+                </MudGrid>
+            </MudContainer>
+        </MudPaper>
+    </MudPaper>
+</MudMainContent>
+
+
+@code {
+    private string firstName = string.Empty;
+    private string lastName = string.Empty;
+    private string phoneNumber = string.Empty;
+    private string idNumber = string.Empty;
+    private string email = string.Empty;
+    private string reportingManager = string.Empty;
+    private string assignedRole = string.Empty;
+    private string curriculum = string.Empty;
+    private string initialPassword = string.Empty;
+
+    private static readonly Random _rng = new();
+    private bool IsDesktop => true; // You can implement actual breakpoint detection if needed
+
+    protected override void OnInitialized()
+    {
+        GeneratePassword(); // Generate initial password on load
+    }
+
+    private void GeneratePassword()
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        initialPassword = new string(Enumerable.Range(0, 12).Select(_ => chars[_rng.Next(chars.Length)]).ToArray());
+    }
+
+    private async Task CopyPassword()
+    {
+        if (!string.IsNullOrEmpty(initialPassword))
+        {
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", initialPassword);
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            Snackbar.Add("Password copied to clipboard!", Severity.Success);
+        }
+    }
+
+    private void Submit()
+    {
+        // Simulate submit
+        Console.WriteLine($"Submitting user: {firstName} {lastName}");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

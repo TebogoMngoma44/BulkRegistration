@@ -1,0 +1,120 @@
+﻿@* Components/PracticalAssignment/DownloadSection.razor *@
+@using MudBlazor
+@inject ISnackbar Snackbar
+@attribute [Authorize]
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudPaper Class="content-section" Elevation="2">
+    <MudPaper Class="panel-header" Elevation="0">
+        <MudIcon Icon="@Icons.Material.Filled.Download" Style="font-size: 16px;" />
+        <MudText Style="font-size: 15px;">Download Sample Data</MudText>
+    </MudPaper>
+    <MudPaper Class="section-content" Elevation="0">
+        <MudStack Spacing="3">
+            @foreach (var file in downloadFiles)
+            {
+                <MudPaper Elevation="1" Style="background: #e8f0ff; border-radius: 8px; padding: 16px;">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="3">
+                        <MudPaper Class="file-icon" Elevation="0">
+                            <MudIcon Icon="@file.Icon" Style="@GetIconStyle(file.IconColor)" />
+                        </MudPaper>
+                        <MudStack Style="flex-grow: 1;" Spacing="1">
+                            <MudText Typo="Typo.subtitle1" Style="font-weight: 600; color: #1f2937; font-size: 16px;">@file.FileName</MudText>
+                            <MudText Style="color: #1e3a5f; font-size: 14px;">@file.Description</MudText>
+                        </MudStack>
+                        <MudButton Variant="Variant.Filled"
+                                   Size="Size.Medium"
+                                   Style="background: #1e3a5f; color: white; font-size: 13px; padding: 10px 20px; border-radius: 6px; min-width: 100px;"
+                                   OnClick="() => DownloadFile(file.FileName)">
+                            Download
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            }
+        </MudStack>
+    </MudPaper>
+</MudPaper>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    private readonly DownloadFileInfo[] downloadFiles = {
+        new DownloadFileInfo(Icons.Material.Filled.AttachMoney, "#fbbf24", "Sales Performance Data.xlsx", "Q1-Q4 sales data with products, regions, and performance metrics"),
+        new DownloadFileInfo(Icons.Material.Filled.AccountBalance, "#10b981", "Financial Analysis Data.xlsx", "Budget vs actual, expense categories, and financial ratios"),
+        new DownloadFileInfo(Icons.Material.Filled.People, "#8b5cf6", "Customer Demographics.xlsx", "Customer profiles, segmentation, and purchasing behavior")
+    };
+
+    private void DownloadFile(string fileName)
+    {
+        // Simulate file download
+        Snackbar.Add($"Downloading {fileName}...", Severity.Info);
+
+        // In a real application, you would trigger the actual file download here
+        // For example: NavigationManager.NavigateTo($"/api/downloads/{fileName}", true);
+    }
+
+    private string GetIconStyle(string color)
+    {
+        return $"font-size: 20px; color: {color};";
+    }
+
+    public class DownloadFileInfo
+    {
+        public string Icon { get; }
+        public string IconColor { get; }
+        public string FileName { get; }
+        public string Description { get; }
+
+        public DownloadFileInfo(string icon, string iconColor, string fileName, string description)
+        {
+            Icon = icon;
+            IconColor = iconColor;
+            FileName = fileName;
+            Description = description;
+        }
+    }
+}
+<style>
+    .content-section {
+        background: white;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .panel-header {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        color: white;
+        padding: 6px 10px;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .section-content {
+        padding: 16px;
+    }
+
+    .file-icon {
+        background: #1e3a5f;
+        color: white;
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+</style>

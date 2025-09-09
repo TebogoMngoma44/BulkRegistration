@@ -1,0 +1,676 @@
+﻿@page "/feedback-history"
+@layout BlankLayout
+@using System.ComponentModel.DataAnnotations
+
+@* @attribute [Authorize]
+<CascadingAuthenticationState>
+    <AuthorizeView Context="FeedbackHistory">
+        <Authorized> *@
+
+<!-- Navigation Bar -->
+<MudAppBar Elevation="1" Style="background-color: white; color: #333; height: 70px; border-bottom: 1px solid #e0e0e0;">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding: 0 16px;">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%; height: 70px;">
+            <!-- Logo -->
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <img src="images/SpecCon-Logo.png"
+                     alt="SpecCon Holdings Logo"
+                     style="height: 50px; width: auto;" />
+            </MudStack>
+
+            <!-- Navigation Links - Hidden on mobile -->
+            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Dashboard
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" 
+                               Style="color: white; text-transform: none; padding: 8px 20px; border-radius: 25px; background: #1e3a5f; font-weight: 500; box-shadow: none;">
+                        My Qualifications
+                    </MudButton>
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Achievements
+                    </MudButton>
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        My Messages
+                    </MudButton>
+                    <MudButton Variant="Variant.Text" 
+                               Style="color: #666; text-transform: none; padding: 8px 20px; border-radius: 25px; font-weight: 500;">
+                        Quick Tips
+                    </MudButton>
+                </MudStack>
+            </MudHidden>
+
+            <!-- User Profile and Notifications -->
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                <!-- Mobile Menu Button -->
+                <MudHidden Breakpoint="Breakpoint.LgAndUp">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" 
+                                   Style="color: #1e3a5f;" />
+                </MudHidden>
+                
+                <MudBadge Content="1" Color="Color.Warning" Overlap="true">
+                    <MudIconButton Icon="@Icons.Material.Filled.Notifications" 
+                                   Style="color: #ff9800; background: transparent; width: 40px; height: 40px;" />
+                </MudBadge>
+                <MudAvatar Style="background: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: 16px;">
+                    JS
+                </MudAvatar>
+            </MudStack>
+        </MudStack>
+    </MudContainer>
+</MudAppBar>
+
+<!-- Breadcrumb/Back Button -->
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Style="padding-top: 90px; padding-left: 16px; padding-right: 16px; padding-bottom: 0;">
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <div style="padding-left: 84px;">
+            <MudButton Variant="Variant.Filled" 
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       Style="background: #1e3a5f; color: white; text-transform: none; border-radius: 25px; padding: 8px 20px; margin-bottom: 20px; font-weight: 500;"
+                       Href="/module-feedback/1">
+                Back to Feedback
+            </MudButton>
+        </div>
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+        <MudButton Variant="Variant.Filled" 
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Style="background: #1e3a5f; color: white; text-transform: none; border-radius: 25px; padding: 8px 20px; margin-bottom: 20px; font-weight: 500;"
+                   Href="/module-feedback/1">
+            Back to Feedback
+        </MudButton>
+    </MudHidden>
+</MudContainer>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-4" Style="max-width: 1200px; background-color: #f5f5f5; min-height: 100vh; padding-top: 20px; padding-bottom: 20px;">
+
+    <!-- Header Section with Module Information -->
+    <MudPaper Elevation="1" Style="background: #12265E; border-radius: 12px; margin-bottom: 30px; color: white; padding: 40px; text-align: center; min-height: 187px; display: flex; flex-direction: column; justify-content: center;">
+        <MudText Typo="Typo.h3" Style="font-weight: 600; margin-bottom: 10px; color: white; font-size: clamp(20px, 4vw, 28px);">
+            Feedback History
+        </MudText>
+        <MudText Typo="Typo.h6" Style="color: rgba(255,255,255,0.9); margin-bottom: 25px; font-size: clamp(14px, 2.5vw, 18px);">
+            Communication in the Workplace - Module 1
+        </MudText>
+        
+        <!-- Module Information Row - Responsive -->
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudStack Row="true" Justify="Justify.Center" AlignItems="AlignItems.Center" Spacing="6" Style="flex-wrap: wrap;">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Person" Style="color: #ffd700;" />
+                    <MudText Typo="Typo.body1" Style="color: rgba(255,255,255,0.9);">
+                        Assessor: Sarah Johnson
+                    </MudText>
+                </MudStack>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Code" Style="color: #ffd700;" />
+                    <MudText Typo="Typo.body1" Style="color: rgba(255,255,255,0.9);">
+                        Module Code: BAS-M1-2025
+                    </MudText>
+                </MudStack>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudIcon Icon="@Icons.Material.Filled.CalendarToday" Style="color: #ffd700;" />
+                    <MudText Typo="Typo.body1" Style="color: rgba(255,255,255,0.9);">
+                        Started: March 28, 2025
+                    </MudText>
+                </MudStack>
+            </MudStack>
+        </MudHidden>
+        <!-- Mobile Version - Stacked -->
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudStack AlignItems="AlignItems.Center" Spacing="3">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Person" Style="color: #ffd700;" />
+                    <MudText Typo="Typo.body2" Style="color: rgba(255,255,255,0.9); font-size: 14px;">
+                        Assessor: Sarah Johnson
+                    </MudText>
+                </MudStack>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Code" Style="color: #ffd700;" />
+                    <MudText Typo="Typo.body2" Style="color: rgba(255,255,255,0.9); font-size: 14px;">
+                        Module Code: BAS-M1-2025
+                    </MudText>
+                </MudStack>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                    <MudIcon Icon="@Icons.Material.Filled.CalendarToday" Style="color: #ffd700;" />
+                    <MudText Typo="Typo.body2" Style="color: rgba(255,255,255,0.9); font-size: 14px;">
+                        Started: March 28, 2025
+                    </MudText>
+                </MudStack>
+            </MudStack>
+        </MudHidden>
+    </MudPaper>
+
+    <!-- Filter Feedback Section -->
+    <MudPaper Elevation="1" Style="background: white; border-radius: 8px; margin-bottom: 25px; padding: 25px;">
+        <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin-bottom: 20px;">
+            Filter Feedback (@GetFilteredCount() items)
+        </MudText>
+        
+        <!-- Filter Tabs - Responsive -->
+        <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Style="flex-wrap: wrap; gap: 8px;">
+            <MudButton Variant="@(selectedFilter == "All" ? Variant.Filled : Variant.Outlined)" 
+                       Size="Size.Small"
+                       Style="@GetFilterButtonStyle("All")"
+                       OnClick="@(() => SetFilter("All"))">
+                All Feedback
+            </MudButton>
+            <MudButton Variant="@(selectedFilter == "Assessment" ? Variant.Filled : Variant.Outlined)" 
+                       Size="Size.Small"
+                       Style="@GetFilterButtonStyle("Assessment")"
+                       OnClick="@(() => SetFilter("Assessment"))">
+                Assessments
+            </MudButton>
+            <MudButton Variant="@(selectedFilter == "Progress" ? Variant.Filled : Variant.Outlined)" 
+                       Size="Size.Small"
+                       Style="@GetFilterButtonStyle("Progress")"
+                       OnClick="@(() => SetFilter("Progress"))">
+                Progress Updates
+            </MudButton>
+            <MudButton Variant="@(selectedFilter == "General" ? Variant.Filled : Variant.Outlined)" 
+                       Size="Size.Small"
+                       Style="@GetFilterButtonStyle("General")"
+                       OnClick="@(() => SetFilter("General"))">
+                General Feedback
+            </MudButton>
+        </MudStack>
+    </MudPaper>
+
+    <!-- Complete Feedback Timeline -->
+    <MudPaper Elevation="1" Style="background: white; border-radius: 8px; margin-bottom: 20px;">
+        <MudCardContent Style="padding: 25px;">
+            <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin-bottom: 5px;">
+                Complete Feedback Timeline
+                @if (selectedFilter != "All")
+                {
+                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Text" 
+                             Style="margin-left: 10px; font-size: 12px;">
+                        @selectedFilter Filtered
+                    </MudChip>
+                }
+            </MudText>
+            <MudText Typo="Typo.body2" Style="color: #666; margin-bottom: 25px;">
+                @GetTimelineDescription()
+            </MudText>
+            
+            @if (GetFilteredFeedback().Any())
+            {
+                var filteredItems = GetFilteredFeedback().ToList();
+                for (int i = 0; i < filteredItems.Count; i++)
+                {
+                    var historyItem = filteredItems[i];
+                    var isLast = i == filteredItems.Count - 1;
+                    
+                    <!-- Timeline Item - Responsive -->
+                    <MudStack Row="true" Spacing="3" Style="@(isLast ? "" : "margin-bottom: 30px;")">
+                        <!-- Timeline Avatar and Line -->
+                        <MudStack AlignItems="AlignItems.Center" Spacing="0" Style="min-width: 50px;">
+                            <MudAvatar Style="@GetAvatarStyle(historyItem.FeedbackType)">
+                                @GetInitials(historyItem.AssessorName)
+                            </MudAvatar>
+                            @if (!isLast)
+                            {
+                                <MudPaper Elevation="0" Style="width: 2px; height: 120px; background: #e0e0e0; margin-top: 5px;"></MudPaper>
+                            }
+                        </MudStack>
+                        
+                        <!-- Timeline Content -->
+                        <MudStack Style="flex: 1; min-width: 0;">
+                            <!-- Header with Name, Role and Date - Responsive -->
+                            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Start" Style="margin-bottom: 8px;">
+                                    <MudStack Spacing="0">
+                                        <MudText Typo="Typo.subtitle1" Style="font-weight: 600; color: #333; margin: 0;">
+                                            @historyItem.AssessorName
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #666; margin: 0; font-size: 14px;">
+                                            @historyItem.AssessorTitle
+                                        </MudText>
+                                    </MudStack>
+                                    <MudStack AlignItems="AlignItems.End" Spacing="0">
+                                        <MudText Typo="Typo.body2" Style="color: #666; font-size: 14px;">
+                                            @historyItem.Date.ToString("MMM dd, yyyy")
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #999; font-size: 12px;">
+                                            @historyItem.Date.ToString("h:mm tt")
+                                        </MudText>
+                                    </MudStack>
+                                </MudStack>
+                            </MudHidden>
+                            <!-- Mobile Version - Stacked -->
+                            <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                                <MudStack Spacing="1" Style="margin-bottom: 8px;">
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                        <MudText Typo="Typo.subtitle1" Style="font-weight: 600; color: #333; margin: 0; font-size: 16px;">
+                                            @historyItem.AssessorName
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #666; font-size: 12px;">
+                                            @historyItem.Date.ToString("MMM dd, yyyy")
+                                        </MudText>
+                                    </MudStack>
+                                    <MudText Typo="Typo.body2" Style="color: #666; margin: 0; font-size: 13px;">
+                                        @historyItem.AssessorTitle
+                                    </MudText>
+                                </MudStack>
+                            </MudHidden>
+                            
+                            <!-- Content Card (Always Expanded) -->
+                            <MudPaper Elevation="0" Style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin-bottom: 10px;">
+                                <!-- Feedback Title -->
+                                <MudText Typo="Typo.h6" Style="font-weight: 600; color: #333; margin-bottom: 10px; font-size: clamp(14px, 2.5vw, 16px);">
+                                    @historyItem.Title
+                                </MudText>
+                                
+                                <!-- Feedback Content -->
+                                <MudText Typo="Typo.body1" Style="color: #555; line-height: 1.6; margin-bottom: 15px; font-size: 14px;">
+                                    @historyItem.Content
+                                </MudText>
+                                
+                                <!-- Dynamic Content Based on Feedback Type -->
+                                @if (historyItem.ShowDetails && historyItem.FeedbackType == "Final Assessment")
+                                {
+                                    <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 10px;">
+                                        Strengths Identified:
+                                    </MudText>
+                                    <MudStack Style="margin-bottom: 20px; padding-left: 15px;">
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Excellent grasp of workplace safety protocols and procedures
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Strong demonstration of time management strategies
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Outstanding conflict resolution skills in practical scenarios
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Professional approach to giving and receiving feedback
+                                        </MudText>
+                                    </MudStack>
+                                    
+                                    <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 10px;">
+                                        Areas of Excellence:
+                                    </MudText>
+                                    <MudStack Style="margin-bottom: 20px; padding-left: 15px;">
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Role-play scenarios were handled with maturity and professionalism
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Written assessments showed clear understanding of concepts
+                                        </MudText>
+                                        <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                            • Workplace evidence portfolio exceeded expectations
+                                        </MudText>
+                                    </MudStack>
+                                }
+                                
+                                @if (historyItem.ShowProgressDetails && historyItem.ProgressAreas != null)
+                                {
+                                    <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 8px;">
+                                        Areas showing strong development:
+                                    </MudText>
+                                    <MudStack Style="margin-bottom: 15px; padding-left: 15px;">
+                                        @foreach (var area in historyItem.ProgressAreas)
+                                        {
+                                            <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                                • @area
+                                            </MudText>
+                                        }
+                                    </MudStack>
+                                }
+                                
+                                @if (historyItem.ShowAssessmentDetails)
+                                {
+                                    @if (historyItem.StrengthsObserved != null)
+                                    {
+                                        <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 8px;">
+                                            Strengths observed:
+                                        </MudText>
+                                        <MudStack Style="margin-bottom: 15px; padding-left: 15px;">
+                                            @foreach (var strength in historyItem.StrengthsObserved)
+                                            {
+                                                <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                                    • @strength
+                                                </MudText>
+                                            }
+                                        </MudStack>
+                                    }
+                                    
+                                    @if (historyItem.AreasForDevelopment != null)
+                                    {
+                                        <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 8px;">
+                                            Areas for development:
+                                        </MudText>
+                                        <MudStack Style="margin-bottom: 15px; padding-left: 15px;">
+                                            @foreach (var area in historyItem.AreasForDevelopment)
+                                            {
+                                                <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                                    • @area
+                                                </MudText>
+                                            }
+                                        </MudStack>
+                                    }
+                                }
+                                
+                                @if (historyItem.ShowObservations && historyItem.Observations != null)
+                                {
+                                    <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 8px;">
+                                        Observations:
+                                    </MudText>
+                                    <MudStack Style="margin-bottom: 15px; padding-left: 15px;">
+                                        @foreach (var observation in historyItem.Observations)
+                                        {
+                                            <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                                • @observation
+                                            </MudText>
+                                        }
+                                    </MudStack>
+                                }
+                                
+                                @if (historyItem.ShowWelcomeDetails)
+                                {
+                                    <MudText Typo="Typo.subtitle2" Style="font-weight: 600; color: #1e3a5f; margin-bottom: 8px;">
+                                        What to expect:
+                                    </MudText>
+                                    <MudStack Style="margin-bottom: 15px; padding-left: 15px;">
+                                        @foreach (var expectation in historyItem.WhatToExpect)
+                                        {
+                                            <MudText Typo="Typo.body2" Style="color: #555; font-size: 14px; margin-bottom: 4px;">
+                                                • @expectation
+                                            </MudText>
+                                        }
+                                    </MudStack>
+                                    
+                                    @if (!string.IsNullOrEmpty(historyItem.WelcomeNote))
+                                    {
+                                        <MudText Typo="Typo.body2" Style="color: #555; line-height: 1.6; margin-bottom: 15px; font-size: 14px;">
+                                            @historyItem.WelcomeNote
+                                        </MudText>
+                                    }
+                                }
+                                
+                                <!-- Progress Badge -->
+                                @if (!string.IsNullOrEmpty(historyItem.ProgressBadge))
+                                {
+                                    <MudChip T="string" Size="Size.Medium" Color="Color.Primary" Variant="Variant.Filled" 
+                                             Style="@($"background: {historyItem.BadgeColor}; color: white; margin-bottom: 10px; padding: 8px 16px; font-weight: 600; font-size: 12px;")">
+                                        @historyItem.ProgressBadge
+                                    </MudChip>
+                                }
+                                
+                                <!-- Additional Info -->
+                                @if (!string.IsNullOrEmpty(historyItem.AdditionalInfo))
+                                {
+                                    <MudAlert Severity="Severity.Success" Variant="Variant.Text" 
+                                              Style="background: #e8f5e8; border: 1px solid #4caf50; border-radius: 8px; margin-top: 15px;">
+                                        <MudText Typo="Typo.body2" Style="color: #2e7d32; font-weight: 500; font-size: 14px; margin: 0;">
+                                            @historyItem.AdditionalInfo
+                                        </MudText>
+                                    </MudAlert>
+                                }
+                            </MudPaper>
+                        </MudStack>
+                    </MudStack>
+                }
+            }
+            else
+            {
+                <MudStack AlignItems="AlignItems.Center" Spacing="3" Style="padding: 40px 20px;">
+                    <MudIcon Icon="@Icons.Material.Filled.FilterList" Size="Size.Large" Style="color: #bdbdbd; font-size: 64px;" />
+                    <MudText Typo="Typo.h6" Style="color: #9e9e9e; text-align: center; font-weight: 500;">
+                        No @selectedFilter Feedback Found
+                    </MudText>
+                    <MudText Typo="Typo.body2" Style="color: #bdbdbd; text-align: center;">
+                        Try selecting a different filter to view other feedback types.
+                    </MudText>
+                    <MudButton Variant="Variant.Outlined" 
+                               OnClick="@(() => SetFilter("All"))"
+                               Style="color: #1e3a5f; border-color: #1e3a5f; text-transform: none; border-radius: 20px;">
+                        Show All Feedback
+                    </MudButton>
+                </MudStack>
+            }
+        </MudCardContent>
+    </MudPaper>
+
+</MudContainer>
+
+<!-- Snackbar for notifications -->
+<MudSnackbarProvider />
+
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    private List<FeedbackHistoryItem> feedbackHistory = new();
+    private string selectedFilter = "All";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFeedbackHistory();
+    }
+
+    private async Task LoadFeedbackHistory()
+    {
+        // Simulate loading history - replace with actual service call
+        await Task.Delay(100);
+        
+        feedbackHistory = new List<FeedbackHistoryItem>
+        {
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 4, 19, 11, 15, 0),
+                Title = "Final Assessment - Outstanding Performance",
+                Content = "Your submission demonstrates exceptional understanding of workplace communication principles and practical application of professional interaction skills.",
+                AdditionalInfo = "Congratulations on achieving distinction level performance. Your work sets an excellent standard for future modules.",
+                ModuleNumber = 1,
+                ShowDetails = true,
+                FeedbackType = "Final Assessment",
+                ProgressBadge = "Final Grade: 92% (Distinction)",
+                BadgeColor = "#1e3a5f",
+                IsExpanded = false
+            },
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 4, 19, 11, 15, 0),
+                Title = "Module 1 Progress Update",
+                Content = "Great progress on your initial submissions. Your understanding of workplace communication principles is developing well. Please focus on completing the remaining units for final assessment.",
+                AdditionalInfo = "Keep up the excellent work! You're on track for completion ahead of schedule.",
+                ModuleNumber = 1,
+                ShowDetails = true,
+                FeedbackType = "Progress Update",
+                ProgressBadge = "Current Progress: 80% Complete",
+                BadgeColor = "#1e3a5f",
+                ShowProgressDetails = true,
+                ProgressAreas = new List<string>
+                {
+                    "Time management practical applications",
+                    "Conflict resolution case studies", 
+                    "Professional communication scenarios"
+                }
+            },
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 4, 5, 4, 49, 0),
+                Title = "Units 1.1 & 1.2 Assessment Feedback",
+                Content = "Excellent work on the workplace safety and time management units. Your practical examples demonstrate real-world application of the concepts.",
+                AdditionalInfo = "You're making excellent progress. Continue with this level of engagement for the remaining units.",
+                ModuleNumber = 1,
+                ShowDetails = true,
+                FeedbackType = "Unit Assessment",
+                ProgressBadge = "Unit 1.1: 88% | Unit 1.2: 90%",
+                BadgeColor = "#1e3a5f",
+                ShowAssessmentDetails = true,
+                StrengthsObserved = new List<string>
+                {
+                    "Clear understanding of workplace safety protocols",
+                    "Effective time management strategies demonstrated",
+                    "Good use of workplace examples and evidence"
+                },
+                AreasForDevelopment = new List<string>
+                {
+                    "Consider expanding on conflict resolution techniques for the next units",
+                    "Include more detailed reflection on learning outcomes"
+                }
+            },
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 3, 31, 9, 30, 0),
+                Title = "Week 1 Progress Check",
+                Content = "Good start on Module 1! I can see you've engaged well with the introductory materials and have begun working on the first units.",
+                AdditionalInfo = "Keep up the good work and don't hesitate to reach out if you need any guidance.",
+                ModuleNumber = 1,
+                ShowDetails = true,
+                FeedbackType = "Progress Check",
+                ProgressBadge = "Week 1 Progress: On Track",
+                BadgeColor = "#1e3a5f",
+                ShowObservations = true,
+                Observations = new List<string>
+                {
+                    "Active participation in learning activities",
+                    "Good time management in completing initial tasks",
+                    "Thoughtful approach to workplace scenarios"
+                }
+            },
+            new FeedbackHistoryItem
+            {
+                AssessorName = "Sarah Johnson",
+                AssessorTitle = "Senior Assessor",
+                Date = new DateTime(2025, 3, 28, 11, 0, 0),
+                Title = "Welcome to Module 1: Communication in the Workplace",
+                Content = "Hello! I'm excited to work with you on developing your workplace communication skills throughout this module.",
+                AdditionalInfo = "Looking forward to seeing your progress and achievements in this module.",
+                ModuleNumber = 1,
+                ShowDetails = true,
+                FeedbackType = "Welcome Message",
+                ProgressBadge = "Expected Completion: April 2025",
+                BadgeColor = "#1e3a5f",
+                ShowWelcomeDetails = true,
+                WhatToExpect = new List<string>
+                {
+                    "Regular feedback on your progress and submissions",
+                    "Support and guidance throughout your learning journey",
+                    "Constructive assessment of your work and achievements"
+                },
+                WelcomeNote = "Please review the module materials and don't hesitate to reach out if you have any questions. I'm here to support your success!"
+            }
+        };
+    }
+
+    // Filter Methods
+    private void SetFilter(string filter)
+    {
+        selectedFilter = filter;
+        StateHasChanged();
+    }
+
+    private IEnumerable<FeedbackHistoryItem> GetFilteredFeedback()
+    {
+        return selectedFilter switch
+        {
+            "Assessment" => feedbackHistory.Where(f => f.FeedbackType.Contains("Assessment")),
+            "Progress" => feedbackHistory.Where(f => f.FeedbackType.Contains("Progress") || f.FeedbackType.Contains("Check")),
+            "General" => feedbackHistory.Where(f => f.FeedbackType.Contains("Welcome") || f.FeedbackType.Contains("Message")),
+            _ => feedbackHistory
+        };
+    }
+
+    private int GetFilteredCount() => GetFilteredFeedback().Count();
+
+    private string GetTimelineDescription()
+    {
+        return selectedFilter == "All" 
+            ? "All feedback and communication for this module" 
+            : $"Filtered view showing {selectedFilter.ToLower()} feedback only";
+    }
+
+    // Styling Methods
+    private string GetFilterButtonStyle(string filter)
+    {
+        var isSelected = selectedFilter == filter;
+        return isSelected 
+            ? "background-color: #1e3a5f; color: white; text-transform: none; border-radius: 20px; padding: 8px 16px; font-weight: 500; min-width: 100px; font-size: 12px;"
+            : "background-color: #f8f9fa; color: #666; text-transform: none; border-radius: 20px; padding: 8px 16px; font-weight: 500; min-width: 100px; border: 1px solid #e0e0e0; font-size: 12px;";
+    }
+
+    private string GetAvatarStyle(string feedbackType)
+    {
+        return "background-color: #1e3a5f; color: white; font-weight: 600; width: 40px; height: 40px; font-size: 14px; margin-bottom: 8px;";
+    }
+
+    private Color GetFeedbackTypeColor(string feedbackType)
+    {
+        return feedbackType switch
+        {
+            "Final Assessment" => Color.Primary,
+            "Unit Assessment" => Color.Info,
+            "Progress Update" => Color.Success,
+            "Progress Check" => Color.Warning,
+            "Welcome Message" => Color.Secondary,
+            _ => Color.Default
+        };
+    }
+
+    private string GetInitials(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return "??";
+        
+        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length >= 2)
+            return $"{parts[0][0]}{parts[1][0]}".ToUpper();
+        
+        return parts[0].Length >= 2 ? parts[0].Substring(0, 2).ToUpper() : parts[0].ToUpper();
+    }
+
+    // Models
+    public class FeedbackHistoryItem
+    {
+        public string AssessorName { get; set; } = "";
+        public string AssessorTitle { get; set; } = "";
+        public DateTime Date { get; set; }
+        public string Title { get; set; } = "";
+        public string Content { get; set; } = "";
+        public string AdditionalInfo { get; set; } = "";
+        public int ModuleNumber { get; set; }
+        public bool ShowDetails { get; set; } = false;
+        public string FeedbackType { get; set; } = "";
+        public string ProgressBadge { get; set; } = "";
+        public string BadgeColor { get; set; } = "#1e3a5f";
+        public bool IsExpanded { get; set; } = false;
+        
+        // Progress Update specific
+        public bool ShowProgressDetails { get; set; } = false;
+        public List<string> ProgressAreas { get; set; } = new();
+        
+        // Assessment specific
+        public bool ShowAssessmentDetails { get; set; } = false;
+        public List<string> StrengthsObserved { get; set; } = new();
+        public List<string> AreasForDevelopment { get; set; } = new();
+        
+        // Progress Check specific
+        public bool ShowObservations { get; set; } = false;
+        public List<string> Observations { get; set; } = new();
+        
+        // Welcome message specific
+        public bool ShowWelcomeDetails { get; set; } = false;
+        public List<string> WhatToExpect { get; set; } = new();
+        public string WelcomeNote { get; set; } = "";
+    }
+}

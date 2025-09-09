@@ -1,0 +1,748 @@
+﻿@page "/Achievements/myachievements"
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pa-0">
+    <!-- Main Content -->
+    <MudContainer MaxWidth="MaxWidth.Large" Class="main-content">
+        <MudStack AlignItems="AlignItems.Center" Spacing="4">
+            <!--  Title and  Subtitle   -->
+            <MudContainer Class="peccon-title-container">
+                <!-- Page Title -->
+                <MudText Class="speccon-page-title-large">
+                    My Achievements
+                </MudText>
+                <!-- Subtitle -->
+                <MudText Class="speccon-subtitle-small">
+                    Celebrate your learning milestones and track your progress towards educational excellence
+                </MudText>
+            </MudContainer>
+
+            <!-- Achievement Summary Card -->
+            <MudPaper Class="pa-6" Style="background: linear-gradient(135deg, #1e3a5f, #2c4a6b); border-radius: 20px; padding: 40px; margin-bottom: 40px;
+                                              box-shadow: 0 8px 32px rgba(30, 58, 95, 0.3); width: 105%;animation: fadeIn 0.6s ease-in;">
+            
+                <MudStack Class="speccon-summary">
+                    <!-- Title -->
+                    <MudText Class="speccon-summary-title">
+                        Your Achievement Summary
+                    </MudText>
+
+
+                    <!-- Statistics Grid -->
+                    <MudGrid Justify="Justify.SpaceBetween" AlignItems="Align.Center" Spacing="6">
+                        <!-- Badges Earned -->
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h2" class="speccon-stat-number">
+                                    24
+                                </MudText>
+                                <MudText Typo="Typo.body1" class="speccon-stat-label">
+                                    BADGES EARNED
+                                </MudText>
+                            </MudStack>
+                        </MudItem>
+
+                        <!-- Modules Completed -->
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h2" Class="speccon-stat-number">
+                                    18
+                                </MudText>
+                                <MudText Typo="Typo.body1" Class="speccon-stat-label">
+                                    MODULES COMPLETED
+                                </MudText>
+                            </MudStack>
+                        </MudItem>
+
+                        <!-- Average Grade -->
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h2" Class="speccon-stat-number">
+                                    92%
+                                </MudText>
+                                <MudText Typo="Typo.body1" Class="speccon-stat-label">
+                                    AVERAGE GRADE
+                                </MudText>
+                            </MudStack>
+                        </MudItem>
+
+                    </MudGrid>
+                </MudStack>
+            </MudPaper>
+
+            <!-- Badge Collection Section -->
+            <MudPaper Class="pa-6" Style="background: white; border-radius: 16px; padding: 40px; margin-bottom: 40px;
+                                              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid #e9ecef; width: 105%">
+                <MudStack Spacing="4">
+                    <!-- Header with Filter Tabs -->
+                    <MudGrid Class="mb-3" AlignItems="Align.Center" Justify="Justify.SpaceBetween">
+                        <MudItem xs="12" sm="6">
+                            <MudText Style="color: #1e3a5f; font-size: 26px; font-weight: 600;">
+                                Badge Collection
+                            </MudText>
+                        </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudStack Row Spacing="1" Justify="Justify.FlexEnd">
+                                <MudButton Variant="@(selectedFilter == "All" ? Variant.Filled : Variant.Text)"
+                                           Size="Size.Medium"
+                                           Style="@(selectedFilter == "All" ? "background: #1e3a5f; color: white; border-color: #1e3a5f; border-radius: 20px;" : "color: #6c757d; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 25px; cursor: pointer; font-weight: 500; transition: all 0.3s ease;" )"
+                                           Class="filter-btn"
+                                           OnClick="@(() => SetFilter("All"))">
+                                    All Badges
+                                </MudButton>
+
+                                <MudButton Variant="@(selectedFilter == "Earned" ? Variant.Filled : Variant.Text)"
+                                           Size="Size.Medium"
+                                           Style="@(selectedFilter == "Earned" ? "background: #1e3a5f; color: white; border-color: #1e3a5f; border-radius: 20px;" : "color: #6c757d; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 25px; cursor: pointer; font-weight: 500; transition: all 0.3s ease;" )"
+                                           Class="filter-btn"
+                                           OnClick="@(() => SetFilter("Earned"))">
+                                    Earned
+                                </MudButton>
+
+                                <MudButton Variant="@(selectedFilter == "Locked" ? Variant.Filled : Variant.Text)"
+                                           Size="Size.Medium"
+                                           Style="@(selectedFilter == "Locked" ? "background: #1e3a5f; color: white; border-color: #1e3a5f; border-radius: 20px;" : "color: #6c757d; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 25px; cursor: pointer; font-weight: 500; transition: all 0.3s ease;" )"
+                                           Class="filter-btn"
+                                           OnClick="@(() => SetFilter("Locked"))">
+                                    Locked
+                                </MudButton>
+
+                                <MudButton Variant="@(selectedFilter == "Recent" ? Variant.Filled : Variant.Text)"
+                                           Size="Size.Medium"
+                                           Style="@(selectedFilter == "Recent" ? "background: #1e3a5f; color: white; border-color: #1e3a5f; border-radius: 20px;" : "color: #6c757d; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 25px; cursor: pointer; font-weight: 500; transition: all 0.3s ease;" )"
+                                           Class="filter-btn"
+                                           OnClick="@(() => SetFilter("Recent"))">
+                                    Recent
+                                </MudButton>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+
+                    <!-- Enhanced Badge Grid -->
+                    <MudGrid Spacing="3">
+                        @foreach (var badge in GetFilteredBadges())
+                        {
+                        <MudItem xs="12" sm="6" md="4" lg="3" xl="2" @key="badge.Id">
+                            <MudPaper Class="@GetBadgeCardClass(badge)"
+                                      Style="@GetBadgeCardStyle(badge)"
+                                      @onclick="@(() => ViewBadgeDetails(badge))">
+
+                                <!-- Badge Icon -->
+                                <MudAvatar Size="Size.Large"
+                                           Style="@($" background: {badge.Color}; color: white; margin: 0 auto 16px; width: 60px; height: 60px; transition: transform 0.3s ease;")">
+                                    <MudIcon Icon="@badge.Icon" Style="font-size: 24px;" />
+                                </MudAvatar>
+
+                                <!-- Badge Content -->
+                                <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                                    <MudText Typo="Typo.subtitle1" Style="color: #1e3a5f; font-size: 16px; font-weight: 600; margin-bottom: 8px;">
+                                        @badge.Title
+                                    </MudText>
+                                    <MudText Typo="Typo.body2" Style="color: #6c757d; font-size: 14px; line-height: 1.4; margin-bottom: 12px;">
+                                        @badge.Description
+                                    </MudText>
+
+                                    @if (badge.IsEarned)
+                                    {
+                                    <MudText Typo="Typo.caption" Style="color: #28a745; font-size: 12px; font-weight: 500; margin-bottom: 12px;">
+                                        Earned: @badge.EarnedDate
+                                    </MudText>
+                                    }
+                                    else
+                                    {
+                                    <MudText Typo="Typo.caption" Style="color: #dc3545; font-size: 12px; font-weight: 500; font-style: italic; margin-bottom: 12px;">
+                                        @badge.UnlockRequirement
+                                    </MudText>
+                                    }
+                                </div>
+
+                                <!-- Share Button for Earned Badges -->
+                                @if (badge.IsEarned)
+                                {
+                                <MudButton Size="Size.Small"
+                                           Style="background: #28a745; position: absolute; bottom: 12px; right: 12px; padding: 6px 12px; color: white;
+                                                                  border: none; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: 500; transition: all 0.3s ease;
+                                                                  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); z-index: 10;"
+                                                                  OnClick="@(() => HandleShareClick(badge))">
+                                            Share
+                                </MudButton>
+                                }
+
+                                <!-- Recent Badge Indicator -->
+                                @if (badge.IsRecent)
+                                {
+                                <MudChip T="string"
+                                         Color="Color.Warning"
+                                         Size="Size.Small"
+                                         Style="position: absolute; top: 12px; right: 12px; background: #dc3545; color: white; font-weight: 500;">
+                                    New!
+                                </MudChip>
+                                }
+
+                                <!-- Lock Icon for Locked Badges -->
+                                @if (!badge.IsEarned)
+                                {
+                                <MudIcon Icon="@Icons.Material.Filled.Lock"
+                                         Style="position: absolute; top: 12px; right: 12px; color: #9ca3af; font-size: 20px;" />
+                                }
+                            </MudPaper>
+                        </MudItem>
+                        }
+                    </MudGrid>
+                </MudStack>
+            </MudPaper>
+
+            <!-- My Certificates Section -->
+            <MudPaper Class="pa-6 speccon-certificate-section" Style="background: white; border-radius: 16px; width: 105%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);">
+                <MudStack AlignItems="AlignItems.Center" Spacing="4">
+                    <!-- Title -->
+                    <MudText Class="speccon-certificate-title" Typo="Typo.h4">
+                        My Certificates
+                    </MudText>
+
+                    <!-- Subtitle -->
+                    <MudText Class="speccon-certificate-subtitle" Typo="Typo.body1">
+                        View and share your earned certificates and qualifications
+                    </MudText>
+
+                    <!-- Certificates Grid -->
+                    <MudGrid Justify="Justify.SpaceEvenly" Spacing="4" Style="width: 105%; max-width: 1200px;">
+                        @foreach (var cert in certificates)
+                        {
+                        <MudItem xs="12" md="6" @key="cert.Id">
+                            <MudPaper Class="@GetCertificateCardClass(cert)"
+                                      Style="@GetCertificateCardStyle(cert)">
+                                <MudStack AlignItems="AlignItems.Center" Spacing="3">
+                                    <!-- Certificate Icon -->
+                                        <MudText Class="speccon-certificate-icon speccon-certificate-icon-gold"> 🏆 </MudText>
+                                 
+                                    <!-- Certificate Title -->
+                                        <MudText Typo="Typo.h6" Class="speccon-certificate-title">
+                                        @cert.Title
+                                    </MudText>
+
+                                    <!-- Level -->
+                                        <MudText Typo="Typo.body2" Class="speccon-certificate-level">
+                                        @cert.Level
+                                    </MudText>
+
+                                    <!-- Status Text -->
+                                    @if (cert.IsCompleted)
+                                    {
+                                            <MudText Typo="Typo.body2" Class="speccon-certificate-status" Style="color: #155724 !important">
+                                        Completed - December 2024
+                                    </MudText>
+                                    }
+                                    else
+                                    {
+                                     <MudText Typo="Typo.body2" Class="speccon-certificate-status">
+                                        In Progress - @cert.Progress% Complete
+                                    </MudText>
+                                    }
+
+                                    <!-- Action Buttons -->
+                                        <MudStack  Row Spacing="2" Justify="Justify.Center">
+                                        @if (cert.IsCompleted)
+                                        {
+                                        <MudButton Class="speccon-cert-action-btn">
+                                                    👁️ View Certificate
+                                        </MudButton>
+                                        <MudButton Class="speccon-cert-action-btn">
+                                                    💾 Download PDF
+                                        </MudButton>
+                                        }
+                                        else
+                                        {
+                                                <MudButton Class="speccon-cert-action-btn">
+                                                    📄 Progress Certificate
+                                        </MudButton>
+                                                <MudButton Class="speccon-cert-action-btn">
+                                            💾 Download Progress
+                                        </MudButton>
+                                        }
+                                    </MudStack>
+                                </MudStack>
+
+                                <!-- Share Button (Top Right) -->
+                                <MudButton  Size="Size.Small"
+                                               Style="background: #1e3a5f; position: absolute; bottom: 12px; right: 12px; padding: 6px 12px; color: white;
+                                                                      border: none; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: 500; transition: all 0.3s ease;
+                                                                      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); z-index: 10;"
+                                           OnClick="@(() => HandleCertificateShare(cert))" >     
+                                    Share
+                                </MudButton>
+                            </MudPaper>
+                        </MudItem>
+                        }
+                    </MudGrid>
+                </MudStack>
+            </MudPaper>
+
+        </MudStack>
+    </MudContainer>
+</MudContainer>
+
+<!-- Enhanced Share Modal -->
+<MudDialog Class="speccon-share-model" @bind-Visible="_shareModalOpen">
+    <DialogContent>
+        @* <MudStack Spacing="3"> *@
+            <MudButton Class="speccon-share-model-close"
+                       OnClick="(CloseShareModal)">
+                x
+            </MudButton>
+            <MudStack Class="speccon-share-model-title" Row AlignItems="AlignItems.Center" Spacing="2">
+                <MudText Typo="Typo.h6">Share Achievement</MudText>
+            </MudStack>
+
+            <MudGrid Class="speccon-share-grid">
+                <MudButton Class="specconn-share-model-content" xs="6" OnClick="@(() => ShareTo("twitter"))">
+                    <MudText Class="speccon-share-model-icon" Style="background: #1da1f2;"> 🐦 </MudText>
+                    <MudText Class="speccon-share-model-text"> Share On Twitter </MudText>
+                </MudButton>
+                <MudButton Class="specconn-share-model-content" xs="6" OnClick="@(() => ShareTo("instagram"))">
+                    <MudText Class="speccon-share-model-icon" Style="background: linear-gradient(45deg, #f09433, #bc1888);"> 📸 </MudText>
+                    <MudText Class="speccon-share-model-text"> Share On INSTAGRAM </MudText>
+                </MudButton>
+                <MudButton Class="specconn-share-model-content" xs="6" OnClick="@(() => ShareTo("whatsapp"))">
+                    <MudText Class="speccon-share-model-icon" Style="background: #25d366;"> 💬 </MudText>
+                    <MudText Class="speccon-share-model-text"> Share On WhatsApp </MudText>
+                </MudButton>
+                <MudButton Class="specconn-share-model-content" xs="6" OnClick="@(() => ShareTo("telegram"))">
+                    <MudText Class="speccon-share-model-icon" Style="background: #0088cc;"> ✈️ </MudText>
+                    <MudText Class="speccon-share-model-text"> Share On  Telegram </MudText>
+                </MudButton>
+            </MudGrid>
+        @* </MudStack> *@
+    </DialogContent>
+</MudDialog>
+
+@code {
+    private string selectedFilter = "All";
+    private bool _shareModalOpen = false;
+    private object _currentShareItem = null!;
+    private string _currentShareType = "";
+    private BadgeModel? _selectedBadge;
+
+    private readonly DialogOptions _dialogOptions = new()
+    {
+        MaxWidth = MaxWidth.Small,
+        CloseOnEscapeKey = true
+    };
+
+    // Badge data with enhanced information
+    private readonly List<BadgeModel> allBadges = new()
+    {
+        new BadgeModel
+        {
+            Id = "first-module",
+            Title = "First Module Master",
+            Description = "Completed first module with excellence",
+            Icon = Icons.Material.Filled.School,
+            Color = "#fbbf24",
+            IsEarned = true,
+            IsRecent = true,
+            EarnedDate = "March 15, 2024",
+            XpAwarded = 500,
+            RequirementsMet = "• Complete Module 1: Communication in the Workplace\n• Score 85% or higher\n• Submit all assignments on time",
+            UnlockRequirement = "Complete first module with 85%+ score"
+        },
+        new BadgeModel
+        {
+            Id = "communication-expert",
+            Title = "Communication Expert",
+            Description = "Mastered workplace communication skills",
+            Icon = Icons.Material.Filled.Chat,
+            Color = "#1e3a8a",
+            IsEarned = true,
+            IsRecent = false,
+            EarnedDate = "March 20, 2024",
+            XpAwarded = 350,
+            RequirementsMet = "• Excel in communication assessments\n• Complete role-play scenarios\n• Demonstrate active listening",
+            UnlockRequirement = "Complete communication modules"
+        },
+        new BadgeModel
+        {
+            Id = "team-player",
+            Title = "Team Player",
+            Description = "Excelled in teamwork and collaboration",
+            Icon = Icons.Material.Filled.Group,
+            Color = "#10b981",
+            IsEarned = true,
+            IsRecent = false,
+            EarnedDate = "April 2, 2024",
+            XpAwarded = 300,
+            RequirementsMet = "• Participate in team projects\n• Demonstrate collaboration skills\n• Receive positive peer feedback",
+            UnlockRequirement = "Complete team projects successfully"
+        },
+        new BadgeModel
+        {
+            Id = "time-master",
+            Title = "Time Master",
+            Description = "Demonstrated excellent time management",
+            Icon = Icons.Material.Filled.AccessTime,
+            Color = "#9ca3af",
+            IsEarned = true,
+            IsRecent = false,
+            EarnedDate = "June 10, 2024",
+            XpAwarded = 400,
+            RequirementsMet = "• Submit 10 assignments on time\n• Maintain punctual attendance\n• Complete time management module",
+            UnlockRequirement = "Submit assignments on time consistently"
+        },
+        new BadgeModel
+        {
+            Id = "conflict-resolver",
+            Title = "Conflict Resolver",
+            Description = "Successfully resolved workplace conflicts",
+            Icon = Icons.Material.Filled.Balance,
+            Color = "#a855f7",
+            IsEarned = true,
+            IsRecent = false,
+            EarnedDate = "April 18, 2024",
+            XpAwarded = 450,
+            RequirementsMet = "• Complete conflict resolution module\n• Demonstrate mediation skills\n• Apply conflict resolution techniques",
+            UnlockRequirement = "Complete conflict resolution training"
+        },
+        new BadgeModel
+        {
+            Id = "assessment-ace",
+            Title = "Assessment Ace",
+            Description = "Scored 90%+ on 5 consecutive assessments",
+            Icon = Icons.Material.Filled.Star,
+            Color = "#fbbf24",
+            IsEarned = true,
+            IsRecent = false,
+            EarnedDate = "June 5, 2024",
+            XpAwarded = 600,
+            RequirementsMet = "• Score 90% or higher on 5 assessments\n• Maintain consistent performance\n• Demonstrate mastery of content",
+            UnlockRequirement = "Score 90%+ on 5 consecutive assessments"
+        },
+        new BadgeModel
+        {
+            Id = "punctual-learner",
+            Title = "Punctual Learner",
+            Description = "Perfect attendance for 3 months",
+            Icon = Icons.Material.Filled.Schedule,
+            Color = "#10b981",
+            IsEarned = true,
+            IsRecent = false,
+            EarnedDate = "May 1, 2024",
+            XpAwarded = 250,
+            RequirementsMet = "• Attend all scheduled sessions\n• No absences for 3 months\n• Demonstrate commitment to learning",
+            UnlockRequirement = "Maintain perfect attendance for 3 months"
+        },
+        new BadgeModel
+        {
+            Id = "graduation-gold",
+            Title = "Graduation Gold",
+            Description = "Complete entire qualification with distinction",
+            Icon = Icons.Material.Filled.School,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 1000,
+            RequirementsMet = "",
+            UnlockRequirement = "Complete all 24 modules with 85%+ average"
+        },
+        new BadgeModel
+        {
+            Id = "leadership-legend",
+            Title = "Leadership Legend",
+            Description = "Demonstrate exceptional leadership qualities",
+            Icon = Icons.Material.Filled.EmojiEvents,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 750,
+            RequirementsMet = "",
+            UnlockRequirement = "Complete leadership modules and lead team projects"
+        },
+        new BadgeModel
+        {
+            Id = "mentor-master",
+            Title = "Mentor Master",
+            Description = "Help 5 fellow learners achieve their goals",
+            Icon = Icons.Material.Filled.Person,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 500,
+            RequirementsMet = "",
+            UnlockRequirement = "Assist 5 fellow learners successfully"
+        },
+        new BadgeModel
+        {
+            Id = "innovation-champion",
+            Title = "Innovation Champion",
+            Description = "Process and implement process improvements",
+            Icon = Icons.Material.Filled.Lightbulb,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 500,
+            RequirementsMet = "",
+            UnlockRequirement = "Submit innovation ideas"
+        },
+        new BadgeModel
+        {
+            Id = "perfect-student",
+            Title = "Pefect Student",
+            Description = "Achieve 100% in all assignments",
+            Icon = Icons.Material.Filled.Star,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 500,
+            RequirementsMet = "",
+            UnlockRequirement = "Score perfect 10 assignments"
+        },
+        new BadgeModel
+        {
+            Id = "workplace-champion",
+            Title = "Workplace Champion",
+            Description = "Excel in workplace application task",
+            Icon = Icons.Material.Filled.Work,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 500,
+            RequirementsMet = "",
+            UnlockRequirement = "Complete workplace projects"
+        },
+        new BadgeModel
+        {
+            Id = "study-streak",
+            Title = "Study Streak",
+            Description = "Study consistently for 100 days",
+            Icon = Icons.Material.Filled.WaterDrop,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 500,
+            RequirementsMet = "",
+            UnlockRequirement = "Maintain study streak"
+        },
+           new BadgeModel
+        {
+            Id = "quiz-master",
+            Title = "Quiz Master",
+            Description = "Score top marks in all module quizzes",
+            Icon = Icons.Material.Filled.Masks,
+            Color = "#9ca3af",
+            IsEarned = false,
+            IsRecent = false,
+            EarnedDate = "",
+            XpAwarded = 500,
+            RequirementsMet = "",
+            UnlockRequirement = "Excel in all quizzes"
+        }
+
+    };
+
+    // Certificate data
+    private readonly List<CertificateModel> certificates = new()
+    {
+        new CertificateModel
+        {
+            Id = "office-admin-nqf3",
+            Title = "Office Administration NQF 3",
+            Level = "Level 3 Qualification",
+            Icon = Icons.Material.Filled.School,
+            Color = "#fbbf24",
+            IsCompleted = true,
+            IsInProgress = false,
+            Progress = 100
+        },
+        new CertificateModel
+        {
+            Id = "business-admin-nqf5",
+            Title = "Business Administration Services NQF 5",
+            Level = "Level 5 Qualification",
+            Icon = Icons.Material.Filled.BusinessCenter,
+            Color = "#1e3a8a",
+            IsCompleted = false,
+            IsInProgress = true,
+            Progress = 75
+        }
+    };
+
+    private List<BadgeModel> earnedBadges => allBadges.Where(b => b.IsEarned).ToList();
+
+    private void SetFilter(string filter)
+    {
+        selectedFilter = filter;
+        StateHasChanged();
+    }
+
+    private List<BadgeModel> GetFilteredBadges()
+    {
+        return selectedFilter switch
+        {
+            "Earned" => allBadges.Where(b => b.IsEarned).ToList(),
+            "Locked" => allBadges.Where(b => !b.IsEarned).ToList(),
+            "Recent" => allBadges.Where(b => b.IsEarned && b.IsRecent).ToList(),
+            _ => allBadges
+        };
+    }
+
+    private string GetBadgeCardClass(BadgeModel badge)
+    {
+        var baseClass = "";
+        if (badge.IsEarned) baseClass += "badge-card earned-badge";
+        if (!badge.IsEarned) baseClass += " locked-badge";
+        if (badge.IsRecent) baseClass += " recent-badge";
+        return baseClass;
+    }
+
+    private string GetBadgeCardStyle(BadgeModel badge)
+    {
+        var baseStyle = "border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden; height: 100%; min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;";
+
+        if (!badge.IsEarned)
+        {
+            baseStyle += " background: #f8f9fa; opacity: 0.6; border: 2px solid #e9ecef;";
+        }
+        else
+        {
+            baseStyle += " background: #fefefe; border: 2px solid #e9ecef;";
+        }
+
+        return baseStyle;
+    }
+
+    private string GetCertificateCardClass(CertificateModel cert)
+    {
+        var baseClass = "speccon-certificate-card";
+        if (cert.IsCompleted) baseClass += " speccon-certificate-card-completed";
+        if (cert.IsInProgress) baseClass += " speccon-certificate-card-progress";
+        return baseClass;
+    }
+
+    private string GetCertificateCardStyle(CertificateModel cert)
+    {
+        var baseStyle = " border-radius: 16px; text-align: center; position: relative; padding: 24px; cursor: pointer; transition: all 0.3s ease;";
+
+        if (cert.IsCompleted)
+        {
+            baseStyle += " background: #f0fdf4; border: 2px solid #10b981;";
+        }
+        else
+        {
+            baseStyle += " background: #fefefe; border: 2px solid #e5e7eb;";
+        }
+
+        return baseStyle;
+    }
+
+ 
+
+    private void OpenShareModal(object item, string type)
+    {
+        _currentShareItem = item;
+        _currentShareType = type;
+        _shareModalOpen = true;
+        StateHasChanged();
+    }
+
+    private void HandleShareClick(BadgeModel badge)
+    {
+        OpenShareModal(badge, "badge");
+    }
+
+    private void HandleCertificateShare(CertificateModel cert)
+    {
+
+        OpenShareModal(cert, cert.IsCompleted ? "certificate" : "progress");
+    }
+
+    private async Task ShareTo(string platform)
+    {
+        var shareUrl = $"https://achievements.speccon.co.za/share/{GetShareId()}";
+        var encodedUrl = Uri.EscapeDataString(shareUrl);
+
+        var url = platform switch
+        {
+            "twitter" => $"https://twitter.com/intent/tweet?text=url={encodedUrl}",
+            "instagram" => $"https://www.instagram.com/create/story/?url={encodedUrl}",
+            "whatsapp" => $"https://wa.me/?text={encodedUrl}",
+            "telegram" => $"https://t.me/share/url?url={encodedUrl}",
+            _ => ""
+        };
+
+        if (!string.IsNullOrEmpty(url))
+        {
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("open", url, "_blank");
+                Snackbar.Add($"Opening {platform}...", Severity.Info);
+            }
+            catch (Exception)
+            {
+                Snackbar.Add($"Error opening {platform}", Severity.Error);
+            }
+        }
+        else
+        {
+            Snackbar.Add("Platform not supported", Severity.Warning);
+        }
+
+        CloseShareModal();
+    }
+
+    private string GetShareId()
+    {
+        return _currentShareItem switch
+        {
+            BadgeModel badge => badge.Id,
+            CertificateModel cert => cert.Id,
+            _ => "unknown"
+        };
+    }
+
+    private void CloseShareModal()
+    {
+        _shareModalOpen = false;
+        _currentShareItem = null!;
+        _currentShareType = "";
+        StateHasChanged();
+    }
+
+    private void ViewBadgeDetails(BadgeModel badge)
+    {
+        _selectedBadge = badge;
+    }
+
+    
+    // Model classes
+    public class BadgeModel
+    {
+        public string Id { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string Color { get; set; } = "";
+        public bool IsEarned { get; set; }
+        public bool IsRecent { get; set; }
+        public string EarnedDate { get; set; } = "";
+        public int XpAwarded { get; set; }
+        public string RequirementsMet { get; set; } = "";
+        public string UnlockRequirement { get; set; } = "";
+    }
+
+    public class CertificateModel
+    {
+        public string Id { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string Level { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string Color { get; set; } = "";
+        public bool IsCompleted { get; set; }
+        public bool IsInProgress { get; set; }
+        public int Progress { get; set; }
+    }
+}

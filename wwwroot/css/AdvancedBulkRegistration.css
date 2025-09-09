@@ -1,0 +1,624 @@
+﻿* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.import-csv-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+}
+
+.back-button {
+    background-color: #12265e;
+    color: white;
+    text-transform: none;
+    border-radius: 50px;
+    border: none;
+    padding: 8px 24px;
+    margin-bottom: 32px;
+}
+
+    .back-button:hover {
+        background-color: #16304f;
+    }
+
+.page-title {
+    text-align: center;
+    color: #12265e;
+    font-weight: bold;
+    margin-bottom: 28px;
+    padding-bottom: 4rem;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.step-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 140px;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #e0e0e0;
+    color: #666;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.step-item.active .step-circle {
+    background-color: #12265e;
+    color: white;
+    border: 2px solid #12265e;
+}
+
+.step-item.completed .step-circle {
+    background-color: #12265e;
+    color: white;
+}
+
+    .step-item.completed .step-circle ::deep .mud-icon-root {
+        font-size: 20px;
+        color: white;
+    }
+
+.step-label {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.step-item.active .step-label,
+.step-item.completed .step-label {
+    color: #12265e;
+    font-weight: 500;
+}
+
+.step-connector {
+    width: 100px;
+    height: 2px;
+    background-color: #e0e0e0;
+    margin: 0 -20px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+    .step-connector.completed {
+        background-color: #12265e;
+    }
+
+.import-card {
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    min-height: 300px;
+}
+
+.upload-area {
+    padding: 40px;
+}
+
+.file-upload-zone {
+    width: 100%;
+}
+
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    border: 2px dashed #d0d0d0;
+    border-radius: 8px;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+    .drop-zone:hover {
+        border-color: #12265e;
+        background-color: #f5f5f5;
+    }
+
+    .drop-zone.drag-hover {
+        border-color: #12265e;
+        background-color: #e8f0fe;
+    }
+
+.import-button {
+    border-color: #12265e;
+    color: #12265e;
+    padding: 10px 24px;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+    .import-button:hover {
+        background-color: #12265e;
+        color: white;
+    }
+
+    .import-button ::deep .mud-button-starticon {
+        color: inherit;
+    }
+
+.upload-text {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 400px;
+    margin-top: 16px;
+    padding: 2rem;
+}
+
+.selected-file {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    border: 1px solid #12265e;
+}
+
+    .selected-file ::deep .mud-icon-root {
+        font-size: 32px;
+    }
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.process-button {
+    background-color: #12265e;
+}
+
+    .process-button:hover {
+        background-color: #16304f;
+    }
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Tablet - iPad (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .import-csv-container {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+        padding-bottom: 3rem;
+        margin-bottom: 36px;
+    }
+
+    .steps-container {
+        padding: 0 20px;
+    }
+
+    .step-item {
+        min-width: 120px;
+    }
+
+    .step-connector {
+        width: 80px;
+    }
+
+    .import-card {
+        max-width: 90%;
+    }
+
+    .upload-area {
+        padding: 30px;
+    }
+
+    .drop-zone {
+        padding: 50px 30px;
+    }
+
+    .upload-text {
+        padding: 1.5rem;
+    }
+}
+
+/* Small Tablet and Large Phone (481px - 768px) */
+@media screen and (max-width: 768px) {
+    .import-csv-container {
+        padding: 16px;
+        padding-bottom: 80px; /* Space for footer */
+    }
+
+    .back-button {
+        padding: 6px 20px;
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        padding: 2rem 0px;
+        margin-bottom: 24px;
+    }
+
+    .steps-container {
+        padding: 0 10px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        margin-bottom: 36px;
+    }
+
+    .step-wrapper {
+        flex-shrink: 0;
+    }
+
+    .step-item {
+        min-width: 100px;
+    }
+
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .step-label {
+        font-size: 12px;
+    }
+
+    .step-connector {
+        width: 60px;
+        margin: 0 -15px;
+    }
+
+    .import-card {
+        max-width: 100%;
+        border-radius: 6px;
+    }
+
+    .upload-area {
+        padding: 20px;
+    }
+
+    .drop-zone {
+        padding: 40px 20px;
+    }
+
+    .import-button {
+        padding: 8px 20px;
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+
+    .upload-text {
+        font-size: 13px;
+        padding: 1rem;
+        max-width: 90%;
+    }
+
+    .selected-file {
+        padding: 16px;
+        gap: 8px;
+    }
+
+        .selected-file ::deep .mud-icon-root {
+            font-size: 28px;
+        }
+
+    .card-actions {
+        padding: 16px;
+        margin-top: 16px;
+        justify-content: space-between;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}
+
+/* Mobile - iPhone SE and smaller (320px - 480px) */
+@media screen and (max-width: 480px) {
+    .import-csv-container {
+        padding: 12px;
+        padding-bottom: 60px;
+        min-height: auto;
+    }
+
+    .back-button {
+        padding: 6px 16px;
+        font-size: 13px;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 120px;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+        padding: 2rem 0px;
+        margin-bottom: 20px;
+    }
+
+    .steps-container {
+        display: none;
+    }
+
+        .steps-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .steps-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .steps-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+
+    .step-wrapper {
+        padding-right: 10px;
+    }
+
+    .step-item {
+        min-width: 85px;
+    }
+
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .step-item.completed .step-circle ::deep .mud-icon-root {
+        font-size: 16px;
+    }
+
+    .step-label {
+        font-size: 11px;
+        max-width: 80px;
+    }
+
+    .step-connector {
+        width: 40px;
+        margin: 0 -10px;
+        margin-bottom: 25px;
+    }
+
+    .import-card {
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        min-height: 250px;
+    }
+
+    .upload-area {
+        padding: 16px;
+    }
+
+    .drop-zone {
+        padding: 30px 15px;
+        border-width: 1px;
+    }
+
+    .import-button {
+        padding: 8px 16px;
+        margin-bottom: 12px;
+        font-size: 13px;
+        width: 100%;
+        max-width: 180px;
+    }
+
+        .import-button ::deep .mud-button-starticon {
+            font-size: 18px;
+        }
+
+    .upload-text {
+        font-size: 12px;
+        padding: 0.75rem;
+        max-width: 100%;
+        margin-top: 12px;
+        line-height: 1.4;
+    }
+
+    .selected-file {
+        flex-direction: column;
+        padding: 12px;
+        gap: 8px;
+        text-align: center;
+    }
+
+        .selected-file ::deep .mud-icon-root {
+            font-size: 24px;
+        }
+
+        .selected-file ::deep .mud-text-root {
+            font-size: 13px;
+            word-break: break-all;
+        }
+
+    .card-actions {
+        flex-direction: column;
+        padding: 12px;
+        margin-top: 12px;
+        gap: 8px;
+    }
+
+        .card-actions ::deep .mud-button {
+            width: 100%;
+        }
+
+    .process-button {
+        order: -1; /* Move process button to top */
+        padding: 10px 20px;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 8px;
+        right: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 4px;
+    }
+
+    .copyright {
+        font-size: 11px;
+    }
+}
+
+/* Very small phones (below 375px) */
+@media screen and (max-width: 374px) {
+    .import-csv-container {
+        padding: 8px;
+        padding-bottom: 50px;
+    }
+
+    .back-button {
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+
+    .page-title {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+
+    .step-item {
+        min-width: 75px;
+    }
+
+    .step-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .step-label {
+        font-size: 10px;
+        max-width: 70px;
+    }
+
+    .import-card {
+        min-height: 220px;
+    }
+
+    .upload-area {
+        padding: 12px;
+    }
+
+    .drop-zone {
+        padding: 24px 12px;
+    }
+
+    .import-button {
+        font-size: 12px;
+        padding: 6px 14px;
+        max-width: 160px;
+    }
+
+    .upload-text {
+        font-size: 11px;
+        padding: 0.5rem;
+    }
+
+    .selected-file {
+        padding: 10px;
+    }
+
+        .selected-file ::deep .mud-icon-root {
+            font-size: 20px;
+        }
+
+        .selected-file ::deep .mud-text-root {
+            font-size: 12px;
+        }
+
+    .card-actions {
+        padding: 10px;
+    }
+
+    .process-button {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+
+    .copyright {
+        font-size: 10px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .import-csv-container {
+        padding-top: 8px;
+        padding-bottom: 40px;
+    }
+
+    .page-title {
+        font-size: 1.2rem;
+        padding-bottom: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .steps-container {
+        display: none;
+    }
+
+    .import-card {
+        min-height: auto;
+    }
+
+    .drop-zone {
+        padding: 20px 15px;
+    }
+
+    .upload-text {
+        margin-top: 8px;
+    }
+
+    .footer {
+        bottom: 5px;
+    }
+}

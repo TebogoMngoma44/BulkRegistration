@@ -1,0 +1,397 @@
+﻿* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.bulk-registration-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.back-button {
+    background-color: #12265e;
+    color: white;
+    text-transform: none;
+    border-radius: 54px;
+    padding: 8px 24px;
+    margin-bottom: 32px;
+}
+
+    .back-button:hover {
+        background-color: #16304f;
+    }
+
+.page-title {
+    text-align: center;
+    color: #12265e;
+    font-weight: bold;
+    margin-bottom: 28px;
+    padding-bottom: 4rem;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    padding: 0 40px;
+    position: relative;
+}
+
+.step-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 140px;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #e0e0e0;
+    color: #666;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.step-item.active .step-circle {
+    background-color: #12265e;
+    color: white;
+    border: 2px solid #12265e;
+}
+
+.step-label {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.step-item.active .step-label {
+    color: #12265e;
+    font-weight: 500;
+}
+
+.step-connector {
+    width: 100px;
+    height: 2px;
+    background-color: #e0e0e0;
+    margin: 0 -20px;
+    margin-bottom: 30px;
+}
+
+.template-card {
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.card-title {
+    text-align: center;
+    color: #12265e;
+    font-weight: bold;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.download-section {
+    padding: 20px;
+}
+
+.download-label {
+    text-align: center;
+    color: #12265e;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.file-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .file-container:hover {
+        background-color: #f5f5f5;
+        border-radius: 8px;
+    }
+
+.excel-icon {
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    object-fit: contain;
+}
+
+    .excel-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .excel-icon ::deep .mud-icon-root {
+        color: white !important;
+        font-size: 36px !important;
+    }
+
+.file-name {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    word-break: break-word;
+}
+
+/* Tablet Styles (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .bulk-registration-container {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 1.75rem;
+        padding-bottom: 3rem;
+        margin-bottom: 36px;
+    }
+
+    .steps-container {
+        padding: 0 20px;
+    }
+
+    .step-item {
+        min-width: 120px;
+    }
+
+    .step-connector {
+        width: 80px;
+        margin: 0 -15px;
+    }
+}
+
+/* Small Tablet and Large Phone (481px - 768px) */
+@media screen and (max-width: 768px) {
+    .bulk-registration-container {
+        padding: 16px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        padding: 2rem 0px;
+        margin-bottom: 32px;
+    }
+
+    .steps-container {
+        display: none;
+    }
+
+    .step-wrapper {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .step-item {
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        min-width: unset;
+        padding: 12px 0;
+    }
+
+    .step-circle {
+        margin-bottom: 0;
+        margin-right: 16px;
+        flex-shrink: 0;
+    }
+
+    .step-label {
+        text-align: left;
+        flex: 1;
+    }
+
+    .step-connector {
+        width: 2px;
+        height: 40px;
+        margin: 0;
+        margin-left: 19px;
+        margin-top: -12px;
+        margin-bottom: -12px;
+    }
+
+    .step-wrapper:last-child .step-connector {
+        display: none;
+    }
+
+    .template-card {
+        max-width: 100%;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 24px;
+    }
+
+    .excel-icon {
+        width: 72px;
+        height: 72px;
+    }
+}
+
+/* Mobile Styles (320px - 480px) - Including iPhone SE */
+@media screen and (max-width: 480px) {
+    .bulk-registration-container {
+        padding: 12px;
+    }
+
+    .back-button {
+        padding: 6px 16px;
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+        padding-bottom: 2rem 0px;
+        margin-bottom: 24px;
+    }
+
+    .steps-container {
+        margin-bottom: 32px;
+    }
+
+    .step-item {
+        padding: 10px 0;
+    }
+
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        margin-right: 12px;
+    }
+
+    .step-label {
+        font-size: 13px;
+    }
+
+    .step-connector {
+        margin-left: 17px;
+        height: 36px;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+    }
+
+    .download-section {
+        padding: 16px;
+    }
+
+    .download-label {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+
+    .file-container {
+        padding: 16px;
+    }
+
+    .excel-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 8px;
+    }
+
+    .file-name {
+        font-size: 12px;
+        padding: 0 8px;
+    }
+}
+
+/* Very Small Mobile (iPhone SE and smaller) */
+@media screen and (max-width: 375px) {
+    .bulk-registration-container {
+        padding: 10px;
+    }
+
+    .back-button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .page-title {
+        font-size: 1.1rem;
+        padding-bottom: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .step-label {
+        font-size: 12px;
+    }
+
+    .step-connector {
+        margin-left: 15px;
+        height: 32px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .excel-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .file-name {
+        font-size: 11px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .page-title {
+        padding-bottom: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .steps-container {
+        margin-bottom: 24px;
+    }
+
+    .step-item {
+        padding: 8px 0;
+    }
+
+    .step-connector {
+        height: 28px;
+    }
+}

@@ -1,0 +1,97 @@
+﻿@* Components/PracticalAssignment/ToolsAndResources.razor *@
+@using MudBlazor
+@attribute [Authorize]
+
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserList">
+        <Authorized>
+*@<MudPaper Class="tools-section" Elevation="1">
+    <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Class="section-title">
+        <MudIcon Icon="@Icons.Material.Filled.Build" Style="color: #0ea5e9; font-size: 20px;" />
+        <MudText Typo="Typo.h6" Style="font-weight: 700; color: #1f2937; font-size: 18px;">Required Tools & Resources</MudText>
+    </MudStack>
+
+    <MudStack Spacing="3">
+        @foreach (var tool in tools)
+        {
+            <MudPaper Class="tool-item" Elevation="0">
+                <MudPaper Class="tool-icon-container" Elevation="0">
+                    <MudIcon Icon="@tool.Icon" Style="font-size: 24px;" />
+                </MudPaper>
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.subtitle2" Style="font-weight: 700; color: #1f2937; font-size: 16px;">@tool.Title</MudText>
+                    <MudText Style="color: #6b7280; font-size: 14px; line-height: 1.5;">@tool.Description</MudText>
+                </MudStack>
+            </MudPaper>
+        }
+    </MudStack>
+</MudPaper>
+@*                   </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+@code {
+    private readonly (string Icon, string Title, string Description)[] tools = {
+        (Icons.Material.Filled.MenuBook, "Excel Advanced Functions Guide", "Comprehensive guide to Excel formulas and functions"),
+        (Icons.Material.Filled.PlayCircle, "Pivot Table Video Tutorial", "Step-by-step pivot table creation and analysis"),
+        (Icons.Material.Filled.Palette, "Chart Design Best Practices", "Professional chart creation and formatting tips"),
+        (Icons.Material.Filled.Dashboard, "Dashboard Template", "Example dashboard layout and design template")
+    };
+}
+
+<style>
+    .tools-section {
+        background: #e8f0ff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tool-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: white;
+        border-radius: 16px;
+        margin-bottom: 12px;
+        text-decoration: none;
+        color: #444;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+        .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+    .tool-icon-container {
+        background: #1e40af;
+        color: white;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+</style>

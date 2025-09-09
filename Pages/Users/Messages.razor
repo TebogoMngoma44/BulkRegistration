@@ -1,0 +1,747 @@
+@page "/messages"
+@page "/messages/{status}"
+
+@attribute [Authorize]
+
+<PageTitle>@GetPageTitle() Support Messages</PageTitle>
+
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            @if (!_loader)
+            {
+                <!-- Custom Navbar -->
+                <MudAppBar Elevation="1" Style="background-color: #2c5282; height: 64px;">
+                    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="d-flex align-center">
+                        <MudPaper Class="pa-2 mr-6" Style="background-color: white; color: #2c5282; border-radius: 8px; font-weight: bold;">
+                            <MudText Typo="Typo.h6" Style="font-weight: bold; font-size: 1.1rem;">SC</MudText>
+                        </MudPaper>
+
+                        <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                            <MudButton Href="#" Color="Color.Inherit" Class="mr-3" Style="font-size: 0.95rem; font-weight: 500;">My Dashboard</MudButton>
+                            <MudButton Href="#" Color="Color.Inherit" Class="mr-3" Style="font-size: 0.95rem; font-weight: 500;">My Qualifications</MudButton>
+                            <MudButton Href="#" Color="Color.Inherit" Class="mr-3" Style="font-size: 0.95rem; font-weight: 500;">My Progress</MudButton>
+                            <MudButton Href="#" Color="Color.Inherit" Class="mr-3" Style="font-size: 0.95rem; font-weight: 500;">My Achievements</MudButton>
+                            <MudButton Href="#" Color="Color.Inherit" Class="mr-3"
+                                       Style="background-color: rgba(255,255,255,0.2); border-radius: 8px; font-size: 0.95rem; font-weight: 500;">
+                                My Messages
+                            </MudButton>
+                            <MudButton Href="#" Color="Color.Inherit" Style="font-size: 0.95rem; font-weight: 500;">Quick Tips</MudButton>
+                        </MudHidden>
+
+                        <MudSpacer />
+
+                        <MudBadge Content="3" Color="Color.Error" Overlap="true" Class="mr-4">
+                            <MudIconButton Icon="@Icons.Material.Filled.Notifications" Color="Color.Inherit" />
+                        </MudBadge>
+
+                        <MudAvatar Style="background-color: #4a5568; color: white; font-weight: bold;">
+                            @GetUserInitials()
+                        </MudAvatar>
+                    </MudContainer>
+                </MudAppBar>
+
+                <!-- Sub Navigation -->
+                <MudPaper Elevation="0" Class="border-b-1" Style="background-color: white; border-bottom: 1px solid #e2e8f0;">
+                    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pa-0">
+                        <MudTabs Elevation="0" Rounded="false" Color="Color.Primary" Class="pa-0" Style="min-height: 48px;">
+                            <MudTabPanel Text="+ Create Message" Style="font-size: 0.95rem; font-weight: 500;" />
+                            <MudTabPanel Text="📁 My Messages" Style="font-size: 0.95rem; font-weight: 500; color: #1976d2;" />
+                            <MudTabPanel Text="FAQ & Help" Style="font-size: 0.95rem; font-weight: 500;" />
+                            <MudTabPanel Text="📞 Contact Info" Style="font-size: 0.95rem; font-weight: 500;" />
+                        </MudTabs>
+                    </MudContainer>
+                </MudPaper>
+
+                <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-8">
+                    @if (string.IsNullOrEmpty(Status))
+                    {
+                        <!-- Overview Section -->
+                        <div class="text-center mb-8">
+                            <MudText Typo="Typo.h3" Class="mb-3" Style="color: #2d3748; font-weight: 600; font-size: 2.5rem;">
+                                Message Overview
+                            </MudText>
+                            <MudText Typo="Typo.body1" Style="color: #718096; font-size: 1.1rem;">
+                                Choose a category to view and manage your messages
+                            </MudText>
+                        </div>
+
+                        <!-- Status Cards Row -->
+                        <MudGrid Class="mb-6" Spacing="4">
+                            <MudItem xs="12" sm="4">
+                                <MudCard Elevation="2" Class="cursor-pointer hover-card status-card"
+                                         Style="height: 280px; border: 2px solid #e2e8f0; background-color: white; border-radius: 12px;"
+                                         @onclick="() => NavigateToStatus(MessageStatus.New)">
+                                    <MudCardContent Class="text-center card-content">
+                                        <MudIcon Icon="@Icons.Material.Filled.Add"
+                                                 Size="Size.Large"
+                                                 Class="mb-4 card-icon"
+                                                 Color="Color.Primary"
+                                                 Style="font-size: 3.5rem;" />
+                                        <MudText Typo="Typo.h6" Class="mb-3 card-title">New</MudText>
+                                        <MudText Typo="Typo.h3" Class="mb-2 card-count" Style="color: #1976d2; font-size: 2.5rem; font-weight: 600;">3</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3 card-label" Style="color: #718096; font-size: 0.95rem;">messages</MudText>
+                                        <MudText Typo="Typo.body2" Class="card-action" Style="color: #3b82f6; font-size: 0.9rem;">Click to view all</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="4">
+                                <MudCard Elevation="2" Class="cursor-pointer hover-card status-card"
+                                         Style="height: 280px; border: 2px solid #e2e8f0; background-color: #fff3e0; border-radius: 12px;"
+                                         @onclick="() => NavigateToStatus(MessageStatus.InProgress)">
+                                    <MudCardContent Class="text-center card-content">
+                                        <MudIcon Icon="@Icons.Material.Filled.Schedule"
+                                                 Size="Size.Large"
+                                                 Class="mb-4 card-icon"
+                                                 Color="Color.Warning"
+                                                 Style="font-size: 3.5rem;" />
+                                        <MudText Typo="Typo.h6" Class="mb-3 card-title">In Progress</MudText>
+                                        <MudText Typo="Typo.h3" Class="mb-2 card-count" Style="color: #2d3748; font-size: 2.5rem; font-weight: 600;">2</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3 card-label" Style="color: #718096; font-size: 0.95rem;">messages</MudText>
+                                        <MudText Typo="Typo.body2" Class="card-action" Style="color: #718096; font-size: 0.9rem;">Click to view all</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="4">
+                                <MudCard Elevation="2" Class="cursor-pointer hover-card status-card"
+                                         Style="height: 280px; border: 2px solid #e2e8f0; background-color: #e8f5e8; border-radius: 12px;"
+                                         @onclick="() => NavigateToStatus(MessageStatus.Resolved)">
+                                    <MudCardContent Class="text-center card-content">
+                                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
+                                                 Size="Size.Large"
+                                                 Class="mb-4 card-icon"
+                                                 Color="Color.Success"
+                                                 Style="font-size: 3.5rem;" />
+                                        <MudText Typo="Typo.h6" Class="mb-3 card-title">Resolved</MudText>
+                                        <MudText Typo="Typo.h3" Class="mb-2 card-count" Style="color: #2d3748; font-size: 2.5rem; font-weight: 600;">2</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3 card-label" Style="color: #3b82f6; font-size: 0.95rem;">messages</MudText>
+                                        <MudText Typo="Typo.body2" Class="card-action" Style="color: #3b82f6; font-size: 0.9rem;">Click to view all</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <!-- Show status cards in header for context -->
+                        <MudGrid Class="mb-6" Spacing="4">
+                            <MudItem xs="12" sm="4">
+                                <MudCard Elevation="2" Class="cursor-pointer hover-card status-card"
+                                         Style="@GetCardStyle(MessageStatus.New)"
+                                         @onclick="() => NavigateToStatus(MessageStatus.New)">
+                                    <MudCardContent Class="text-center card-content">
+                                        <MudIcon Icon="@Icons.Material.Filled.Add"
+                                                 Size="Size.Large"
+                                                 Class="mb-4 card-icon"
+                                                 Color="Color.Primary"
+                                                 Style="font-size: 3.5rem;" />
+                                        <MudText Typo="Typo.h6" Class="mb-3 card-title">New</MudText>
+                                        <MudText Typo="Typo.h3" Class="mb-2 card-count" Style="color: #1976d2; font-size: 2.5rem; font-weight: 600;">3</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3 card-label" Style="color: #718096; font-size: 0.95rem;">messages</MudText>
+                                        <MudText Typo="Typo.body2" Class="card-action" Style="color: #1976d2; font-size: 0.9rem;">Click to view all</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="4">
+                                <MudCard Elevation="2" Class="cursor-pointer hover-card status-card"
+                                         Style="@GetCardStyle(MessageStatus.InProgress)"
+                                         @onclick="() => NavigateToStatus(MessageStatus.InProgress)">
+                                    <MudCardContent Class="text-center card-content">
+                                        <MudIcon Icon="@Icons.Material.Filled.Schedule"
+                                                 Size="Size.Large"
+                                                 Class="mb-4 card-icon"
+                                                 Color="Color.Warning"
+                                                 Style="font-size: 3.5rem;" />
+                                        <MudText Typo="Typo.h6" Class="mb-3 card-title">In Progress</MudText>
+                                        <MudText Typo="Typo.h3" Class="mb-2 card-count" Style="color: #2d3748; font-size: 2.5rem; font-weight: 600;">2</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3 card-label" Style="color: #718096; font-size: 0.95rem;">messages</MudText>
+                                        <MudText Typo="Typo.body2" Class="card-action" Style="color: #718096; font-size: 0.9rem;">Click to view all</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="4">
+                                <MudCard Elevation="2" Class="cursor-pointer hover-card status-card"
+                                         Style="@GetCardStyle(MessageStatus.Resolved)"
+                                         @onclick="() => NavigateToStatus(MessageStatus.Resolved)">
+                                    <MudCardContent Class="text-center card-content">
+                                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
+                                                 Size="Size.Large"
+                                                 Class="mb-4 card-icon"
+                                                 Color="Color.Success"
+                                                 Style="font-size: 3.5rem;" />
+                                        <MudText Typo="Typo.h6" Class="mb-3 card-title">Resolved</MudText>
+                                        <MudText Typo="Typo.h3" Class="mb-2 card-count" Style="color: #2d3748; font-size: 2.5rem; font-weight: 600;">2</MudText>
+                                        <MudText Typo="Typo.body2" Class="mb-3 card-label" Style="color: #718096; font-size: 0.95rem;">messages</MudText>
+                                        <MudText Typo="Typo.body2" Class="card-action" Style="color: #1976d2; font-size: 0.9rem;">Click to view all</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        </MudGrid>
+
+                        <!-- Messages Section Header -->
+                        <div class="d-flex justify-space-between align-center mb-6">
+                            <div>
+                                <MudText Typo="Typo.h4" Class="mb-1" Style="color: #2d3748; font-weight: 600; font-size: 1.875rem;">
+                                    @GetPageTitle() Support Messages
+                                </MudText>
+                                <MudText Typo="Typo.body1" Style="color: #718096; font-size: 1rem;">
+                                    Showing all messages with @Status.ToLower() status
+                                </MudText>
+                            </div>
+                            <div class="d-flex align-center ga-3">
+                                <MudPaper Elevation="0" Class="px-3 py-1" Style="background-color: #e2e8f0; border-radius: 4px;">
+                                    <MudText Typo="Typo.body2" Style="color: #4a5568; font-weight: 500;">
+                                        @GetStatusText(_currentStatus)
+                                    </MudText>
+                                </MudPaper>
+                                <MudText Typo="Typo.body1" Style="color: #4a5568; font-weight: 400;">
+                                    @GetCurrentStatusCount() messages
+                                </MudText>
+                            </div>
+                        </div>
+
+                        <!-- Search Section -->
+                        <MudTextField @bind-Value="_searchTerm"
+                                      Placeholder="Search messages..."
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="@Icons.Material.Filled.Search"
+                                      Variant="Variant.Outlined"
+                                      Class="mb-4"
+                                      Style="background-color: #f7fafc;"
+                                      DebounceInterval="300"
+                                      OnDebounceIntervalElapsed="OnSearchChanged" />
+
+                        <!-- Messages Found Counter -->
+                        <div class="d-flex justify-end mb-4">
+                            <MudText Typo="Typo.body2" Style="color: #718096;">
+                                @_filteredMessages.Count messages found
+                            </MudText>
+                        </div>
+
+                        <!-- Messages List -->
+                        @if (_filteredMessages.Any())
+                        {
+                            <div class="messages-list">
+                                @foreach (var message in _filteredMessages)
+                                {
+                                    <MudPaper Class="message-card pa-4 mb-3" Elevation="1">
+                                        <div class="d-flex justify-space-between align-start">
+                                            <div style="flex: 1;">
+                                                <div class="d-flex align-center ga-2 mb-2">
+                                                    <MudText Typo="Typo.h6" Style="color: #2d3748; font-weight: 600; font-size: 1.25rem;">
+                                                        @message.Title
+                                                    </MudText>
+                                                    <MudChip T="string" Size="Size.Small"
+                                                             Style="@GetStatusChipStyle(message.Status)">
+                                                        @GetStatusChipText(message.Status)
+                                                    </MudChip>
+                                                    <MudChip T="string" Size="Size.Small"
+                                                             Style="@GetPriorityChipStyle(message.Priority)">
+                                                        @message.Priority.ToString()
+                                                    </MudChip>
+                                                </div>
+                                                <MudText Typo="Typo.body2" Class="mb-3" Style="color: #4a5568; line-height: 1.5;">
+                                                    @message.Description
+                                                </MudText>
+                                                <div class="d-flex align-center ga-4">
+                                                    <div class="d-flex align-center ga-1">
+                                                        <MudIcon Icon="@Icons.Material.Filled.DateRange" Size="Size.Small" Style="color: #718096;" />
+                                                        <MudText Typo="Typo.caption" Style="color: #718096;">
+                                                            Created: @message.CreatedDate.ToString("yyyy-MM-dd")
+                                                        </MudText>
+                                                    </div>
+                                                    <div class="d-flex align-center ga-1">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Update" Size="Size.Small" Style="color: #718096;" />
+                                                        <MudText Typo="Typo.caption" Style="color: #718096;">
+                                                            Updated: @message.UpdatedDate.ToString("yyyy-MM-dd")
+                                                        </MudText>
+                                                    </div>
+                                                    <div class="d-flex align-center ga-1">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" Style="color: #718096;" />
+                                                        <MudText Typo="Typo.caption" Style="color: #718096;">
+                                                            @message.CreatedBy
+                                                        </MudText>
+                                                    </div>
+                                                    <div class="d-flex align-center ga-1">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Comment" Size="Size.Small" Style="color: #718096;" />
+                                                        <MudText Typo="Typo.caption" Style="color: #718096;">
+                                                            @message.ResponseCount responses
+                                                        </MudText>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-center ga-4 ml-4">
+                                                <MudText Typo="Typo.body2" Style="color: #718096; font-weight: 500;">
+                                                    #@message.MessageId
+                                                </MudText>
+                                                <MudButton Variant="Variant.Filled"
+                                                           Size="Size.Small"
+                                                           Style="background-color: #2c5282; color: white; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; padding-left: 24px; padding-right: 24px;"
+                                                           OnClick="() => ViewMessage(message.Id)">
+                                                    VIEW
+                                                </MudButton>
+                                            </div>
+                                        </div>
+                                    </MudPaper>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center pa-8">
+                                <MudIcon Icon="@Icons.Material.Filled.SearchOff" Size="Size.Large" Style="color: #9ca3af;" Class="mb-4" />
+                                <MudText Typo="Typo.h6" Class="mb-2" Style="color: #4a5568;">No messages found</MudText>
+                                <MudText Typo="Typo.body2" Style="color: #718096;">
+                                    @if (!string.IsNullOrEmpty(_searchTerm))
+                                    {
+                                        <span>Try adjusting your search terms or check a different status.</span>
+                                    }
+                                    else
+                                    {
+                                        <span>There are no @Status.ToLower() messages at this time.</span>
+                                    }
+                                </MudText>
+                            </div>
+                        }
+                    }
+                </MudContainer>
+            }
+            else
+            {
+                <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-8">
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+                </MudContainer>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-8">
+                <MudPaper Class="pa-8 text-center" Elevation="2">
+                    <MudIcon Icon="@Icons.Material.Filled.Lock" Size="Size.Large" Color="Color.Warning" Class="mb-4" />
+                    <MudText Typo="Typo.h5" Class="mb-4">Access Denied</MudText>
+                    <MudText Typo="Typo.body1" Class="mb-4">You need to be logged in to view this page.</MudText>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="NavigateToLogin">
+                        Go to Login
+                    </MudButton>
+                </MudPaper>
+            </MudContainer>
+        </NotAuthorized>
+        <Authorizing>
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-8">
+                <MudPaper Class="pa-8 text-center" Elevation="2">
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" Class="mb-4" />
+                    <MudText Typo="Typo.h6">Checking authorization...</MudText>
+                </MudPaper>
+            </MudContainer>
+        </Authorizing>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+<style>
+    .hover-card {
+        transition: all 0.2s ease-in-out;
+    }
+
+        .hover-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        /* Only show blue border on hover for cards that aren't already selected */
+        .hover-card:not(.selected-card):hover {
+            border-color: #3182ce !important;
+        }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    /* Message card styling */
+    .message-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+    }
+
+        .message-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #cbd5e0;
+        }
+
+    /* Override MudBlazor chip styles */
+    .mud-chip {
+        height: auto !important;
+        min-height: 24px !important;
+        padding: 4px 12px !important;
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        border-radius: 4px !important;
+    }
+
+    /* Card content */
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding: 24px;
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 1.25rem;
+    }
+
+    .card-count {
+        line-height: 1;
+    }
+
+    /* Override MudTextField for search */
+    .mud-input-outlined .mud-input-outlined-border {
+        border-color: #e2e8f0 !important;
+    }
+
+    .mud-input-outlined:hover .mud-input-outlined-border {
+        border-color: #cbd5e0 !important;
+    }
+
+    .mud-input-outlined.mud-focused .mud-input-outlined-border {
+        border-color: #3182ce !important;
+    }
+</style>
+
+@code {
+    [Parameter] public string Status { get; set; } = "";
+
+    private MessageStatus _currentStatus;
+    private List<SupportMessage> _allMessages = new();
+    private List<SupportMessage> _filteredMessages = new();
+    private string _searchTerm = "";
+    private bool _loader = true;
+    private string _userName = "";
+    private string _userEmail = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Get authentication state
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            _userName = user.Identity.Name ?? "User";
+            _userEmail = user.FindFirst(c => c.Type == "email")?.Value ?? "";
+
+            // You can also check for specific roles or claims here
+            // For example:
+            // bool isAdmin = user.IsInRole("Admin");
+            // string userId = user.FindFirst(c => c.Type == "sub")?.Value ?? "";
+        }
+
+        if (!string.IsNullOrEmpty(Status))
+        {
+            try
+            {
+                _currentStatus = Enum.Parse<MessageStatus>(Status, true);
+            }
+            catch (ArgumentException)
+            {
+                _currentStatus = MessageStatus.New;
+            }
+            await LoadData();
+        }
+
+        _loader = false;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(Status))
+        {
+            try
+            {
+                _currentStatus = Enum.Parse<MessageStatus>(Status, true);
+            }
+            catch (ArgumentException)
+            {
+                _currentStatus = MessageStatus.New;
+            }
+            await LoadData();
+        }
+    }
+
+    private async Task LoadData()
+    {
+        // Here you might want to filter messages based on the current user
+        // For example, only load messages created by or assigned to the current user
+
+        _allMessages = _currentStatus switch
+        {
+            MessageStatus.New => GetNewMessages(),
+            MessageStatus.InProgress => GetInProgressMessages(),
+            MessageStatus.Resolved => GetResolvedMessages(),
+            _ => new List<SupportMessage>()
+        };
+
+        ApplySearch();
+    }
+
+    private string GetUserInitials()
+    {
+        if (string.IsNullOrEmpty(_userName))
+            return "U";
+
+        var parts = _userName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length >= 2)
+            return $"{parts[0][0]}{parts[1][0]}".ToUpper();
+        else if (parts.Length == 1)
+            return parts[0].Substring(0, Math.Min(2, parts[0].Length)).ToUpper();
+        else
+            return "U";
+    }
+
+    private void NavigateToLogin()
+    {
+        NavigationManager.NavigateTo("/login", forceLoad: true);
+    }
+
+    // ... rest of your existing methods remain the same ...
+
+    private List<SupportMessage> GetNewMessages()
+    {
+        return new List<SupportMessage>
+        {
+            new SupportMessage
+            {
+                Id = 1,
+                MessageId = "MSG-001",
+                Title = "Unable to access logbook submission portal",
+                Description = "Getting error message when trying to upload logbook files",
+                Status = MessageStatus.New,
+                Priority = MessagePriority.High,
+                CreatedBy = "Sarah Johnson",
+                CreatedDate = new DateTime(2025, 6, 20),
+                UpdatedDate = new DateTime(2025, 6, 22),
+                ResponseCount = 2
+            },
+            new SupportMessage
+            {
+                Id = 4,
+                MessageId = "MSG-004",
+                Title = "New user account setup",
+                Description = "Need help setting up new learner account",
+                Status = MessageStatus.New,
+                Priority = MessagePriority.Medium,
+                CreatedBy = "Support Team",
+                CreatedDate = new DateTime(2025, 6, 25),
+                UpdatedDate = new DateTime(2025, 6, 25),
+                ResponseCount = 0
+            },
+            new SupportMessage
+            {
+                Id = 6,
+                MessageId = "MSG-006",
+                Title = "Password reset issue",
+                Description = "Cannot reset password using the forgot password link",
+                Status = MessageStatus.New,
+                Priority = MessagePriority.High,
+                CreatedBy = "Tech Support",
+                CreatedDate = new DateTime(2025, 6, 24),
+                UpdatedDate = new DateTime(2025, 6, 24),
+                ResponseCount = 0
+            }
+        };
+    }
+
+    private List<SupportMessage> GetInProgressMessages()
+    {
+        return new List<SupportMessage>
+        {
+            new SupportMessage
+            {
+                Id = 2,
+                MessageId = "MSG-002",
+                Title = "Stipend payment inquiry",
+                Description = "Questions about stipend payment schedule and amount",
+                Status = MessageStatus.InProgress,
+                Priority = MessagePriority.Medium,
+                CreatedBy = "Mike Davis",
+                CreatedDate = new DateTime(2025, 6, 18),
+                UpdatedDate = new DateTime(2025, 6, 21),
+                ResponseCount = 1
+            },
+            new SupportMessage
+            {
+                Id = 7,
+                MessageId = "MSG-007",
+                Title = "Module completion not showing",
+                Description = "Completed module but progress not updating in dashboard",
+                Status = MessageStatus.InProgress,
+                Priority = MessagePriority.Medium,
+                CreatedBy = "Academic Team",
+                CreatedDate = new DateTime(2025, 6, 19),
+                UpdatedDate = new DateTime(2025, 6, 23),
+                ResponseCount = 2
+            }
+        };
+    }
+
+    private List<SupportMessage> GetResolvedMessages()
+    {
+        return new List<SupportMessage>
+        {
+            new SupportMessage
+            {
+                Id = 3,
+                MessageId = "MSG-003",
+                Title = "Assessment date clarification",
+                Description = "Need confirmation of internal assessment date",
+                Status = MessageStatus.Resolved,
+                Priority = MessagePriority.Low,
+                CreatedBy = "Lisa Chen",
+                CreatedDate = new DateTime(2025, 6, 15),
+                UpdatedDate = new DateTime(2025, 6, 19),
+                ResponseCount = 3
+            },
+            new SupportMessage
+            {
+                Id = 5,
+                MessageId = "MSG-005",
+                Title = "Certificate request",
+                Description = "Request for completion certificate",
+                Status = MessageStatus.Resolved,
+                Priority = MessagePriority.Low,
+                CreatedBy = "Admin Team",
+                CreatedDate = new DateTime(2025, 6, 10),
+                UpdatedDate = new DateTime(2025, 6, 12),
+                ResponseCount = 2
+            }
+        };
+    }
+
+    private void ApplySearch()
+    {
+        if (string.IsNullOrEmpty(_searchTerm))
+        {
+            _filteredMessages = _allMessages;
+        }
+        else
+        {
+            _filteredMessages = _allMessages.Where(m =>
+                m.Title.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                m.Description.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                m.CreatedBy.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                m.MessageId.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)
+            ).ToList();
+        }
+    }
+
+    private async Task OnSearchChanged(string searchTerm)
+    {
+        _searchTerm = searchTerm;
+        ApplySearch();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void NavigateToStatus(MessageStatus status)
+    {
+        NavigationManager.NavigateTo($"/messages/{status.ToString().ToLower()}");
+    }
+
+    private void ViewMessage(int id)
+    {
+        NavigationManager.NavigateTo($"/messages/view/{id}");
+    }
+
+    private string GetPageTitle()
+    {
+        return _currentStatus switch
+        {
+            MessageStatus.New => "New",
+            MessageStatus.InProgress => "In Progress",
+            MessageStatus.Resolved => "Resolved",
+            _ => "Support"
+        };
+    }
+
+    private string GetCardStyle(MessageStatus status)
+    {
+        var baseStyle = "height: 280px; border: 2px solid #e2e8f0; border-radius: 12px;";
+
+        // Show blue border and light blue background when selected
+        if (!string.IsNullOrEmpty(Status) && status == _currentStatus)
+        {
+            return baseStyle + " border-color: #3182ce; background-color: #ebf8ff;";
+        }
+
+        // Default styles when not selected
+        return baseStyle + " background-color: " + status switch
+        {
+            MessageStatus.New => "white;",
+            MessageStatus.InProgress => "#fff3e0;",
+            MessageStatus.Resolved => "#e8f5e8;",
+            _ => "white;"
+        };
+    }
+
+    private string GetStatusChipText(MessageStatus status)
+    {
+        return status switch
+        {
+            MessageStatus.New => "Open",
+            MessageStatus.InProgress => "In Progress",
+            MessageStatus.Resolved => "Resolved",
+            _ => "Open"
+        };
+    }
+
+    private string GetStatusChipStyle(MessageStatus status)
+    {
+        return status switch
+        {
+            MessageStatus.New => "background-color: #ef4444; color: white; border: none;",
+            MessageStatus.InProgress => "background-color: #3b82f6; color: white; border: none;",
+            MessageStatus.Resolved => "background-color: #10b981; color: white; border: none;",
+            _ => "background-color: #ef4444; color: white; border: none;"
+        };
+    }
+
+    private string GetPriorityChipStyle(MessagePriority priority)
+    {
+        return priority switch
+        {
+            MessagePriority.High => "border: 1px solid #ef4444; color: #ef4444; background-color: white;",
+            MessagePriority.Medium => "border: 1px solid #f59e0b; color: #f59e0b; background-color: white;",
+            MessagePriority.Low => "border: 1px solid #10b981; color: #10b981; background-color: white;",
+            _ => "border: 1px solid #f59e0b; color: #f59e0b; background-color: white;"
+        };
+    }
+
+    private string GetStatusText(MessageStatus status)
+    {
+        return status switch
+        {
+            MessageStatus.New => "New Status",
+            MessageStatus.InProgress => "In progress Status",
+            MessageStatus.Resolved => "Resolved Status",
+            _ => "Status"
+        };
+    }
+
+    private int GetCurrentStatusCount()
+    {
+        return _currentStatus switch
+        {
+            MessageStatus.New => 3,
+            MessageStatus.InProgress => 2,
+            MessageStatus.Resolved => 2,
+            _ => 0
+        };
+    }
+}

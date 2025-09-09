@@ -1,0 +1,268 @@
+﻿@page "/user/userupdate"
+
+<CascadingAuthenticationState>
+    <AuthorizeView Context="UserUpdate">
+        <Authorized>
+            @if (_loader == false)
+            {
+                <MudDialog>
+                    <DialogContent>
+                        <div class="d-flex flex-column py-1">
+                            <MudContainer Class="mt-1 px-1"
+                                          MaxWidth="MaxWidth.False">
+                                <MudPaper Elevation="0" Class="mt-3">
+                                    <MudGrid Style="padding-left: 2%;
+                                                    padding-right: 2%;
+                                                    padding-bottom: 2%">
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.FirstName"
+                                                          Label="Edit name*"
+                                                         
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.LastName"
+                                                          Label="Edit lastname*"
+                                                         
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.Email"
+                                                          Label="Edit email address*"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+
+
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.ContactNo"
+                                                          Label="Edit contact number*"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.IdNumber"
+                                                          Label="Edit id number*"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.Disabled"
+                                                          Label="Are you disabled?*"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.XLink"
+                                                          Label="Edit X(twitter) link"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.FacebookLink"
+                                                          Label="Edit  facebook link"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.LinkedinLink"
+                                                          Label="Edit linkedIn link*"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.InstagramLink"
+                                                          Label="Edit insta link*"
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+                                        </MudItem>
+                                       
+                                        <MudItem xs="12">
+                                            <MudGrid Justify="Justify.FlexEnd">
+                                                <MudButton Disabled="@_processing"
+                                                           OnClick="@(e =>ToUpdate())"
+                                                           Class="mt-5 rounded-pill"
+                                                           Variant="Variant.Filled" DisableElevation="false"
+                                                           Style="width: 150px;
+                                                                  height: 40px;
+                                                                  margin-bottom: 25px;
+                                                                  background-color: #2E3168;
+                                                                             color: #fff;
+                                                                  margin-right: 10px">
+                                                    @if (_processing)
+                                                    {
+                                                        <MudProgressCircular Class="ms-n1"
+                                                                             Size="MudBlazor.Size.Small"
+                                                                             Indeterminate="true" />
+                                                        <MudText Class="ms-2">Processing</MudText>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudText>Save</MudText>
+                                                    }
+                                                </MudButton>
+                                            </MudGrid>
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudPaper>
+                            </MudContainer>
+                        </div>
+                    </DialogContent>
+                </MudDialog>
+            }
+            else
+            {
+                <MudGrid Class="d-flex justify-center" Style="height: 100vh">
+                    <MudItem>
+                        <MudPaper Elevation="0"
+                                  Class="pa-4 text-center align-content-center"
+                                  Style="height: 80%;">
+                            <MudImage Src="importloader.gif"
+                                      Alt="loading"
+                                      Elevation="0"
+                                      Height="120"
+                                      Class="rounded-lg align-items-center" />
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>You are not authorized to view this page.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public string key { get; set; } = string.Empty;
+
+    public EditUserDto updateDto = new EditUserDto();
+   
+
+    private bool _processing = false;
+    bool _loader = true;
+    string _description = "";
+
+    private bool isInitialized = false;
+    protected override void OnInitialized()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _loader = true; // Set loader to true at the beginning
+            InvokeAsync(LoadDataAsync); // Call the async method
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        // try
+        // {
+        //     key = await EncryptionHelper.Decode(key);
+        //     var getUser = await _userService.Getuser(new Guid(key));
+           
+        //     updateDto = new EditUserDto
+        //         {
+        //         UserKey = getUser.UserKey,
+               
+        //         FirstName = getUser.First_Name,
+        //         LastName = getUser.Last_Name,
+        //         Email = getUser.Email,
+        //         UserId = getUser.UserId,
+        //         ContactNo = getUser.Contact_No,
+        //         IdNumber = getUser.ID_number,
+        //         Address = getUser.Address,
+        //         XLink = getUser.X_Link,
+        //         FacebookLink = getUser.Facebook_Link,
+        //         InstagramLink = getUser.Instagram_Link,
+        //         LinkedinLink = getUser.Linkedin_Link,
+        //         ProfilePicture = getUser.Profile_Picture,
+        //         CreateDate = getUser.CreatedDate,
+        //         GenderId = getUser.Gender_ID,
+        //         DisabilityId = getUser.DisabilityID,
+        //         Disabled = getUser.Disabled
+        //         };
+
+
+        // }
+        // catch (Exception ex)
+        // {
+        //     ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        // }
+        // finally
+        // {
+        //     _loader = false;
+        //     StateHasChanged();
+        // }
+    }
+
+
+    async Task ToUpdate()
+    {
+        try
+        {
+            _processing = true;
+
+            EditUserDto update = updateDto;
+            var addDisability = await _userService.UpdateUser(update);
+            updateDto = new EditUserDto();
+            _processing = false;
+            NavigationManager.NavigateTo($"/users/UserUpdate", true);
+            return;
+        }
+        catch (Exception ex)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+    }
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+
+
+
+}

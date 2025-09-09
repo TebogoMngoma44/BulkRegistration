@@ -1,0 +1,318 @@
+﻿@* @attribute [Authorize] *@
+@using MudBlazor
+@using Speccon.Learnership.FrontEnd.Models
+
+@* 
+<CascadingAuthenticationState>
+    <AuthorizeView Context="QualificationSelector">
+        <Authorized>
+*@
+<MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="qualification-selector">
+    <!-- Desktop Layout -->
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Style="width: 100%; max-width: 800px;">
+            <MudText Typo="Typo.body1" Class="selector-label">
+                Select Qualification:
+            </MudText>
+            <MudSelect T="string" @bind-Value="SelectedQualification" @bind-Value:after="HandleSelectionChange"
+                       Variant="Variant.Outlined" Class="qualification-dropdown">
+                @foreach (var option in QualificationOptions)
+                {
+                    <MudSelectItem Value="@option.Value">@option.Label</MudSelectItem>
+                }
+            </MudSelect>
+        </MudStack>
+    </MudHidden>
+
+    <!-- Mobile Layout -->
+    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+        <MudStack AlignItems="AlignItems.Center" Spacing="2" Style="width: 100%; padding: 0 16px;">
+            <MudText Typo="Typo.body1" Class="selector-label-mobile">
+                Select Qualification:
+            </MudText>
+            <MudSelect T="string" @bind-Value="SelectedQualification" @bind-Value:after="HandleSelectionChange"
+                       Variant="Variant.Outlined" Class="qualification-dropdown-mobile"
+                       Style="width: 100%;">
+                @foreach (var option in QualificationOptions)
+                {
+                    <MudSelectItem Value="@option.Value">@option.Label</MudSelectItem>
+                }
+            </MudSelect>
+        </MudStack>
+    </MudHidden>
+</MudStack>
+@* </Authorized>
+        <NotAuthorized>
+            @{
+                NavigationManager.NavigateTo("/auth/logout");
+            }
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState> *@
+
+
+
+@code {
+    // Added missing Value parameter to fix the runtime error
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public string SelectedQualification { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> SelectedQualificationChanged { get; set; }
+    [Parameter] public List<QualificationOption> QualificationOptions { get; set; } = new();
+    [Parameter] public EventCallback<string> OnSelectionChanged { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        // Sync Value parameter with SelectedQualification if Value is provided
+        if (!string.IsNullOrEmpty(Value) && Value != SelectedQualification)
+        {
+            SelectedQualification = Value;
+        }
+    }
+
+    private async Task HandleSelectionChange()
+    {
+        // Update Value parameter when selection changes
+        if (ValueChanged.HasDelegate)
+        {
+            await ValueChanged.InvokeAsync(SelectedQualification);
+        }
+        await SelectedQualificationChanged.InvokeAsync(SelectedQualification);
+        await OnSelectionChanged.InvokeAsync(SelectedQualification);
+    }
+}
+
+<style>
+    .qualification-selector {
+        margin-bottom: 2rem;
+        padding: 0 16px;
+    }
+
+    /* Desktop Styles */
+    .selector-label {
+        font-size: clamp(14px, 2.5vw, 16px);
+        font-weight: 600;
+        color: #1e3a5f;
+        margin-right: 20px;
+        white-space: nowrap;
+        min-width: fit-content;
+    }
+
+    .qualification-dropdown {
+        max-width: 600px;
+        width: 100%;
+        flex: 1;
+    }
+
+    /* Mobile Styles */
+    .selector-label-mobile {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e3a5f;
+        text-align: center;
+        width: 100%;
+    }
+
+    .qualification-dropdown-mobile {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Unauthorized Selector Styles */
+    .unauthorized-selector {
+        padding: clamp(20px, 5vw, 40px);
+        text-align: center;
+        background: #f8f9fa;
+        border-radius: 16px;
+        border: 2px dashed #dee2e6;
+        max-width: 700px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .selector-icon {
+        color: #9e9e9e;
+        margin-bottom: 8px;
+        font-size: clamp(48px, 8vw, 64px) !important;
+    }
+
+    .unauthorized-selector-title {
+        font-weight: 600;
+        color: #757575;
+        margin-bottom: 8px;
+        font-size: clamp(18px, 4vw, 24px);
+        line-height: 1.3;
+    }
+
+    .unauthorized-selector-text {
+        color: #9e9e9e;
+        max-width: 400px;
+        margin: 0 auto 24px;
+        line-height: 1.6;
+        font-size: clamp(14px, 2.5vw, 16px);
+        padding: 0 10px;
+    }
+
+    /* Demo Selector - Desktop */
+    .demo-selector {
+        opacity: 0.6;
+        margin: 20px 0;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .demo-selector-label {
+        font-size: clamp(14px, 2.5vw, 16px);
+        font-weight: 600;
+        color: #9e9e9e;
+        margin-right: 20px;
+        white-space: nowrap;
+        min-width: fit-content;
+    }
+
+    .qualification-dropdown-disabled {
+        max-width: 600px;
+        width: 100%;
+        flex: 1;
+        opacity: 0.7;
+    }
+
+    /* Demo Selector - Mobile */
+    .demo-selector-mobile {
+        opacity: 0.6;
+        margin: 20px 0;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .demo-selector-label-mobile {
+        font-size: 16px;
+        font-weight: 600;
+        color: #9e9e9e;
+        text-align: center;
+        width: 100%;
+    }
+
+    .qualification-dropdown-disabled-mobile {
+        max-width: 100%;
+        width: 100%;
+        opacity: 0.7;
+    }
+
+        /* Common disabled styles */
+        .qualification-dropdown-disabled .mud-input-control,
+        .qualification-dropdown-disabled-mobile .mud-input-control {
+            background-color: #f5f5f5;
+        }
+
+        .qualification-dropdown-disabled .mud-input,
+        .qualification-dropdown-disabled-mobile .mud-input {
+            color: #9e9e9e;
+        }
+
+    .selector-access-button {
+        background: linear-gradient(135deg, #1e3a5f, #2c4a6b);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-transform: none;
+        border: none;
+        box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        margin-top: 16px;
+        font-size: clamp(14px, 2.5vw, 16px);
+        min-height: 48px;
+        transition: all 0.3s ease;
+    }
+
+        .selector-access-button:hover {
+            background: linear-gradient(135deg, #2c4a6b, #1e3a5f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(30, 58, 95, 0.4);
+        }
+
+    /* Responsive Design */
+    @@media (max-width: 960px) {
+        .qualification-selector {
+            padding: 0 12px;
+        }
+
+        .unauthorized-selector {
+            margin: 0 12px;
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .qualification-selector {
+            margin-bottom: 1.5rem;
+            padding: 0 10px;
+        }
+
+        .unauthorized-selector {
+            margin: 0 10px;
+            padding: 20px 16px;
+            border-radius: 12px;
+        }
+
+        .selector-access-button {
+            width: 100%;
+            max-width: 280px;
+            padding: 14px 20px;
+        }
+
+        .demo-selector-mobile {
+            padding: 0 5px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .unauthorized-selector {
+            padding: 16px 12px;
+        }
+
+        .unauthorized-selector-text {
+            margin-bottom: 16px;
+        }
+
+        .selector-access-button {
+            max-width: 260px;
+            font-size: 14px;
+        }
+    }
+
+    /* Animation for better UX */
+    .qualification-selector {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Ensure dropdowns work well on mobile */
+    @@media (max-width: 600px) {
+        .mud-select .mud-input-control {
+            min-height: 48px;
+        }
+
+        .mud-select .mud-select-input {
+            padding: 12px 14px;
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+    }
+
+    /* Focus states for accessibility */
+    .qualification-dropdown:focus-within,
+    .qualification-dropdown-mobile:focus-within {
+        outline: 2px solid #1e3a5f;
+        outline-offset: 2px;
+    }
+</style>

@@ -1,0 +1,270 @@
+﻿@page "/test/qualification/update"
+
+<CascadingAuthenticationState>
+    <AuthorizeView Context="TestQualificationUpdate">
+        <Authorized>
+            @if (_loader == false)
+            {
+                <MudDialog>
+                    <DialogContent>
+                        <div class="d-flex flex-column py-1">
+                            <MudContainer Class="mt-1 px-1"
+                                          MaxWidth="MaxWidth.False">
+                                <MudPaper Elevation="0"
+                                          Class="mt-3">
+                                    <MudGrid Style="padding-left: 2%;
+                                                            padding-right: 2%;
+                                                            padding-bottom: 2%">
+                                        <MudItem xs="12" sm="12" md="12">
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.QualificationName"
+                                                          Label="Qualification Name *"
+                                                          HelperText="Please enter the name for this qualification."
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.QualificationDescription"
+                                                          Label="Qualification Description *"
+                                                          HelperText="Please enter the description for this qualification."
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+
+                                           @*  <MudItem xs="12" sm="12" md="12">
+                                                <MudAutocomplete T="QualificationTypeDto"
+                                                                 Label="Search for a qualification type" @bind-Value="qualificationTypeDto"
+                                                                 ToStringFunc="dto => dto?.QualificationTypeDescription"
+                                                                 SearchFunc="SearchQualificationType"
+                                                                 Variant="Variant.Outlined"
+                                                                 CoerceValue="true" />
+                                            </MudItem> *@
+                                            <MudItem xs="12" sm="12" md="12">
+                                                <MudSelect T="QualificationTypeDto"
+                                                           @bind-Value="qualificationTypeDto"
+                                                           Label="Select a qualification type"
+                                                           Variant="Variant.Outlined"
+                                                           ToStringFunc="dto => dto?.QualificationTypeDescription"
+                                                           FullWidth>
+                                                    @foreach (var type in qualificationTypeList)
+                                                    {
+                                                        <MudSelectItem Value="@type">@type.QualificationTypeDescription</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </MudItem>
+
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.QualificationCode"
+                                                          Label="Qualification Code *"
+                                                          HelperText="Please enter the code for this qualification."
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.NqfLevel"
+                                                          Label="NQF Level *"
+                                                          HelperText="Please enter the NQF level for this qualification."
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+
+                                            <MudItem xs="12" sm="12" md="12">
+                                                <MudAutocomplete T="ClientDto"
+                                                                 Label="Search for a client" @bind-Value="clientDto"
+                                                                 ToStringFunc="dto => dto?.ClientName"
+                                                                 SearchFunc="SearchClient"
+                                                                 Variant="Variant.Outlined"
+                                                                 CoerceValue="true" />
+                                            </MudItem>
+
+                                            <MudTextField Class="d-flex" @bind-Value="@updateDto.Credits"
+                                                          Label="Credits *"
+                                                          HelperText="Please enter the credits for this qualification."
+                                                          Variant="Variant.Outlined"
+                                                          InputType="InputType.Text"
+                                                          FullWidth
+                                                          AutoFocus="true">
+                                            </MudTextField>
+
+                                        </MudItem>
+
+                                        <MudItem xs="12">
+                                            <MudGrid Justify="Justify.FlexEnd">
+                                                <MudButton Disabled="@_processing"
+                                                           OnClick="@(e =>Save())"
+                                                           Class="mt-5 rounded-pill"
+                                                           Variant="Variant.Filled"
+                                                           DisableElevation="false"
+                                                           Style="width: 150px;
+                                                                          height: 40px;
+                                                                          margin-bottom: 25px;
+                                                                          background-color: #2E3168;
+                                                                          color: #fff;
+                                                                          margin-right: 10px">
+
+                                                    <MudText>Update</MudText>
+                                                </MudButton>
+                                            </MudGrid>
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudPaper>
+                            </MudContainer>
+                        </div>
+                    </DialogContent>
+                </MudDialog>
+            }
+            else
+            {
+                <MudGrid Class="d-flex justify-center" Style="height: 100vh">
+                    <MudItem>
+                        <MudPaper Elevation="0" Class="pa-4 text-center align-content-center" Style="height: 80%;">
+                            <MudImage Src="importloader.gif" Alt="loading" Elevation="0" Height="120" Class="rounded-lg align-items-center" />
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>You are not authorized to view this page.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    // [CascadingParameter]
+    // private MudDialogInstance _dialog { get; set; } = new MudDialogInstance();
+    [Parameter]
+    public string key { get; set; } = string.Empty;
+
+    public QualificationUpdateDto updateDto = new QualificationUpdateDto();
+
+    public List<QualificationDto> qualificationList = new List<QualificationDto>();
+    public List<QualificationTypeDto> qualificationTypeList = new List<QualificationTypeDto>();
+    public List<ClientDto> clientList = new List<ClientDto>();
+
+    public QualificationTypeDto qualificationTypeDto = new QualificationTypeDto();
+    public ClientDto clientDto = new ClientDto();
+
+    private bool _processing = false;
+    bool _loader = true;
+
+    private bool isInitialized = false;
+    protected override void OnInitialized()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _loader = true; // Set loader to true at the beginning
+            InvokeAsync(LoadDataAsync); // Call the async method
+        }
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            qualificationList = await _testQualificationService.GetList();
+            qualificationTypeList = await _testQualificationTypeService.GetList();
+            clientList = await _testClientService.GetList();
+
+            key = await EncryptionHelper.Decode(key);
+
+            var curQualification = await _testQualificationService.GetQualificationByKey(new Guid(key));
+            updateDto = new QualificationUpdateDto
+            {
+                QualificationId = curQualification.QualificationId,
+                QualificationKey = curQualification.QualificationKey,
+                QualificationName = curQualification.QualificationName,
+                QualificationDescription = curQualification.QualificationDescription,
+                QualificationTypeId = curQualification.QualificationTypeId,
+                QualificationCode = curQualification.QualificationCode,
+                NqfLevel = curQualification.NqfLevel,
+                ClientId = curQualification.ClientId,
+                Credits = curQualification.Credits
+            };
+
+            var type = qualificationTypeList.Where(dto => dto.QualificationTypeId == updateDto.QualificationTypeId).FirstOrDefault();
+            if (type != null)
+            {
+                qualificationTypeDto = type;
+            }
+
+            var client = clientList.Where(dto => dto.ClientId == updateDto.ClientId).FirstOrDefault();
+            if (client != null)
+            {
+                clientDto = client;
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+        finally
+        {
+            _loader = false; // Set loader to false after loading
+            StateHasChanged(); // Refresh the UI
+        }
+    }
+
+    // private Task<IEnumerable<QualificationTypeDto>> SearchQualificationType(string value, CancellationToken cancellationToken)
+    // {
+    //     if (string.IsNullOrEmpty(value))
+    //         return Task.FromResult<IEnumerable<QualificationTypeDto>>(new List<QualificationTypeDto>());
+    //     var dtos = qualificationTypeList.Where(dto => dto.QualificationTypeDescription.Contains(value, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+    //     return Task.FromResult<IEnumerable<QualificationTypeDto>>(dtos);
+    // }
+
+    private Task<IEnumerable<ClientDto>> SearchClient(string value, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrEmpty(value))
+            return Task.FromResult<IEnumerable<ClientDto>>(new List<ClientDto>());
+        var dtos = clientList.Where(dto => dto.ClientName.Contains(value, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+        return Task.FromResult<IEnumerable<ClientDto>>(dtos);
+    }
+
+
+
+    async Task Save()
+    {
+        try
+        {
+            _processing = true;
+            updateDto.QualificationTypeId = qualificationTypeDto.QualificationTypeId;
+            updateDto.ClientId = clientDto.ClientId;
+            var addQualification = await _testQualificationService.UpdateQualification(updateDto);
+            updateDto = new QualificationUpdateDto();
+            _processing = false;
+            // _dialog.Close(DialogResult.Ok("Created"));
+            return;
+        }
+        catch (Exception ex)
+        {
+            ShowError("Uh-oh, we encountered an issue. We're working hard to fix it. Please refresh the page or try again in a moment.");
+        }
+    }
+
+
+
+    void ShowError(string message)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add($"{message}", Severity.Error, c => c.SnackbarVariant = Variant.Filled);
+    }
+}
+
+
